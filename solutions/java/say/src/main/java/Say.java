@@ -56,9 +56,6 @@ public final class Say {
 
     private String lastDigit(int number) {
         var lastDigit = number % 10;
-        if (lastDigit == 0) {
-            return "";
-        }
-        return "-" + numbers[lastDigit];
+        return lastDigit == 0 ? "" : "-" + numbers[lastDigit];
     }
 }
