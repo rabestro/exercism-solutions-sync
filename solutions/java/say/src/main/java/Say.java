@@ -1,61 +1,63 @@
-import java.util.Map;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import static java.util.Comparator.reverseOrder;
-
 public final class Say {
     public static final long MAXIMUM_PRONOUNCEABLE_NUMBER = 999_999_999_999L;
-    private static final String[] numbers = {
-            "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
-            "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
-            "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
-    };
-    private static final Map<Long, String> MAGNITUDES = Map.of(
-            1_000_000_000L, " billion",
-            1_000_000L, " million",
-            1_000L, " thousand",
-            1L, "");
+    public static final long THOUSAND = 1_000;
+    public static final long MILLION = 1_000_000;
+    public static final long BILLION = 1_000_000_000;
 
     public String say(long number) {
         validateNumber(number);
-
-        if (number == 0) {
-            return numbers[0];
-        }
-        return MAGNITUDES.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey(reverseOrder()))
-                .map(e -> translate((int) (number % (e.getKey() * 1000) / e.getKey()), e.getValue()))
-                .filter(Predicate.not(String::isBlank))
-                .collect(Collectors.joining(" "));
+        return sayNumber(number);
     }
 
     private void validateNumber(long number) {
         if (number < 0 || number > MAXIMUM_PRONOUNCEABLE_NUMBER) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Number must be between 0 and " + MAXIMUM_PRONOUNCEABLE_NUMBER + ".");
         }
     }
 
-    private String translate(int number, String unit) {
-        if (number < 1) {
-            return "";
-        }
-        if (number < 21) {
-            return numbers[number] + unit;
-        }
-        if (number < 100) {
-            return tens(number) + lastDigit(number) + unit;
-        }
-        var units = translate(number % 100, "");
-        return translate(number / 100, " hundred") + (units.isBlank() ? "" : " " + units) + unit;
+    public String sayNumber(long number) {
+        return switch ((int) number) {
+            case 0 -> "zero";
+            case 1 -> "one";
+            case 2 -> "two";
+            case 3 -> "three";
+            case 4 -> "four";
+            case 5 -> "five";
+            case 6 -> "six";
+            case 7 -> "seven";
+            case 8 -> "eight";
+            case 9 -> "nine";
+            case 10 -> "ten";
+            case 11 -> "eleven";
+            case 12 -> "twelve";
+            case 13 -> "thirteen";
+            case 14 -> "fourteen";
+            case 15 -> "fifteen";
+            case 16 -> "sixteen";
+            case 17 -> "seventeen";
+            case 18 -> "eighteen";
+            case 19 -> "nineteen";
+            case 20 -> "twenty";
+            case 30 -> "thirty";
+            case 40 -> "forty";
+            case 50 -> "fifty";
+            case 60 -> "sixty";
+            case 70 -> "seventy";
+            case 80 -> "eighty";
+            case 90 -> "ninety";
+            default -> {
+                if (number < 100) yield sayNumber(number / 10 * 10) + "-" + sayNumber(number % 10);
+                if (number < THOUSAND) yield sayMagnitude(number, 100, "hundred");
+                if (number < MILLION) yield sayMagnitude(number, THOUSAND, "thousand");
+                if (number < BILLION) yield sayMagnitude(number, MILLION, "million");
+                yield sayMagnitude(number, BILLION, "billion");
+            }
+        };
     }
 
-    private String tens(int number) {
-        return numbers[18 + number / 10];
-    }
-
-    private String lastDigit(int number) {
-        var lastDigit = number % 10;
-        return lastDigit == 0 ? "" : "-" + numbers[lastDigit];
+    private String sayMagnitude(long number, long divisor, String name) {
+        var quotientPart = sayNumber(number / divisor) + " " + name;
+        var remainder = number % divisor;
+        return remainder == 0 ? quotientPart : quotientPart + " " + sayNumber(remainder);
     }
 }
