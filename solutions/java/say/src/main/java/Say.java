@@ -1,5 +1,6 @@
 public final class Say {
     public static final long MAXIMUM_PRONOUNCEABLE_NUMBER = 999_999_999_999L;
+    public static final long HUNDRED = 100;
     public static final long THOUSAND = 1_000;
     public static final long MILLION = 1_000_000;
     public static final long BILLION = 1_000_000_000;
@@ -46,8 +47,8 @@ public final class Say {
             case 80 -> "eighty";
             case 90 -> "ninety";
             default -> {
-                if (number < 100) yield sayNumber(number / 10 * 10) + "-" + sayNumber(number % 10);
-                if (number < THOUSAND) yield sayMagnitude(number, 100, "hundred");
+                if (number < HUNDRED) yield sayNumber(number / 10 * 10) + "-" + sayNumber(number % 10);
+                if (number < THOUSAND) yield sayMagnitude(number, HUNDRED, "hundred");
                 if (number < MILLION) yield sayMagnitude(number, THOUSAND, "thousand");
                 if (number < BILLION) yield sayMagnitude(number, MILLION, "million");
                 yield sayMagnitude(number, BILLION, "billion");
