@@ -6,12 +6,12 @@ import static java.util.Comparator.reverseOrder;
 
 public final class Say {
     public static final long MAXIMUM_PRONOUNCEABLE_NUMBER = 999_999_999_999L;
-    private static final String[] numbers = new String[]{
+    private static final String[] numbers = {
             "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
             "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
             "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
     };
-    private static final Map<Long, String> units = Map.of(
+    private static final Map<Long, String> UNITS = Map.of(
             1_000_000_000L, " billion",
             1_000_000L, " million",
             1_000L, " thousand",
@@ -23,7 +23,7 @@ public final class Say {
         if (number == 0) {
             return numbers[0];
         }
-        return units.entrySet().stream()
+        return UNITS.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey(reverseOrder()))
                 .map(e -> translate((int) (number % (e.getKey() * 1000) / e.getKey()), e.getValue()))
                 .filter(Predicate.not(String::isBlank))
