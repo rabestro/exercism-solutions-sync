@@ -11,7 +11,7 @@ public final class Say {
             "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
             "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"
     };
-    private static final Map<Long, String> UNITS = Map.of(
+    private static final Map<Long, String> MAGNITUDES = Map.of(
             1_000_000_000L, " billion",
             1_000_000L, " million",
             1_000L, " thousand",
@@ -23,7 +23,7 @@ public final class Say {
         if (number == 0) {
             return numbers[0];
         }
-        return UNITS.entrySet().stream()
+        return MAGNITUDES.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey(reverseOrder()))
                 .map(e -> translate((int) (number % (e.getKey() * 1000) / e.getKey()), e.getValue()))
                 .filter(Predicate.not(String::isBlank))
