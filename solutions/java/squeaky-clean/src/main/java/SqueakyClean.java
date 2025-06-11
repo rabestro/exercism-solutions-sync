@@ -12,6 +12,6 @@ class SqueakyClean {
                 .replace('4', 'a')
                 .replace('1', 'l')
                 .replace(' ', '_')
-                .replaceAll("[^\\p{L}_]", "");
+                .replaceAll("\\W", "");
     }
 }
