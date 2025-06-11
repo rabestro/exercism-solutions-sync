@@ -1,24 +1,17 @@
 import java.util.regex.Pattern;
 
 class SqueakyClean {
+    private static final Pattern KEBAB_CASE = Pattern.compile("-(\\p{L})");
+
     static String clean(String identifier) {
-        var sb = new StringBuilder();
-        for (int i = 0, n = identifier.length(); i < n; ++i) {
-            char symbol = identifier.charAt(i);
-            if (symbol >= 'α' && symbol <= 'ω') {
-                continue;
-            }
-            if (symbol == '-') {
-                symbol = Character.toUpperCase(identifier.charAt(++i));
-            }
-            if (Character.isISOControl(symbol)) {
-                sb.append("CTRL");
-            } else if (Character.isSpaceChar(symbol)) {
-                sb.append('_');
-            } else if (Character.isLetter(symbol)) {
-                sb.append(symbol);
-            }
-        }
-        return sb.toString();
+        return KEBAB_CASE.matcher(identifier)
+                .replaceAll(m -> m.group(1).toUpperCase())
+                .replace('0', 'o')
+                .replace('7', 't')
+                .replace('3', 'e')
+                .replace('4', 'a')
+                .replace('1', 'l')
+                .replace(' ', '_')
+                .replaceAll("[^\\p{L}_]", "");
     }
 }
