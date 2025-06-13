@@ -14,7 +14,7 @@ object House:
     "the horse and the hound and the horn that belonged to"
   )
 
-  private def verse(length: Int): String =
+  private def verse(length: Int) =
     (0 to length).reverse.map(verseLines).mkString("This is ", " ", ".")
 
   def recite(start: Int, end: Int): String =
