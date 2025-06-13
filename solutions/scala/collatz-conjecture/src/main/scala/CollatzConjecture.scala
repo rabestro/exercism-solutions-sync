@@ -1,13 +1,19 @@
 import scala.annotation.tailrec
 
 object CollatzConjecture {
-  def steps(number: Int): Option[Int] =
-    @tailrec
-    def iter(number: Int, step: Int): Option[Int] = number match
+  /**
+   * Computes the number of steps required to reach 1 in the Collatz Conjecture.
+   *
+   * @param number The starting number (must be positive).
+   * @param step The current step count (default is 0, used for recursion).
+   * @return The number of steps to reach 1, or None if the input is invalid.
+   */
+  @tailrec
+  def steps(number: Int, step: Int = 0): Option[Int] =
+    if (number < 1) None
+    else number match {
       case 1 => Some(step)
-      case n if n < 1 => None
-      case n if (n % 2) == 0 => iter(n / 2, step + 1)
-      case n => iter(3 * n + 1, step + 1)
-
-    iter(number, 0)
+      case x if x % 2 == 0 => steps(x / 2, step + 1)
+      case x => steps(3 * x + 1, step + 1)
+    }
 }
