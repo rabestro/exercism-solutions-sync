@@ -1,4 +1,8 @@
+import java.util.regex.Pattern;
+
 class SqueakyClean {
+    private static final Pattern KEBAB_CASE = Pattern.compile("-(\\D)");
+
     static String clean(String identifier) {
         return kebabCase(identifier)
                 .replace(' ', '_')
@@ -8,13 +12,9 @@ class SqueakyClean {
     }
 
     private static String kebabCase(String identifier) {
-        var sb = new StringBuilder(identifier);
-        for (int i = 0; i < sb.length(); ++i) {
-            if (sb.charAt(i) == '-') {
-                sb.deleteCharAt(i);
-                sb.replace(i, i+1, String.valueOf(Character.toUpperCase(sb.charAt(i))));
-            }
-        }
-        return sb.toString();
+        var matcher = KEBAB_CASE.matcher(identifier);
+        return matcher.find()
+                ? matcher.replaceAll(matcher.group(1).toUpperCase())
+                : identifier;
     }
 }
