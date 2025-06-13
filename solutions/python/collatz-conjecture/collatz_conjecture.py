@@ -3,6 +3,5 @@ def steps(number):
         raise ValueError("Only positive integers are allowed")
     if number == 1:
         return 0
-    if number % 2 == 0:
-        return 1 + steps(number // 2)
-    return 1 + steps(3 * number + 1)
+    next_number = 3 * number + 1 if number % 2 else number // 2
+    return 1 + steps(next_number)
