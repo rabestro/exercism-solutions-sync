@@ -1,40 +1,21 @@
-object House {
-  private val Subject = List(
-    "house",
-    "malt",
-    "rat",
-    "cat",
-    "dog",
-    "cow with the crumpled horn",
-    "maiden all forlorn",
-    "man all tattered and torn",
-    "priest all shaven and shorn",
-    "rooster that crowed in the morn",
-    "farmer sowing his corn",
-    "horse and the hound and the horn"
+object House:
+  private val verseLines = List(
+    "the house that Jack built",
+    "the malt that lay in",
+    "the rat that ate",
+    "the cat that killed",
+    "the dog that worried",
+    "the cow with the crumpled horn that tossed",
+    "the maiden all forlorn that milked",
+    "the man all tattered and torn that kissed",
+    "the priest all shaven and shorn that married",
+    "the rooster that crowed in the morn that woke",
+    "the farmer sowing his corn that kept",
+    "the horse and the hound and the horn that belonged to"
   )
 
-  private val Verb = List(
-    "lay in",
-    "ate",
-    "killed",
-    "worried",
-    "tossed",
-    "milked",
-    "kissed",
-    "married",
-    "woke",
-    "kept",
-    "belonged to"
-  )
+  private def verse(length: Int): String =
+    (0 to length).reverse.map(verseLines).mkString("This is ", " ", ".")
 
-  private def phrase(verses: Int): String =
-    if verses == 0 then s"the ${Subject(verses)}"
-    else s"the ${Subject(verses)} that ${Verb(verses - 1)} ${phrase(verses - 1)}"
-
-  private def nurseryRhyme(verses: Int): String =
-    s"This is ${phrase(verses - 1)} that Jack built.\n"
-
-  def recite(a: Int, b: Int): String =
-    (a to b).map(nurseryRhyme).toList.mkString("", "", "\n")
-}
+  def recite(start: Int, end: Int): String =
+    (start - 1 until end).map(verse).mkString("", "\n", "\n\n")
