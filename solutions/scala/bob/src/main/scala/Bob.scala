@@ -1,9 +1,9 @@
 object Bob {
-  def response(statement: String): String = {
-    if statement.isBlank then "Fine. Be that way!"
-    else if statement.matches("[^a-z]*[A-Z][^a-z]*\\?") then "Calm down, I know what I'm doing!"
-    else if statement.matches(".*\\?\\s*") then "Sure."
-    else if statement.matches("[^a-z]*[A-Z][^a-z]*") then "Whoa, chill out!"
-    else "Whatever."
+  def response(statement: String): String = statement.trim match {
+    case "" ⇒ "Fine. Be that way!"
+    case s if s.matches("[^a-z]*[A-Z][^a-z]*\\?") => "Calm down, I know what I'm doing!"
+    case s if s.endsWith("?") ⇒ "Sure."
+    case s if s.matches("[^a-z]*[A-Z][^a-z]*") => "Whoa, chill out!"
+    case _ ⇒ "Whatever."
   }
 }
