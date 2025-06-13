@@ -1,4 +1,4 @@
-object SpaceAge {
+object SpaceAge:
   def onEarth(age: Double): Double = age / 31557600
 
   def onVenus(age: Double): Double = onEarth(age) / 0.61519726
@@ -14,4 +14,3 @@ object SpaceAge {
   def onUranus(age: Double): Double = onEarth(age) / 84.016846
 
   def onNeptune(age: Double): Double = onEarth(age) / 164.79132
-}
