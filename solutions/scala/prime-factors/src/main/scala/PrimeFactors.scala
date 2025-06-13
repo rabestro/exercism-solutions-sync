@@ -9,8 +9,7 @@ object PrimeFactors:
     def iter(number: Long, prime: Long, acc: List[Long]): List[Long] =
       if number == 1 then acc
       else if prime * prime > number then number :: acc
-      else if number % prime == 0
-      then iter(number / prime, prime, prime :: acc)
+      else if number % prime == 0 then iter(number / prime, prime, prime :: acc)
       else iter(number, nextPrime(prime), acc)
 
     iter(n, 2L, List()).reverse
