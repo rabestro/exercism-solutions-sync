@@ -13,14 +13,16 @@ case class Robot(bearing: Bearing, coordinates: (Int, Int)) {
     case South => copy(bearing = East)
     case West => copy(bearing = South)
 
-  def advance: Robot = bearing match
-    case North => copy(coordinates = (coordinates._1, coordinates._2 + 1))
-    case East => copy(coordinates = (coordinates._1 + 1, coordinates._2))
-    case South => copy(coordinates = (coordinates._1, coordinates._2 - 1))
-    case West => copy(coordinates = (coordinates._1 - 1, coordinates._2))
+  def advance: Robot =
+    val nextPosition = bearing match
+      case North => (coordinates._1, coordinates._2 + 1)
+      case East => (coordinates._1 + 1, coordinates._2)
+      case South => (coordinates._1, coordinates._2 - 1)
+      case West => (coordinates._1 - 1, coordinates._2)
+    copy(coordinates = nextPosition)
 
   def simulate(actions: String): Robot =
-    actions.foldLeft(this){ (robot, action) =>
+    actions.foldLeft(this) { (robot, action) =>
       action match
         case 'A' => robot.advance
         case 'R' => robot.turnRight
