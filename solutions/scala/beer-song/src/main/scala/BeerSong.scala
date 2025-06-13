@@ -14,8 +14,7 @@ object BeerSong {
       s"Take one down and pass it around, ${i - 1} bottles of beer on the wall.\n")
 
   def recite(startBottles: Int, takeDown: Int): String =
-    val endBottles = startBottles - takeDown + 1
-    startBottles.to(endBottles, -1)
+    startBottles.until(startBottles - takeDown, -1)
       .flatMap(verse)
       .mkString("\n")
 }
