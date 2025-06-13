@@ -1,24 +1,17 @@
 import Bearing.*
 
 case class Robot(bearing: Bearing, coordinates: (Int, Int)) {
-  def turnRight: Robot = bearing match
-    case North => copy(bearing = East)
-    case East => copy(bearing = South)
-    case South => copy(bearing = West)
-    case West => copy(bearing = North)
+  def turnRight: Robot = copy(bearing = bearing.turnRight)
 
-  def turnLeft: Robot = bearing match
-    case North => copy(bearing = West)
-    case East => copy(bearing = North)
-    case South => copy(bearing = East)
-    case West => copy(bearing = South)
+  def turnLeft: Robot = copy(bearing = bearing.turnLeft)
 
   def advance: Robot =
+    val (x, y) = coordinates
     val nextPosition = bearing match
-      case North => (coordinates._1, coordinates._2 + 1)
-      case East => (coordinates._1 + 1, coordinates._2)
-      case South => (coordinates._1, coordinates._2 - 1)
-      case West => (coordinates._1 - 1, coordinates._2)
+      case Bearing.North => (x, y + 1)
+      case Bearing.East => (x + 1, y)
+      case Bearing.South => (x, y - 1)
+      case Bearing.West => (x - 1, y)
     copy(coordinates = nextPosition)
 
   def simulate(actions: String): Robot =
