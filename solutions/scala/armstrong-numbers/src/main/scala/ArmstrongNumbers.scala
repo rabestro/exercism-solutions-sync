@@ -1,7 +1,6 @@
 object ArmstrongNumbers {
   def isArmstrongNumber(number: Int): Boolean = {
-    val power = number.toString.length
-    val result = number.toString.map(_.asDigit).map(digit => math.pow(digit, power)).sum
-    result == number
+    val digits = number.toString.map(_.asDigit)
+    number == digits.map(math.pow(_, digits.size)).sum
   }
 }
