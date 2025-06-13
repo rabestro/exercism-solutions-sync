@@ -7,22 +7,16 @@ object MatchingBrackets {
   private val OpeningBrackets = BracketPairs.values.toSet
   private val ClosingBrackets = BracketPairs.keySet
 
-  def isPaired(brackets: String): Boolean =
-    @tailrec
-    def iter(brackets: List[Char], stack: List[Char]): Boolean =
-      brackets match
-        case head :: remainingBrackets
-          if ClosingBrackets contains head =>
-          stack match
-            case openingBracket :: remainingStack
-              if BracketPairs(head) == openingBracket =>
-              iter(remainingBrackets, remainingStack)
-            case _ => false
-        case head :: remainingBrackets
-          if OpeningBrackets contains head =>
-          iter(remainingBrackets, head :: stack)
-        case _ :: remainingBrackets => iter(remainingBrackets, stack)
-        case Nil => stack.isEmpty
-
-    iter(brackets.toList, List())
+  @tailrec
+  def isPaired(brackets: String, stack: List[Char] = List()): Boolean =
+    if brackets.isEmpty then stack.isEmpty
+    else if ClosingBrackets contains brackets.head
+    then stack match
+        case openingBracket :: remainingStack
+          if BracketPairs(brackets.head) == openingBracket =>
+          isPaired(brackets.tail, remainingStack)
+        case _ => false
+    else if OpeningBrackets contains brackets.head
+    then isPaired(brackets.tail, brackets.head :: stack)
+    else isPaired(brackets.tail, stack)
 }
