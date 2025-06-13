@@ -1,10 +1,16 @@
 object Bob {
+  private val isYelling = "[^a-z]*[A-Z][^a-z]*".r
+
   def response(statement: String): String = statement.trim match {
-    case "" ⇒ "Fine. Be that way!"
-    case s if s.matches("[^a-z]*[A-Z][^a-z]*") => 
-      if s.endsWith("?") then "Calm down, I know what I'm doing!" 
-      else "Whoa, chill out!"
-    case s if s.endsWith("?") ⇒ "Sure."
-    case _ ⇒ "Whatever."
+    case s @ isYelling() if s.endsWith("?") =>
+      "Calm down, I know what I'm doing!"
+    case isYelling() =>
+      "Whoa, chill out!"
+    case s if s.endsWith("?") =>
+      "Sure."
+    case "" =>
+      "Fine. Be that way!"
+    case _ =>
+      "Whatever."
   }
 }
