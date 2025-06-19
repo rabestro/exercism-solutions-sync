@@ -1,2 +1,4 @@
+from string import ascii_lowercase
+
 def is_pangram(sentence):
-    return len(set(filter(str.isalpha, sentence.lower()))) == 26
+    return set(ascii_lowercase).issubset(sentence.lower())
