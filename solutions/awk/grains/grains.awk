@@ -7,7 +7,7 @@ isOutOfRange() {
     exit 1
 }
 {
-    print 2 ^ --$1
+    print 2 ^ ($1-1)
 }
 
 function isOutOfRange() {return $1 < 1 || $1 > 64}
