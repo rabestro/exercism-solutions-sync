@@ -1,10 +1,10 @@
 {
     gsub(/ /, "")
+    len = length($0)
 }
 /^[0-9]{2,}$/ {
     sum = 0
-    isEven = length($0) % 2 == 0
-    len = length($0)
+    isEven = len % 2 == 0
     for (i = 1; i <= len; i++) {
         digit = substr($0, i, 1)
         if (isEven) {
