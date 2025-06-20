@@ -10,44 +10,44 @@ BEGIN {
 {
     Score = 0
     Category = $NF
-    delete Dice
-    while (--NF) Dice[$NF]++
+    delete DiceCounts
+    while (--NF) DiceCounts[$NF]++
 }
-Category == "yacht" && length(Dice) == 1 {
+Category == "yacht" && length(DiceCounts) == 1 {
     Score = 50
 }
 Category ~ "ones|twos|threes|fours|fives|sixes" {
     side = Number[Category]
-    Score = Dice[side] ? side * Dice[side] : 0
+    Score = DiceCounts[side] ? side * DiceCounts[side] : 0
 }
-Category == "full house" && length(Dice) == 2 {
+Category == "full house" && length(DiceCounts) == 2 {
     Score = full_house()
 }
 Category == "four of a kind" {
     Score = four_of_a_kind()
 }
-Category == "little straight" && length(Dice) == 5 && !Dice[6] {
+Category == "little straight" && length(DiceCounts) == 5 && !DiceCounts[6] {
     Score = 30
 }
-Category == "big straight"  && length(Dice) == 5 && !Dice[1] {
+Category == "big straight"  && length(DiceCounts) == 5 && !DiceCounts[1] {
     Score = 30
 }
 Category == "choice" {
-    for (key in Dice)
-        Score += key * Dice[key]
+    for (key in DiceCounts)
+        Score += key * DiceCounts[key]
 }
 {
     print Score
 }
 function full_house(   score,key) {
-    for (key in Dice) {
-        if (Dice[key] < 2 || Dice[key] > 3) return 0
-        score += key * Dice[key]
+    for (key in DiceCounts) {
+        if (DiceCounts[key] < 2 || DiceCounts[key] > 3) return 0
+        score += key * DiceCounts[key]
     }
     return score
 }
 function four_of_a_kind(   key) {
-    for (key in Dice)
-        if (Dice[key] > 3) return key * 4
+    for (key in DiceCounts)
+        if (DiceCounts[key] > 3) return key * 4
     return 0
 }
