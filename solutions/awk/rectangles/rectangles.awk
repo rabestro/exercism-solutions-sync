@@ -1,7 +1,5 @@
 BEGIN {
     FS = ""
-    delete V
-    delete H
 }
 {
     for (i = 1; i <= NF; ++i) {
