@@ -10,10 +10,7 @@ BEGIN {
     A = $2
     B = $3
 }
-gcd(A, M) != 1 {
-    print "a and m must be coprime.";
-    exit 1
-}
+gcd(A, M) != 1 {die("a and m must be coprime.")}
 {
     NF = 0
     for (i = 1; i <= length(Message); ++i) {
@@ -39,3 +36,4 @@ function decode(y,   i,mmi) {
     return 1 + mmi * (2 * M + y - B) % M
 }
 function gcd(p,q) {return(q ? gcd(q, (p % q)) : p)}
+function die(message) {print message > "/dev/stderr"; exit 1}
