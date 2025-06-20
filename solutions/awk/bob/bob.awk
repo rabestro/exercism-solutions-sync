@@ -23,6 +23,3 @@ ENDFILE {
 }
 
 function say(message) {print message; exit }
-function yell() {return !/[[:lower:]]/ && /[[:upper:]]/}
-function question() {return /\?[[:space:]]*$/}
-function silence() {return /^[[:space:]]*$/}
