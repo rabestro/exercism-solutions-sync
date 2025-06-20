@@ -8,8 +8,8 @@ BEGIN {
     }
 
     Primes[Size = 1] = 2
-
-    for(Candidate = 3; !(n in Primes); ++Candidate)
+    Primes[++Size] = 3
+    for(Candidate = 5; !(n in Primes); Candidate += 2)
         if (is_prime(Candidate))
             Primes[++Size] = Candidate
 
