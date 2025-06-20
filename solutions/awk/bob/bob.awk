@@ -1,5 +1,6 @@
-BEGIN {RS = ""}
-
+BEGIN {
+    RS = "^$"
+}
 yell() && question() {
     say("Calm down, I know what I'm doing!")
 }
@@ -9,15 +10,11 @@ yell() {
 question() {
     say("Sure.")
 }
-silence() {
-    say("Fine. Be that way!")
-}
-{
+!silence() {
     say("Whatever.")
 }
-
-END {
-    if (!NR) say("Fine. Be that way!")
+ENDFILE {
+    say("Fine. Be that way!")
 }
 
 function say(message) {print message; exit }
