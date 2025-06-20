@@ -6,7 +6,7 @@ import static java.util.function.Predicate.not;
 class ProteinTranslator {
     private static final Pattern SEQUENCE_SPLITTER = Pattern.compile("(?<=\\G.{3})");
 
-    String mapRnaCodonToProtein(String codon) {
+    static String mapRnaCodonToProtein(String codon) {
         return switch (codon) {
             case "AUG" -> "Methionine";
             case "UUU", "UUC" -> "Phenylalanine";
@@ -20,10 +20,10 @@ class ProteinTranslator {
         };
     }
 
-    List<String> translate(String rnaSequence) {
+    static List<String> translate(String rnaSequence) {
         return SEQUENCE_SPLITTER.splitAsStream(rnaSequence)
                 .filter(not(String::isEmpty))
-                .map(this::mapRnaCodonToProtein)
+                .map(ProteinTranslator::mapRnaCodonToProtein)
                 .takeWhile(not("STOP"::equals))
                 .toList();
     }
