@@ -54,6 +54,7 @@ function generate_maze(row, col,   directions,randDir,dx,dy,newRow,newCol) {
         }
     }
 }
+
 function arrange_doors() {
     MazeEntrance = 1 + 2 * int(rand() * Rows)
     MazeExit = 1 + 2 * int(rand() * Rows)
