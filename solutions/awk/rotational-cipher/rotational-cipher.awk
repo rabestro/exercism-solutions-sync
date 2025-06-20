@@ -4,10 +4,11 @@
 # - distance
 
 BEGIN {
-    FS = OFS = ""
+    OFS = ""
+    FPAT = "."
 }
 {
-    for (i = 1; i <= length($0); ++i) out = out encode(substr($0, i, 1))
+    for (i = 1; i <= NF; ++i) out = out encode($i)
     print out
 }
 
