@@ -1,11 +1,11 @@
-!$0 {
-    print "series cannot be empty"; exit 1
-}
-len <= 0 || length($0) < len {
-    print "invalid length"; exit 1
-}
+@include "assert"
+
 {
+    assert($0, "series cannot be empty")
+    assert(len > 0 && len <= length($0), "invalid length")
+
     n = $0
-    while (i++ <= length(n) - len) $i = substr(n, i, len)
+    while (i++ <= length(n) - len)
+        $i = substr(n, i, len)
     print
 }
