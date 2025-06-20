@@ -1,12 +1,14 @@
 BEGIN {
-    RnaTranscription = "tr GCTA CGAU"
+    OFS = FS = ""
+    T["G"] = "C"
+    T["C"] = "G"
+    T["T"] = "A"
+    T["A"] = "U"
 }
 /[^GCTA]/ {
     print "Invalid nucleotide detected."; exit 1
 }
 {
-    print | RnaTranscription
-}
-END {
-    close(RnaTranscription)
+    for (i = NF; i > 0; --i) $i = T[$i]
+    print
 }
