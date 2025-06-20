@@ -1,9 +1,7 @@
 BEGIN {
-    FS = "[^[:alnum:]']"
-    OFS = ""
+    RS = "[^[:alnum:]']"
+    ORS = FS = ""
 }
 {
-    for (i = NF; i; --i)
-        $i = toupper(substr($i, 1, 1))
+    print toupper($1)
 }
-1
