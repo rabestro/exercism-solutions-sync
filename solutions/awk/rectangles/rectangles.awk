@@ -1,25 +1,44 @@
 BEGIN {
-    VerticalLine = @/[|+]/
-    HorizontalLine = @/[-+]/
-    delete Board
+    FS = ""
+    delete V
+    delete H
 }
 {
-    Board[NR] = $0
+    for (i = 1; i <= NF; ++i) {
+        bit = lshift(1, i - 1)
+        switch ($i) {
+            case "-": H[NR] = or(H[NR], bit); break;
+            case "+": H[NR] = or(H[NR], bit);
+            case "|": V[NR] = or(V[NR], bit);
+        }
+    }
 }
 END {
-    Height = length(Board)
+    Height = NR
+    Width = NF
 
-    for (row in Board) {
-        Width = length(Board[row])
-        for (i = 1; i < Width; ++i) {
-            total += cornerA(row, i)
+    for (rowA = 1; rowA < Height; ++rowA) {
+        for (colA = 1; colA < Width; ++colA) {
+            total += cornerA(rowA, colA)
         }
     }
     print +total
 }
 
+function isPlus(row, col) {
+    return and(H[row], V[row], lshift(1, col - 1))
+}
+
+function isVerticalLine(row, col) {
+    return row <= Height && and(V[row], lshift(1, col - 1))
+}
+
+function isHorizontalLine(row, col) {
+    return col <= Width && and(H[row], lshift(1, col - 1))
+}
+
 function cornerA(rowA, colA,   total,colB) {
-    if (!isCross(rowA, colA)) return 0
+    if (!isPlus(rowA, colA)) return 0
     for (colB = colA + 1; isHorizontalLine(rowA, colB); ++colB) {
         total += cornerB(rowA, colA, colB)
     }
@@ -27,36 +46,18 @@ function cornerA(rowA, colA,   total,colB) {
 }
 
 function cornerB(rowA, colA, colB,   rowC,total) {
-    if (!isCross(rowA, colB)) return 0
-    for (rowC = rowA + 1; isVerticalLine(rowC, colB); ++rowC) {
-        total += cornerC(rowA, colA, colB, rowC)
+    if (!isPlus(rowA, colB)) return 0
+    for (rowC = rowA + 1; isVerticalLine(rowC, colA) && isVerticalLine(rowC, colB); ++rowC) {
+        total += cornerC(colA, colB, rowC)
     }
     return +total
 }
 
-function cornerC(rowA, colA, colB, rowC,   i) {
-    if (!isCross(rowC, colA)) return 0
+function cornerC(colA, colB, rowC,   i) {
+    if (!isPlus(rowC, colB)) return 0
+    if (!isPlus(rowC, colA)) return 0
     for (i = colB - 1; i > colA; --i) {
         if (!isHorizontalLine(rowC, i)) return 0
     }
-    for (i = rowC - 1; i > rowA; --i) {
-        if (!isVerticalLine(i, colA)) return 0
-    }
     return 1
-}
-
-function symbol(row, col) {
-    return substr(Board[row], col, 1)
-}
-
-function isCross(row, col) {
-    return symbol(row, col) == "+"
-}
-
-function isVerticalLine(row, col) {
-    return row <= Height && symbol(row, col) ~ VerticalLine
-}
-
-function isHorizontalLine(row, col) {
-    return col <= Width && symbol(row, col) ~ HorizontalLine
 }
