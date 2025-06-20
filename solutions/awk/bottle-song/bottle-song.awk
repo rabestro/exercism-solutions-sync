@@ -27,13 +27,13 @@ function print_verse(bottles) {
 }
 
 function first_line(bottles) {
-    return Numbers[bottles] hanging(bottles) ","
+    return hanging(bottles) ","
 }
 
 function last_line(bottles) {
-    return "There'll be " tolower(Numbers[bottles]) hanging(bottles) "."
+    return "There'll be " tolower(hanging(bottles)) "."
 }
 
 function hanging(bottles) {
-    return " green bottle" (bottles == 1 ? "" : "s") " hanging on the wall"
+    return Numbers[bottles] " green bottle" (bottles == 1 ? "" : "s") " hanging on the wall"
 }
