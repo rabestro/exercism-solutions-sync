@@ -9,11 +9,16 @@ BEGIN {
     Items["pollen"] = 64
     Items["cats"] = 128
 }
+{
+    score = $1
+}
 /allergic_to/ {
-    print and($1, Items[$3]) ? "true" : "false"
+    item = Items[$3]
+    for (i = 128; i > item; i /= 2)
+        if (score >= i) score -= i
+    print score >= item ? "true" : "false"
 }
 /list/ {
-    score = $1
     NF = 0
     PROCINFO["sorted_in"] = "@val_num_asc"
     for (item in Items) if (and(score, Items[item])) $(++NF) = item
