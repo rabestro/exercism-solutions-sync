@@ -1,16 +1,21 @@
 BEGIN {
     RS = "^$"
 }
-yell() && question() {
+{
+    yelling  = /[[:upper:]]/ && !/[[:lower:]]/
+    question = /\?[[:space:]]*$/
+    silence  = /^[[:space:]]*$/
+}
+yelling && question {
     say("Calm down, I know what I'm doing!")
 }
-yell() {
+yelling {
     say("Whoa, chill out!")
 }
-question() {
+question {
     say("Sure.")
 }
-!silence() {
+!silence {
     say("Whatever.")
 }
 ENDFILE {
