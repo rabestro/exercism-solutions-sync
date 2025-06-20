@@ -2,8 +2,9 @@
 @include "join"
 
 function read(filename, matrix_var,   row,size) {
-    while ((getline row < filename) > 0)
+    while ((getline row < filename) > 0) {
         matrix_var[++size] = row
+    }
     close(filename)
 }
 
