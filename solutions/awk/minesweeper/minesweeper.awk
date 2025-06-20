@@ -2,16 +2,13 @@ BEGIN {
     FPAT="[.*]"
     OFS = ""
 }
-NR == 1 {
-    Width = NF
-}
 {
     for (col = NF; col; --col)
         Field[NR, col] = $col == "*"
 }
 END {
     while (row++ < NR) {
-        for (col = Width; col; --col)
+        for (col = NF; col; --col)
             $col = print_cell(row, col)
         print
     }
