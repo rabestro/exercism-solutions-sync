@@ -9,22 +9,12 @@ BEGIN {
     print isMatchingBrackets() ? "true" : "false"
 }
 
-function isMatchingBrackets(   i) {
+function isMatchingBrackets(   i,stack,size) {
     for (i = 1; i <= NF; ++i)
-        if ($i ~ OpenBracket) push($i)
-        else if ($i != Opposite[pop()]) return 0
+        if ($i ~ OpenBracket)
+            stack[++size] = $i
+        else if ($i != Opposite[stack[size--]])
+            return 0
 
-    return isStackEmpty()
-}
-
-function push(element) {
-    Stack[++Size] = element
-}
-
-function pop() {
-    return Stack[Size--]
-}
-
-function isStackEmpty() {
-    return Size == 0
+    return !size
 }
