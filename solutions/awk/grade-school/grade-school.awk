@@ -6,8 +6,8 @@ BEGIN {
     OFS = FS = ","
     PROCINFO["sorted_in"] = "compare_students"
 }
-{
-    if (!Grades[$1]) Grades[$1] = $2
+!($1 in Grades) {
+    Grades[$1] = $2
 }
 END {
     NF = 0
