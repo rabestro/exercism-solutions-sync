@@ -28,8 +28,6 @@ function square(level, len) {
         line(level + len, level, -1, 0, len)
     } else
         Matrix[level, level] = ++Number
-
-
 }
 function line(x, y, dx, dy, len) {
     while(len--) {
