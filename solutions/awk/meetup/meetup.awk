@@ -1,6 +1,4 @@
-BEGIN {
-    FS = ","
-}
+BEGIN {FS = ","}
 
 /teenth/ {print find_date(13)}
 /first/ {print find_date(1)}
@@ -18,9 +16,6 @@ function find_date(startDay,    day) {
             return sprintf("%4d-%02d-%02d", $1, $2, day)
 }
 function last_day(year, month) {
-    if (++month == 13) {
-        ++year
-        month = 1
-    }
+    if (++month == 13) {++year; month = 1}
     return strftime("%d", mktime(year " " month " 01 0 0 0") - 1)
 }
