@@ -1,13 +1,15 @@
 /total/ {
-    print "18446744073709551615"
-    next
-}
-isOutOfRange() {
-    print "square must be between 1 and 64"
-    exit 1
-}
-{
-    print 2 ^ ($1-1)
+    print 2^64 - 1; next
 }
 
-function isOutOfRange() {return $1 < 1 || $1 > 64}
+in_range() {
+    print 2 ^ ($1-1); next
+}
+
+{
+    print "square must be between 1 and 64"; exit 1
+}
+
+function in_range() {
+    return $0 > 0 && $0 < 65
+}
