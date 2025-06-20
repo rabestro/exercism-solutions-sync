@@ -4,6 +4,8 @@
 
 BEGIN {
     assert(action ~ /(en|de)code/, "unknown action")
+
+    MSB = 128  # 0b10000000 - most significant bit
 }
 
 action == "encode" {
@@ -13,11 +15,11 @@ action == "encode" {
 
 action == "decode" {
     for (i = 1; i <= NF; ++i) {
-        hex = strtonum("0x"$i)
-        if (hex > 127) {
-            number = number * 128 + hex - 128
+        dec = strtonum("0x"$i)
+        if (dec >= MSB) {
+            number = number * MSB + dec - MSB
         } else {
-            $(++k) = sprintf("%02X", number * 128 + hex)
+            $(++k) = dec2hex(number * MSB + dec)
             number = 0
         }
     }
@@ -26,14 +28,16 @@ action == "decode" {
     print
 }
 
-function encode(number,   out,hex) {
+function encode(number,   out,dec) {
     number = strtonum("0x"number)
     do {
-        hex = out ? 128 : 0
-        hex += number % 128
-        out = sprintf("%02X", hex) (out ? " " out : "")
-        number = int(number / 128)
+        dec = out ? MSB : 0
+        dec += number % MSB
+        out = dec2hex(dec) (out ? " " out : "")
+        number = int(number / MSB)
     } while(number)
 
     return out
 }
+
+function dec2hex(d) { return sprintf("%02X", d) }
