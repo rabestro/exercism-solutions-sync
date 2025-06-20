@@ -1,10 +1,10 @@
 BEGIN {
     FS = "[^[:alnum:]']"
+    OFS = ""
 }
 {
-    acronym = ""
     for (i = 1; i <= NF; ++i) {
-        acronym = acronym substr($i, 1, 1)
+        $i = toupper(substr($i, 1, 1))
     }
-    print toupper(acronym)
+    print
 }
