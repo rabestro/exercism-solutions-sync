@@ -24,7 +24,7 @@ function number(   col,row,result) {
 }
 
 function digit(row, col,   text) {
-    text = cut($row, col) cut($(row + 1), col) cut($(row + 2), col)
+    text = cut(row, col) cut(row + 1, col) cut(row + 2, col)
     switch (text) {
         case " _ | ||_|": return 0
         case "     |  |": return 1
@@ -40,5 +40,5 @@ function digit(row, col,   text) {
     }
 }
 
-function cut(line, i) {return substr(line, i, DigitWidth)}
+function cut(line, i) {return substr($line, i, DigitWidth)}
 function die(message) {print message > "/dev/stderr"; exit 1}
