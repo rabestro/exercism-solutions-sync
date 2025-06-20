@@ -3,17 +3,21 @@
 
 BEGIN {
     if (num % 3 == 0) {
-        result = "Pling"
+        Result = "Pling"
     }
     if (num % 5 == 0) {
-        result = result "Plang"
+        Result = Result "Plang"
     }
     if (num % 7 == 0) {
-        result = result "Plong"
+        Result = Result "Plong"
     }
-    if (!result) {
-        result = num
+    if (isEmpty(Result)) {
+        Result = num
     }
 
-    print result
+    print Result
+}
+
+function isEmpty(result) {
+    return !result
 }
