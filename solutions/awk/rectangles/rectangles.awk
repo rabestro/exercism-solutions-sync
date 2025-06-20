@@ -11,7 +11,7 @@ END {
 
     for (row in Board) {
         Width = length(Board[row])
-        for (i = 1; i <= Width; ++i) {
+        for (i = 1; i < Width; ++i) {
             total += cornerA(row, i)
         }
     }
