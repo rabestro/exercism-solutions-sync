@@ -4,30 +4,29 @@
 # - dir
 
 BEGIN {
-    x = +x; y = +y; dir = dir?dir:"north"
+    x = +x; y = +y;
+    dir = dir ? dir : "north"
 }
-action = $0 {@action()}
-END {
-    print x, y, dir
-}
-
-function R() {
+/R/ {
     dir = dir == "north" ? "east" :
-          dir == "east" ? "south" :
-          dir == "south" ? "west" :
-          "north"
+    dir == "east" ? "south" :
+    dir == "south" ? "west" :
+    "north"
 }
-function L() {
+/L/ {
     dir = dir == "north" ? "west" :
-          dir == "west" ? "south" :
-          dir == "south" ? "east" :
-          "north"
+    dir == "west" ? "south" :
+    dir == "south" ? "east" :
+    "north"
 }
-function A() {
+/A/ {
     switch (dir) {
         case "north": y++; break
         case "east": x++; break
         case "south": y--; break
         case "west": x--; break
     }
+}
+END {
+    print x, y, dir
 }
