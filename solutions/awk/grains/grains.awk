@@ -1,4 +1,4 @@
-$0 == "total" {
+/total/ {
     print "18446744073709551615"
     next
 }
@@ -7,7 +7,7 @@ isOutOfRange() {
     exit 1
 }
 {
-    print 2 ^ --$0
+    print 2 ^ --$1
 }
 
-function isOutOfRange() {return $0 < 1 || $0 > 64}
+function isOutOfRange() {return $1 < 1 || $1 > 64}
