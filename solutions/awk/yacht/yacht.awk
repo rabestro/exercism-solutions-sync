@@ -13,15 +13,15 @@ BEGIN {
     delete Dice
     while (--NF) Dice[$NF]++
 }
+Category == "yacht" && length(Dice) == 1 {
+    Score = 50
+}
 Category ~ "ones|twos|threes|fours|fives|sixes" {
     side = Number[Category]
     Score = Dice[side] ? side * Dice[side] : 0
 }
 Category == "full house" && length(Dice) == 2 {
     Score = full_house()
-}
-Category == "yacht" {
-    Score = length(Dice) == 1 ? 50 : 0
 }
 Category == "four of a kind" {
     Score = four_of_a_kind()
@@ -40,7 +40,6 @@ Category == "choice" {
     print Score
 }
 function full_house(   score,key) {
-    if (length(Dice) != 2) return 0
     for (key in Dice) {
         if (Dice[key] < 2 || Dice[key] > 3) return 0
         score += key * Dice[key]
