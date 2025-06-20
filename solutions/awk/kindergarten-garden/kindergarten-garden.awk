@@ -13,7 +13,7 @@ BEGIN {
 
     ORS = ""
     OFS = " "
-    while (i++ < length(ChildrensInitials) * 2) FIELDWIDTHS = FIELDWIDTHS" 1"
+    FPAT = "[[:alpha:]]"
 }
 NR == 2 {
     print " "
