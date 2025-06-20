@@ -18,14 +18,12 @@ $4 == Two {
     Volume[One] = $1
     Volume[Two] = $2
     Water[One] = Water[Two] = 0
-}
-{
+
     do {
         process_step()
         record_step()
     } while(!is_goal_achieved())
-}
-{
+
     winner = Water[One] == Goal ? One : Two
     second = winner == One ? Two : One
     print Step, winner, Water[second]
