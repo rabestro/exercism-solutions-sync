@@ -2,7 +2,6 @@ BEGIN {
     Units[1e9] = " billion"
     Units[1e6] = " million"
     Units[1e3] = " thousand"
-    Units[1] = ""
 
     split("one two three four five six seven eight nine ten eleven "\
         "twelve thirteen fourteen fifteen sixteen seventeen eighteen "\
