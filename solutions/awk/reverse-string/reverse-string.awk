@@ -1,11 +1,12 @@
-BEGIN {FS=""}
+BEGIN {OFS=FS = ""}
 {
-    print reverse()
+    for (i = int(NF / 2); i; --i)
+        swap(i, NF - i + 1)
+    print
 }
 
-function reverse(   i,result) {
-    for (i = NF; i ; --i) {
-        result = result $i
-    }
-    return result
+function swap(a, b,   t) {
+    t = $a
+    $a = $b
+    $b = t
 }
