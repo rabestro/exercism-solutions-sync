@@ -1,5 +1,5 @@
 BEGIN {
-    FPAT="[.*]"
+    FPAT = "[.*]"
     OFS = ""
 }
 {
@@ -14,15 +14,17 @@ END {
     }
 }
 
-function print_cell(row, col,   mines) {
+function print_cell(row, col,   mines,i) {
     if (Field[row, col]) return "*"
-    mines = Field[row - 1, col - 1] \
-        + Field[row - 1, col] \
-        + Field[row - 1, col + 1] \
-        + Field[row, col - 1] \
-        + Field[row, col + 1] \
-        + Field[row + 1, col - 1] \
-        + Field[row + 1, col] \
-        + Field[row + 1, col + 1]
+    for (i = 8; i; --i)
+        mines += Field[row + int(i / 3) - 1, col + i % 3 - 1]
+#    mines = Field[row - 1, col - 1] \
+# + Field[row - 1, col] \
+# + Field[row - 1, col + 1] \
+# + Field[row, col - 1] \
+# + Field[row, col + 1] \
+# + Field[row + 1, col - 1] \
+# + Field[row + 1, col] \
+# + Field[row + 1, col + 1]
     return mines ? mines : "."
 }
