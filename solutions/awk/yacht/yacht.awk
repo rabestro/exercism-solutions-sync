@@ -41,13 +41,15 @@ Category == "choice" {
 }
 function full_house(   score,key) {
     for (key in DiceCounts) {
-        if (DiceCounts[key] < 2 || DiceCounts[key] > 3) return 0
+        if (DiceCounts[key] < 2 || DiceCounts[key] > 3)
+            return 0
         score += key * DiceCounts[key]
     }
     return score
 }
 function four_of_a_kind(   key) {
     for (key in DiceCounts)
-        if (DiceCounts[key] > 3) return key * 4
+        if (DiceCounts[key] > 3)
+            return key * 4
     return 0
 }
