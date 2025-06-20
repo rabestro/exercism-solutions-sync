@@ -21,6 +21,5 @@ function print_cell(row, col,   mines,i,x,y) {
         y = col + i % 3 - 1
         mines += Field[x, y]
     }
-
     return mines ? mines : "."
 }
