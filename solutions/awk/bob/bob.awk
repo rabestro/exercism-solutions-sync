@@ -1,6 +1,4 @@
-BEGIN {
-    RS = ""
-}
+BEGIN {RS = ""}
 
 yell() && question() {
     say("Calm down, I know what I'm doing!")
