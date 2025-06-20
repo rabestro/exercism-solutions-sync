@@ -1,15 +1,18 @@
 def is_valid(isbn: str) -> bool:
-    cleaned_isbn = isbn.replace('-', '')
+    digits = list(isbn.replace('-', ''))
 
-    if len(cleaned_isbn) != 10 or not cleaned_isbn[:-1].isdigit() or not cleaned_isbn[-1] in '0123456789X':
+    if len(digits) != 10:
         return False
 
-    digits = cleaned_isbn[:-1]
-    check_char = cleaned_isbn[-1]
-    check_digit = 10 if check_char == 'X' else int(check_char)
+    if digits[-1] == 'X':
+        digits[-1] = '10'
+
+    if any(not symbol.isdigit() for symbol in digits):
+        return False
 
     check_sum = sum(
         int(digit) * weight
-        for digit, weight in zip(digits, range(10, 1, -1))
+        for digit, weight in zip(digits, range(10, 0, -1))
     )
-    return (check_sum + check_digit) % 11 == 0
+
+    return check_sum % 11 == 0
