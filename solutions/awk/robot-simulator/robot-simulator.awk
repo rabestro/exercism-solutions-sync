@@ -4,27 +4,28 @@
 # - dir
 
 BEGIN {
-    x = +x; y = +y;
+    x = +x
+    y = +y
     dir = dir ? dir : "north"
 }
 /R/ {
-    dir = dir == "north" ? "east" :
-    dir == "east" ? "south" :
-    dir == "south" ? "west" :
-    "north"
+    if (dir == "north") dir = "east"
+    else if (dir == "east") dir = "south"
+    else if (dir == "south") dir = "west"
+    else dir = "north"
 }
 /L/ {
-    dir = dir == "north" ? "west" :
-    dir == "west" ? "south" :
-    dir == "south" ? "east" :
-    "north"
+    if (dir == "north") dir = "west"
+    else if (dir == "west") dir = "south"
+    else if (dir == "south") dir = "east"
+    else  dir = "north"
 }
 /A/ {
     switch (dir) {
-        case "north": y++; break
-        case "east": x++; break
-        case "south": y--; break
-        case "west": x--; break
+        case "north": y++; next
+        case "east": x++; next
+        case "south": y--; next
+        case "west": x--; next
     }
 }
 END {
