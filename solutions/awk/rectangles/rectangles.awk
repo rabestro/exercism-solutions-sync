@@ -4,11 +4,8 @@ BEGIN {
 {
     for (i = 1; i <= NF; ++i) {
         bit = lshift(1, i - 1)
-        switch ($i) {
-            case "-": H[NR] = or(H[NR], bit); break;
-            case "+": H[NR] = or(H[NR], bit);
-            case "|": V[NR] = or(V[NR], bit);
-        }
+        if ($i ~ /[-+]/) H[NR] = or(H[NR], bit)
+        if ($i ~ /[|+]/) V[NR] = or(V[NR], bit)
     }
 }
 END {
