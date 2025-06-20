@@ -4,9 +4,9 @@
 # - dir
 
 BEGIN {
-    x = +x
-    y = +y
+    x = +x; y = +y
     dir = dir ? dir : "north"
+    if (dir !~ /north|east|south|west/) die("invalid direction")
 }
 /R/ {
     if (dir == "north") dir = "east"
@@ -28,6 +28,15 @@ BEGIN {
         case "west": x--; next
     }
 }
+/[^ALR]/ {
+    die("invalid instruction")
+}
+
 END {
     print x, y, dir
+}
+
+function die(message) {
+    print message > "/dev/stderr"
+    exit 1
 }
