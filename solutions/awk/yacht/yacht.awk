@@ -19,7 +19,7 @@ Category == "yacht" && length(DiceCounts) == 1 {
 }
 Category ~ "ones|twos|threes|fours|fives|sixes" {
     side = Number[Category]
-    Score = DiceCounts[side] ? side * DiceCounts[side] : 0
+    Score = side * DiceCounts[side]
 }
 Category ~ "full|kind" {
     Score = @Category()
