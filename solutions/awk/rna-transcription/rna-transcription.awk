@@ -9,6 +9,6 @@ BEGIN {
     print "Invalid nucleotide detected."; exit 1
 }
 {
-    for (i = NF; i > 0; --i) $i = T[$i]
+    while (i++ < NF) $i = T[$i]
     print
 }
