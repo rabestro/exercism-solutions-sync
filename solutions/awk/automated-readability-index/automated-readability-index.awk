@@ -27,7 +27,7 @@ NR == 4 {
 
 END {
     Sentences = NR
-    Score = 4.71 * Characters / Words + 0.5 * Words / Sentences - 21.43;
+    Score = 4.71 * Characters / Words + 0.5 * Words / Sentences - 21.43
     if (Score > 14) ARI = 14
     else ARI = ""Score
 
