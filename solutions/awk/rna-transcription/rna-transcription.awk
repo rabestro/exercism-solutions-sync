@@ -7,3 +7,6 @@ BEGIN {
 {
     print | RnaTranscription
 }
+END {
+    close(RnaTranscription)
+}
