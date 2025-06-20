@@ -12,14 +12,14 @@ NR == 1 {
 END {
     while (row++ < NR) {
         for (col = Width; col; --col)
-            $col = mines(row, col)
+            $col = print_cell(row, col)
         print
     }
 }
 
-function mines(row, col,   count) {
+function print_cell(row, col,   mines) {
     if (Field[row, col]) return "*"
-    count = Field[row - 1, col - 1] \
+    mines = Field[row - 1, col - 1] \
         + Field[row - 1, col] \
         + Field[row - 1, col + 1] \
         + Field[row, col - 1] \
@@ -27,5 +27,5 @@ function mines(row, col,   count) {
         + Field[row + 1, col - 1] \
         + Field[row + 1, col] \
         + Field[row + 1, col + 1]
-    return count ? count : "."
+    return mines ? mines : "."
 }
