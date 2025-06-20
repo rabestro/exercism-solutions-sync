@@ -16,12 +16,12 @@ function product(number,   digits,result,i) {
     for (i in digits) result *= digits[i]
     return result
 }
-function largest_product(   i,p,number,max) {
+function largest_product(   i,number,mp) {
     for (i = length($1) - $2 + 1; i > 0; --i) {
         number = substr($1, i, $2)
-        p = product(number)
-        max = p > max ? p : max
+        mp = max(mp, product(number))
     }
-    return +max
+    return +mp
 }
 function die(message) {print message > "/dev/stderr"; exit 1}
+function max(a, b) {return a > b ? a : b}
