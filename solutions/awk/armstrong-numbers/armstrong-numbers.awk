@@ -2,12 +2,12 @@
 # - num
 
 BEGIN {
-    print num == 0 || isAmstrongNumber(num) ? "true" : "false"
+    print isAmstrong(num) ? "true" : "false"
 }
 
-function isAmstrongNumber(number,   digits,power,sum,i) {
-    split(number, digits, "")
+function isAmstrong(number,   power,sum,i) {
     power = length(number)
-    for (i in digits) sum += digits[i] ^ power
+    for (i = power; i > 0; --i)
+        sum += substr(number, i, 1) ^ power
     return number == sum
 }
