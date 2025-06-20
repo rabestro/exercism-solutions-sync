@@ -22,7 +22,12 @@ $0 < 0 || $0 >= 1e12 {
 function say(number,   i,out,part) {
     for (i = 1e9; i > 0; i = int(i/1e3)) {
         part = translate(int((number % (i*1000) / i)), Units[i])
-        out = out?part?out" "part:out:part
+        if (out) {
+            out = part ? out " " part : out
+        }
+        else {
+            out = part
+        }
     }
     return out
 }
