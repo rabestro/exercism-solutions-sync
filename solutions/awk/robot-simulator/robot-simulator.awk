@@ -33,10 +33,11 @@ BEGIN {
 }
 
 END {
-    print x, y, dir
+    if (dir) print x, y, dir
 }
 
 function die(message) {
     print message > "/dev/stderr"
+    x = y = dir = ""
     exit 1
 }
