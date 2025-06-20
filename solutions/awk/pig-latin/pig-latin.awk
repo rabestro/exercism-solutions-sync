@@ -1,7 +1,4 @@
-{
-    for (i = 1; i <= NF; ++i) $i = pigify($i)
-    print
-}
+{for (i = 1; i <= NF; ++i) $i = pigify($i)} 1
 
 function pigify(word,   part) {
     if (word ~ /^([aouei]|xr|yt)/) return word"ay"
