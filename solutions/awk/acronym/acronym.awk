@@ -2,7 +2,9 @@ BEGIN {
     FS = "[^[:alnum:]']"
 }
 {
-    for (word = 1; word <= NF; ++word) {
-        printf "%c", toupper($word)
+    acronym = ""
+    for (; NF; --NF) {
+        acronym = substr($NF, 1, 1) acronym
     }
+    print toupper(acronym)
 }
