@@ -24,12 +24,8 @@ Category ~ "ones|twos|threes|fours|fives|sixes" {
 Category ~ "full|kind" {
     Score = @Category()
 }
-
-Category ~ "little" && length(DiceCounts) == 5 && !DiceCounts[6] {
-    Score = 30
-}
-Category ~ "big"  && length(DiceCounts) == 5 && !DiceCounts[1] {
-    Score = 30
+Category ~ "straight" && length(DiceCounts) == 5 {
+    Score = DiceCounts[Category ~ "big" ? 1 : 6] ? 0 : 30
 }
 Category == "choice" {
     for (key in DiceCounts)
