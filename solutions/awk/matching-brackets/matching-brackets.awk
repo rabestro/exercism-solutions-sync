@@ -1,4 +1,7 @@
+BEGIN {
+    MatchingBrackets = @/\[]|\()|\{}|[^][(){}]+/
+}
 {
-    while (gsub(/\[\]|\(\)|\{\}|[^][(){}]+/, ""));
-    print !$0 ? "true" : "false"
+    while (gsub(MatchingBrackets, ""));
+    print $0 ? "false" : "true"
 }
