@@ -1,4 +1,4 @@
-import math
+from math import sqrt
 
 
 def classify(number: int) -> str:
@@ -12,5 +12,6 @@ def classify(number: int) -> str:
         raise ValueError("Classification is only possible for positive integers.")
 
     aliquot_sum = (number > 1) + sum(
-        (sum({i, number // i}) for i in range(2, int(math.sqrt(number)) + 1) if not number % i))
+        (sum({i, number // i}) for i in range(2, int(sqrt(number)) + 1) if not number % i))
+    
     return "perfect" if aliquot_sum == number else "deficient" if aliquot_sum < number else "abundant"
