@@ -13,4 +13,5 @@ def classify(number: int) -> str:
 
     aliquot_sum = (number > 1) + sum(
         (sum({i, number // i}) for i in range(2, int(sqrt(number)) + 1) if not number % i))
+    
     return "perfect" if aliquot_sum == number else "deficient" if aliquot_sum < number else "abundant"
