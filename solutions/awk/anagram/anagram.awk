@@ -4,7 +4,6 @@
 BEGIN {
     Word = toupper(key)
     split(Word, Letters, //)
-    asort(Letters)
 }
 
 isCandidate() && isAnagram()
@@ -14,8 +13,7 @@ function isCandidate() {
 }
 
 function isAnagram(   candidate,i) {
-    split(toupper($0), candidate, //)
-    asort(candidate)
-    for (i in Letters) if (candidate[i] != Letters[i]) return 0
-    return 1
+    candidate = toupper($0)
+    for (i in Letters) sub(Letters[i], "", candidate)
+    return !candidate
 }
