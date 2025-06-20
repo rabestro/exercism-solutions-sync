@@ -2,19 +2,19 @@
 # - type
 
 {
-    print @type() ? "true" : "false"
+    print triangle() && @type() ? "true" : "false"
 }
 
 function equilateral() {
-    return $1 && $1 == $2 && $2 == $3
+    return $1 == $2 && $2 == $3
 }
 
 function isosceles() {
-    return triangle() && ($1 == $2 || $1 == $3 || $2 == $3)
+    return $1 == $2 || $1 == $3 || $2 == $3
 }
 
 function scalene() {
-    return triangle() && $1 != $2 && $1 != $3 && $2 != $3
+    return $1 != $2 && $1 != $3 && $2 != $3
 }
 
 function triangle() {
