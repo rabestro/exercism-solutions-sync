@@ -10,17 +10,27 @@ BEGIN {
     Items["cats"] = 128
 }
 {
-    score = $1
+    score = $1 % 256
 }
 /allergic_to/ {
-    item = Items[$3]
-    for (i = 128; i > item; i /= 2)
-        if (score >= i) score -= i
-    print score >= item ? "true" : "false"
+    print isAlegric(score, Items[$3]) ? "true" : "false"
 }
 /list/ {
     NF = 0
-    PROCINFO["sorted_in"] = "@val_num_asc"
-    for (item in Items) if (and(score, Items[item])) $(++NF) = item
+    for (i = 1; i <= 128; i *= 2)
+        if (isAlegric(score, i))
+            $(++NF) = itemName(i)
     print
+}
+
+function isAlegric(score, item,   i) {
+    for (i = 128; i > item; i /= 2)
+        if (score >= i) score -= i
+    return score >= item
+}
+
+function itemName(score,   name) {
+    for (name in Items)
+        if (Items[name] == score)
+            return name
 }
