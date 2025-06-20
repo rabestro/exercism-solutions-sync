@@ -1,10 +1,9 @@
 BEGIN {
     FS = "[^[:alnum:]']"
-    OFS = ""
 }
 {
-    for (i = 1; i <= NF; ++i) {
-        $i = toupper(substr($i, 1, 1))
+    for (word = 1; word <= NF; ++word) {
+        printf "%c", toupper($word)
     }
-    print
+    printf "\n"
 }
