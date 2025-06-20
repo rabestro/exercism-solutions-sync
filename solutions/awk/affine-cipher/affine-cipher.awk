@@ -10,7 +10,7 @@ BEGIN {
     B = $3
     Message = $4
 }
-gcd(A, M) !=1 {
+gcd(A, M) != 1 {
     print "a and m must be coprime.";
     exit 1
 }
