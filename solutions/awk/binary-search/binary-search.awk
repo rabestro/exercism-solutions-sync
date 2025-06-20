@@ -11,7 +11,7 @@ BEGIN {
 function binary_search(low, high,   mid) {
     if (low > high) return -1
     mid = int((low + high) / 2)
-    if ($mid == value) return mid
     if ($mid > value) return binary_search(low, mid - 1)
-    return binary_search(mid + 1, high)
+    if ($mid < value) return binary_search(mid + 1, high)
+    return mid
 }
