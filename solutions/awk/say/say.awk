@@ -5,7 +5,7 @@ BEGIN {
 
     split("one two three four five six seven eight nine ten eleven "\
         "twelve thirteen fourteen fifteen sixteen seventeen eighteen "\
-        "nineteen twenty thirty forty fifty sixty seventy eighty ninety", \
+        "nineteen twenty thirty forty fifty sixty seventy eighty ninety",\
     Numbers)
 }
 $0 < 0 || $0 >= 1e12 {
@@ -22,7 +22,7 @@ $0 < 0 || $0 >= 1e12 {
 function say(number,   i,out,part) {
     for (i = 1e9; i > 0; i = int(i/1e3)) {
         part = translate(int((number % (i*1000) / i)), Units[i])
-        out = out?out" "part:part
+        out = out?part?out" "part:out:part
     }
     return out
 }
