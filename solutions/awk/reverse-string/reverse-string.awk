@@ -1,5 +1,11 @@
+BEGIN {FS=""}
 {
-    command = "rev <<< \""$0"\"" | getline
-    print
-    close("rev")
+    print reverse()
+}
+
+function reverse(   i,result) {
+    for (i = NF; i ; --i) {
+        result = result $i
+    }
+    return result
 }
