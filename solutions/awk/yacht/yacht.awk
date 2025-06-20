@@ -10,6 +10,7 @@ BEGIN {
 {
     Score = 0
     Category = $NF
+    gsub(" ", "_", Category)
     delete DiceCounts
     while (--NF) DiceCounts[$NF]++
 }
@@ -20,16 +21,14 @@ Category ~ "ones|twos|threes|fours|fives|sixes" {
     side = Number[Category]
     Score = DiceCounts[side] ? side * DiceCounts[side] : 0
 }
-Category == "full house" && length(DiceCounts) == 2 {
-    Score = full_house()
+Category ~ "full|kind" {
+    Score = @Category()
 }
-Category == "four of a kind" {
-    Score = four_of_a_kind()
-}
-Category == "little straight" && length(DiceCounts) == 5 && !DiceCounts[6] {
+
+Category ~ "little" && length(DiceCounts) == 5 && !DiceCounts[6] {
     Score = 30
 }
-Category == "big straight"  && length(DiceCounts) == 5 && !DiceCounts[1] {
+Category ~ "big"  && length(DiceCounts) == 5 && !DiceCounts[1] {
     Score = 30
 }
 Category == "choice" {
