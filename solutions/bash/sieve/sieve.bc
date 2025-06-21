@@ -1,0 +1,13 @@
+max_number = read()
+
+for (n = 2; n <= max_number; ++n) {
+    if (composite[n]) continue
+
+    /* prime number found */
+    print n, " "
+
+    /* Sieve of Eratosthenes */
+    for (i = 2 * n; i <= max_number; i += n) {
+        composite[i] = 1
+    }
+}
