@@ -29,14 +29,14 @@ main() {
   (( white_queen_row == black_queen_row && white_queen_col == black_queen_col )) && die "same position"
 
   bc << END_BC
-#    define abs_(x) {
-#      if (x < 0) return (-x)
-#      else return (x)
-#    }
+    define abs_(x) {
+      if (x < 0) return (-x)
+      else return (x)
+    }
     if ($white_queen_row == $black_queen_row \
       || $white_queen_col == $black_queen_col \
-      || abs($white_queen_row - $black_queen_row) \
-      == abs($white_queen_col - $black_queen_col) \
+      || abs_($white_queen_row - $black_queen_row) \
+      == abs_($white_queen_col - $black_queen_col) \
     ) print "true" else print "false"
 END_BC
 
