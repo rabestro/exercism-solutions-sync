@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 
 main () {
-   local phrase=${1@L}
-   grep -qvE '([a-z]).*\1' <<< "$phrase" && echo true || echo false
+    local -r phrase=${1@L}
+    local symbols=${phrase//[[:space:]-]/}
+
+    for letter in {a..z}
+    do
+       symbols="${symbols/$letter/}"
+    done
+
+    [[ -z $symbols ]] && echo 'true' || echo 'false'
 }
 
 main "$@"
