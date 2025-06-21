@@ -4,9 +4,9 @@ readonly power=${#1}
 readonly number=$1
 
 sum=0
-for digit in $(fold -w1 <<<"$number"); do
-  ((sum += digit ** power))
-done
+while read -rn 1 digit; do
+  (( sum += digit ** power ))
+done <<< "$number"
 
 if ((sum == number)); then
   echo true
