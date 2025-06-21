@@ -1,25 +1,21 @@
 #!/usr/bin/env bash
 declare -ri SMALLEST_POSSIBLE_A=3
 
-main () {
+find_pythagorean_triplets () {
   local -ri sum="$1"
-  ((sum % 2 == 0)) || return 0
-
-  local -ri limit=$(( sum / 3 ))
+  (( sum % 2 == 0 )) || return 0
   local -i a b c numerator denominator
 
-  for (( a=SMALLEST_POSSIBLE_A; a <= limit; a++ ))
+  for (( a=SMALLEST_POSSIBLE_A; 1; a++ ))
   do
       (( numerator = sum * sum - 2 * sum * a ))
       (( denominator = 2 * (sum - a) ))
       (( b = numerator / denominator ))
       (( b * denominator == numerator )) || continue
-      (( a < b )) || return 0
       (( c = sum - a - b ))
-      (( c > b )) || return 0
+      (( a < b && b < c )) || return 0
       printf "%d,%d,%d\n" $a $b $c
   done
-  return 0
 }
 
-main "$@"
+find_pythagorean_triplets "$@"
