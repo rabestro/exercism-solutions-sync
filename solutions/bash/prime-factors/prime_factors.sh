@@ -5,10 +5,8 @@ factors () {
     local -i factor=2
     local -a factors
 
-    while (( factor <= number ))
-    do
-        if (( number % factor ))
-        then
+    while (( factor <= number )); do
+        if (( number % factor )); then
             (( ++factor ))
         else
             factors+=( "$factor" )
