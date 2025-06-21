@@ -16,4 +16,8 @@ for ((i = 0; i < len; i++)); do
   result=$result$symbol
 done
 
-echo "$result" | sed 's/.\{5\}/& /g'
+if [[ $1 == encode ]]; then
+  echo "$result" | sed 's/.\{5\}/& /g' | sed 's/ *$//g'
+else
+  echo "$result"
+fi
