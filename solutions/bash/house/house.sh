@@ -22,7 +22,7 @@ phrase () {
 }
 
 nursery_rhyme () {
-    local -ir verse=$(( $1 - 1 ))
+    local -ir verse=$1-1
     echo "This is $(phrase $verse) that Jack built."
     echo ''
 }
@@ -36,7 +36,7 @@ main() {
         exit 1
     fi
 
-    while (( verse<=$end_verse ))
+    while (( verse <= end_verse ))
     do
         nursery_rhyme $(( verse++ ))
     done
