@@ -3,8 +3,7 @@ import Schedule.Schedule
 import java.time.temporal.TemporalAdjusters.{dayOfWeekInMonth, firstInMonth, lastInMonth, nextOrSame}
 import java.time.{DayOfWeek, LocalDate, Year}
 
-case class Meetup(month: Int, year: Int) {
-
+case class Meetup(month: Int, year: Int):
   def day(day: Int, schedule: Schedule): LocalDate =
     val dayOfWeek = DayOfWeek.of(day)
     val adjuster = schedule match {
@@ -16,7 +15,7 @@ case class Meetup(month: Int, year: Int) {
       case Schedule.Last => lastInMonth(dayOfWeek)
     }
     Year.of(year).atMonth(month).atDay(13) `with` adjuster
-}
+
 
 object Schedule extends Enumeration {
   type Schedule = Value
