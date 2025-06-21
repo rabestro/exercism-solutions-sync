@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-OUT=$(bc sieve.bc <<< "$1")
-echo ${OUT//$'\\\n'/}
+primes=$(bc sieve.bc <<< "$1")
+echo ${primes//$'\\\n'/}
