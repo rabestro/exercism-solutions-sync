@@ -13,12 +13,12 @@ readonly span="$2"
 ((span < 0)) && die "span must not be negative"
 
 bc <<< "
+number = $number
+span = $span
+
 define digit(i) {
     return number % 10^i / 10^--i
 }
-
-number = $number
-span = $span
 
 max_index = length(number) - span + 1
 
