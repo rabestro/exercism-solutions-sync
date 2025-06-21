@@ -6,7 +6,7 @@ main () {
   ((sum % 2 == 0)) || return 0
 
   local -ri limit=$(( sum / 3 ))
-  local -i a b c numerator denominator remainder
+  local -i a b c numerator denominator
 
   for (( a=SMALLEST_POSSIBLE_A; a <= limit; a++ ))
   do
