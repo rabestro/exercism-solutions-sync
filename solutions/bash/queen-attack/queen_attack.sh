@@ -28,7 +28,9 @@ main() {
   ((white_queen_col > 7 || black_queen_col > 7)) && die "column not on board"
   ((white_queen_row == black_queen_row && white_queen_col == black_queen_col)) && die "same position"
 
-  bc -lq <<<"
+  bc -l <<<"
+    #define abs(x) { if(x<0) return(-x) else return(x) }
+
     if ($white_queen_row == $black_queen_row \
       || $white_queen_col == $black_queen_col \
       || abs($white_queen_row - $black_queen_row) == abs($white_queen_col - $black_queen_col) \
