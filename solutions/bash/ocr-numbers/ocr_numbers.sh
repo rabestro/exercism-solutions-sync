@@ -28,14 +28,19 @@ parse_line () {
     done
 }
 
-[[ -t 0 ]] && echo '' && exit
+main () {
+    [[ -t 0 ]] && echo '' && exit
 
-readarray -t lines
-(( ${#lines[@]} % 4 )) && die "Number of input lines is not a multiple of four"
-(( ${#lines[0]} % 3 )) && die "Number of input columns is not a multiple of three"
+    readarray -t lines
+    (( ${#lines[@]} % 4 )) && die "Number of input lines is not a multiple of four"
+    (( ${#lines[0]} % 3 )) && die "Number of input columns is not a multiple of three"
 
-for (( row = 0; row < ${#lines[@]}; row += 4 ))
-do
-    (( row )) && echo -n ','
-    parse_line "${lines[$row]}" "${lines[$((row + 1))]}" "${lines[$((row + 2))]}" "${lines[$((row + 3))]}"
-done
+    local -i row=0
+    while (( row < ${#lines[@]} ))
+    do
+        (( row )) && echo -n ','
+        parse_line "${lines[$((row++))]}" "${lines[$((row++))]}" "${lines[$((row++))]}" "${lines[$((row++))]}"
+    done
+}
+
+main "$@"
