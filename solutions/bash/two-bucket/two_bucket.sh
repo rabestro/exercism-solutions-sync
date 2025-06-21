@@ -17,7 +17,6 @@ is_full () {
 }
 
 is_goal () {
-     (( Water[$1] == Goal )) && echo "true" >> log.txt
      (( Water[$1] == Goal ))
 }
 
@@ -52,7 +51,7 @@ process_step() {
 }
 
 record_step () {
-    printf -v state "_%d,%d_" "${Water[$Source]}" "${Water[$Target]}"
+    local state="_${Water[$Source]},${Water[$Target]}_"
     if [[ $History =~ $state ]]
     then
         echo "invalid goal"
@@ -61,6 +60,19 @@ record_step () {
         History+=$state
         (( ++Step ))
     fi
+}
+
+print_result () {
+    local winner second
+    if is_goal one
+    then
+        winner=one
+        second=two
+    else
+        winner=two
+        second=one
+    fi
+    printf "moves: %d, goalBucket: %s, otherBucket: %d" "$Step" "$winner" ${Water[$second]}
 }
 
 main () {
@@ -79,16 +91,7 @@ main () {
         record_step
     done
 
-    local winner second
-    if is_goal one
-    then
-        winner=one
-        second=two
-    else
-        winner=two
-        second=one
-    fi
-    printf "moves: %d, goalBucket: %s, otherBucket: %d" "$Step" "$winner" ${Water[$second]}
+    print_result
 }
 
 main "$@"
