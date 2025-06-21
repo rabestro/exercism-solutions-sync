@@ -17,9 +17,7 @@ validate_pins () {
 
 get_pins () {
     local -ir throw=$1
-    if (( throw >= ${#THROWS[*]} )); then
-        die "Score cannot be taken until the end of the game."
-    fi
+    (( throw >= ${#THROWS[*]} )) && die "Score cannot be taken until the end of the game."
 
     local -ir pins=${THROWS[$throw]}
     validate_pins $pins
@@ -33,7 +31,6 @@ score () {
     do
         frame+=1
         first_throw=$(get_pins $throw)
-        (( $? )) && exit 1
         score+=first_throw
         (( throw++ ))
 
