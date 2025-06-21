@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
 die () {
-    echo "$1"; exit 1
+    echo "$1"
+    exit 1
 }
 one () {
-    echo 1; exit
+    echo 1
+    exit
 }
 
 (( $# == 1 )) || (( $2 == 0 )) && one
@@ -15,7 +17,8 @@ readonly number="$1" span="$2"
 [[ $1 == *[^[:digit:]]* ]] && die "input must only contain digits"
 (( span < 0 )) && die "span must not be negative"
 
-declare -i max_index="${#number} - $span + 1" product max_product=0 digit
+declare -i product digit max_product
+declare -i max_index=$(( ${#number} - $span + 1 ))
 
 for (( i = 0; i < max_index; ++i ))
 do
@@ -29,4 +32,4 @@ do
     (( max_product = product > max_product ? product : max_product ))
 done
 
-echo $max_product
+echo "$max_product"
