@@ -5,6 +5,7 @@ from typing import ClassVar
 
 @dataclass
 class Alien:
+    """Create an Alien object with location x_coordinate and y_coordinate."""
     x_coordinate: int
     y_coordinate: int
     health: int = 3
