@@ -1,11 +1,9 @@
 case class WordCount(text: String):
-  private val WordDelimiter = """([^a-zA-Z0-9']|(?<=\W)'|'(?=\W))+"""
+  private val WordPattern = raw"\b[\p{Alnum}']+\b".r
 
-  def countWords: Map[String, Int] = {
-    text.toLowerCase
-      .split(WordDelimiter)
-      .filterNot(_.isEmpty)
-      .groupBy(identity)
-      .view.mapValues(_.length)
-      .toMap
-  }
+  def countWords: Map[String, Int] =
+    WordPattern
+      .findAllIn(text.toLowerCase)
+      .foldLeft(Map.empty[String, Int]) {
+        case (map, word) => map + (word -> (map.getOrElse(word, 0) + 1))
+      }
