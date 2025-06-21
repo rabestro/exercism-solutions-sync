@@ -11,16 +11,16 @@ public record Config(Currency currency, Locale locale) {
     }
 
     private static Currency getCurrency(String currencyName) {
-        if (!CURRENCIES.contains(currencyName)) {
-            throw new IllegalArgumentException("Invalid currency");
+        if (CURRENCIES.contains(currencyName)) {
+            return Currency.getInstance(currencyName);
         }
-        return Currency.getInstance(currencyName);
+        throw new IllegalArgumentException("Invalid currency: " + currencyName);
     }
 
     private static Locale getLocale(String localeName) {
-        if (!LOCALES.contains(localeName)) {
-            throw new IllegalArgumentException("Invalid locale");
+        if (LOCALES.contains(localeName)) {
+            return Locale.forLanguageTag(localeName);
         }
-        return Locale.forLanguageTag(localeName);
+        throw new IllegalArgumentException("Invalid locale: " + localeName);
     }
 }
