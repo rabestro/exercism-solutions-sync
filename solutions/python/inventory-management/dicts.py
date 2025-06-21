@@ -33,10 +33,8 @@ def decrement_items(inventory, items):
     """
 
     for item in items:
-        if item not in inventory:
-            continue
-        quantity = inventory[item]
-        inventory[item] = quantity - 1 if quantity else 0
+        if item in inventory and inventory[item]:
+            inventory[item] -= 1
 
     return inventory
 
@@ -61,4 +59,3 @@ def list_inventory(inventory):
     """
 
     return [(item, quantity) for item, quantity in inventory.items() if quantity > 0]
-
