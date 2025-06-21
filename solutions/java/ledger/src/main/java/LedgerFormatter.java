@@ -14,9 +14,7 @@ public class LedgerFormatter implements Function<Ledger.LedgerEntry, String> {
     public LedgerFormatter(Config config) {
         resource = ResourceBundle.getBundle("messages", config.locale());
         formatter = DateTimeFormatter.ofPattern(resource.getString("date.pattern"));
-        var symbols = new DecimalFormatSymbols(config.locale());
-        var groupingSeparator = resource.getString("decimal-format.grouping-separator").charAt(0);
-        symbols.setGroupingSeparator(groupingSeparator);
+        var symbols = DecimalFormatSymbols.getInstance(config.locale());
         symbols.setCurrencySymbol(config.currency().getSymbol());
         decimalFormat = new DecimalFormat(resource.getString("decimal-format.pattern"), symbols);
     }
