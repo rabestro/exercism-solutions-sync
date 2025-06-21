@@ -61,6 +61,7 @@ def categorize_dish(dish_name, dish_ingredients):
         if dish_ingredients <= ingredients:
             return f'{dish_name}: {category}'
 
+    raise ValueError(f"Dish '{dish_name}' could not be categorized.")
 
 def tag_special_ingredients(dish):
     """Compare `dish` ingredients to `SPECIAL_INGREDIENTS`.
