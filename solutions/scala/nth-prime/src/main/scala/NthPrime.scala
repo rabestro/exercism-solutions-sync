@@ -5,5 +5,4 @@ object NthPrime:
     primes.takeWhile(_ <= math.sqrt(candidate)).forall(candidate % _ != 0)
 
   def prime(nth: Int): Option[Int] =
-    if nth < 1 then None
-    else Some(primes(nth - 1))
+    if nth < 1 then None else Some(primes(nth - 1))
