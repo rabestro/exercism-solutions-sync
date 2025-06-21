@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-bc --file sieve.bc <<< "$1"
+bc -f sieve.bc <<< "$1"
