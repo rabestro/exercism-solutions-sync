@@ -3,12 +3,13 @@ import java.text.DecimalFormatSymbols;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 public final class LedgerFormatter implements Function<Ledger.LedgerEntry, String> {
     private final DateTimeFormatter dateFormatter;
     private final DecimalFormat amountFormatter;
-    private final TruncatingStringFormatter stringFormatter;
+    private final UnaryOperator<String> stringTruncator;
     private final String header;
     private final String entryFormatPattern;
 
@@ -33,7 +34,7 @@ public final class LedgerFormatter implements Function<Ledger.LedgerEntry, Strin
         this.entryFormatPattern = "%%-%ds | %%-%ds | %%%ds"
                 .formatted(dateColWidth, descriptionColWidth, changeColWidth);
 
-        stringFormatter = new TruncatingStringFormatter(descriptionColWidth, resource.getString("truncation.suffix"));
+        stringTruncator = new StringTruncator(descriptionColWidth, resource.getString("truncation.suffix"));
     }
 
     public Stream<String> header() {
@@ -44,7 +45,7 @@ public final class LedgerFormatter implements Function<Ledger.LedgerEntry, Strin
     public String apply(Ledger.LedgerEntry transaction) {
         var date = dateFormatter.format(transaction.date());
         var amount = amountFormatter.format(transaction.change());
-        var description = stringFormatter.format(transaction.description());
+        var description = stringTruncator.apply(transaction.description());
         return entryFormatPattern.formatted(date, description, amount);
     }
 }
