@@ -22,10 +22,10 @@ validate "$b"
 c=${colors[$3]}
 validate "$c"
 
-if ((b == 0)); then
-  ((a == 0)) || unset b
-  ((a == 0)) || ((c++))
+if ((b == 0)) && ((a != 0)); then
+  unset b
+  ((c++))
 fi
 ((a == 0)) && unset a
 
-echo "$a$b${suffix[$c]}ohms"
+echo "${a}${b}${suffix[$c]}ohms"
