@@ -1,21 +1,17 @@
 #!/usr/bin/env bash
 
-sound=""
+number=$1
 
-if [[ $1%3 -eq 0 ]]; then
+if (( number % 3 == 0 )); then
   sound=Pling
 fi
 
-if [[ $1%5 -eq 0 ]]; then
-  sound=${sound}Plang
+if (( number % 5 == 0 )); then
+  sound+=Plang
 fi
 
-if [[ $1%7 -eq 0 ]]; then
-  sound=${sound}Plong
+if (( number % 7 == 0 )); then
+  sound+=Plong
 fi
 
-if [[ -z $sound ]]; then
-  sound=$1
-fi
-
-echo "$sound"
+echo ${sound:-$number}
