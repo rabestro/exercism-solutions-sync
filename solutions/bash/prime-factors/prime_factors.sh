@@ -9,11 +9,11 @@ main () {
         if (( number % factor ))
         then
             (( ++factor ))
-            continue
+        else
+            printf "%d " "$factor"
+            (( number /= factor ))
         fi
-        printf "%d " "$factor"
-        (( number /= factor ))
     done
 }
 
-main "$1" | sed 's/ $//'
+main "$1" | sed 's/ $/\n/'
