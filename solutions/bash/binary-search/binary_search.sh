@@ -6,13 +6,14 @@ readonly array=("$@")
 
 declare -i left=0
 declare -i right=${#array[@]}
+declare -i mid
 
 while ((left < right)); do
-  mid=$(((left + right) / 2))
+  mid=(left + right)/2
   if ((array[mid] > target)); then
-    right=$((--mid))
+    right=--mid
   elif ((array[mid] < target)); then
-    left=$((++mid))
+    left=++mid
   else
     break
   fi
