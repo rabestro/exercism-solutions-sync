@@ -12,10 +12,8 @@ main () {
   do
       (( numerator = sum * sum - 2 * sum * a ))
       (( denominator = 2 * (sum - a) ))
-      (( remainder = numerator % denominator ))
-      (( remainder == 0 )) || continue
       (( b = numerator / denominator ))
-      (( a < b )) || continue
+      (( b * denominator == numerator && a < b )) || continue
       (( c = sum - a - b ))
       (( c > b )) || return 0
       printf "%d,%d,%d\n" $a $b $c
