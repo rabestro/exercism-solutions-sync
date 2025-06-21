@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
-readonly re_word="([[:alpha:]])['[:alpha:]]*[^[:alpha:]]*"
-phrase=$1
+main () {
+  readonly words="$1"
 
-while [[ $phrase =~ $re_word ]]; do
-  acronym+=${BASH_REMATCH[1]}
-  phrase=${phrase#${BASH_REMATCH[0]}}
-done
+  IFS=$' -,_*'
+  for word in $words; do
+    acronym+=${word:0:1}
+  done
 
-echo "${acronym^^}"
+  echo "${acronym^^}"
+}
+
+main "$@"
