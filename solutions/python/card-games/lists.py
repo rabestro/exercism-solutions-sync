@@ -55,8 +55,7 @@ def approx_average_is_average(hand):
 
     first_avg = (hand[0] + hand[-1]) / 2
     middle_avg = hand[len(hand) // 2]
-    real_avg = card_average(hand)
-    return first_avg == real_avg or middle_avg == real_avg
+    return card_average(hand) in (first_avg, middle_avg)
 
 
 def average_even_is_average_odd(hand):
