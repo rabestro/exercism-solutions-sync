@@ -1,16 +1,22 @@
 #!/usr/bin/env bash
 
-die () { echo "$1"; exit 1; }
-one () { echo 1; exit; }
+die () {
+  echo "$1"
+  exit 1
+}
+one () {
+  echo 1
+  exit
+}
 
-(($# == 1)) || (($2 == 0)) && one
+(( $# == 1 )) || (( $2 == 0 )) && one
 
 readonly number="$1"
 readonly span="$2"
 
-((${#number} < $2)) && die "span must be smaller than string length"
+(( ${#number} < $2 )) && die "span must be smaller than string length"
 [[ $1 = *[^[:digit:]]* ]] && die "input must only contain digits"
-((span < 0)) && die "span must not be negative"
+(( span < 0 )) && die "span must not be negative"
 
 bc <<< "
 number = $number
