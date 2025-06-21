@@ -5,18 +5,18 @@ import java.util.ResourceBundle;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class LedgerFormatter implements Function<Ledger.LedgerEntry, String> {
+public final class LedgerFormatter implements Function<Ledger.LedgerEntry, String> {
     private static final int maxWidth = 25;
-    private final DateTimeFormatter formatter;
+    private final DateTimeFormatter dateFormatter;
     private final DecimalFormat decimalFormat;
     private final ResourceBundle resource;
 
     public LedgerFormatter(Config config) {
-        resource = ResourceBundle.getBundle("messages", config.locale());
-        formatter = DateTimeFormatter.ofPattern(resource.getString("date.pattern"));
+        resource = ResourceBundle.getBundle("LedgerMessages", config.locale());
         var symbols = DecimalFormatSymbols.getInstance(config.locale());
         symbols.setCurrencySymbol(config.currency().getSymbol());
         decimalFormat = new DecimalFormat(resource.getString("decimal-format.pattern"), symbols);
+        dateFormatter = DateTimeFormatter.ofPattern(resource.getString("date.pattern"));
     }
 
     public Stream<String> header() {
@@ -30,10 +30,10 @@ public class LedgerFormatter implements Function<Ledger.LedgerEntry, String> {
 
     @Override
     public String apply(Ledger.LedgerEntry transaction) {
-        var date = transaction.date().format(formatter);
+        var date = transaction.date().format(dateFormatter);
         var description = truncateToMaxWidth(transaction.description());
-        var amount = decimalFormat.format(transaction.change() / 100);
-        return "%s | %-25s | %13s".formatted(date, description, amount);
+        var amount = decimalFormat.format(transaction.change());
+        return "%-10s | %-25s | %13s".formatted(date, description, amount);
     }
 
     private String truncateToMaxWidth(String s) {
