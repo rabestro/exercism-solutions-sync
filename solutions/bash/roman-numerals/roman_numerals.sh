@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-function arabic_to_roman_numerals() {
-    local -i number=$1
-    local -A Roman=(
+convert_arabic_to_roman() {
+    local -i target_number=$1
+    local -A RomanNumerals=(
         [M]=1000
         [D]=500
         [C]=100
@@ -19,14 +19,15 @@ function arabic_to_roman_numerals() {
     )
 
     local result=""
-    for key in M CM D CD C XC L XL X IX V IV I; do
-        local -i value="${Roman[$key]}"
-        while (( number >= value )); do
-            result+="$key"
-            (( number -= value ))
+
+    for numeral in M CM D CD C XC L XL X IX V IV I; do
+        while (( target_number >= RomanNumerals[$numeral] )); do
+            result+="$numeral"
+            (( target_number -= RomanNumerals[$numeral] ))
         done
     done
+
     echo "$result"
 }
 
-arabic_to_roman_numerals "$1"
+convert_arabic_to_roman "$1"
