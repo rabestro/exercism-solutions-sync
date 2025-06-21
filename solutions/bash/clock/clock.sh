@@ -3,11 +3,11 @@
 die () { echo "$1" >&2; exit 1; }
 
 validate_parameters () {
-    (( $# == 2 || $# == 4 )) || die "invalid arguments"
+    [[ $# == 2 || $# == 4 ]] || die "invalid arguments"
     [[ $1 =~ ^-?[[:digit:]]+$ ]] || die "Hours must be an integer"
     [[ $2 =~ ^-?[[:digit:]]+$ ]] || die "Minutes must be an integer"
-    [[ $3 =~ ^[+-]$ ]] || [ -z "$3" ] || die "invalid arguments"
-    [[ $4 =~ ^[[:digit:]]+$ ]] || [ -z "$4" ] || die "Delta must be an integer"
+    [[ $3 =~ ^[+-]$ || -z $3 ]] || die "invalid arguments"
+    [[ $4 =~ ^[[:digit:]]+$ || -z $4 ]] || die "Delta must be an integer"
 }
 
 print_clock () {
