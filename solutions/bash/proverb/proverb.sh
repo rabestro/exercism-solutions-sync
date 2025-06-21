@@ -1,16 +1,12 @@
 #!/usr/bin/env bash
 
-
 main () {
-    local -ar words=( "$@" )
-
-    for (( i = 0; i < ${#words[@]} - 1; ++i ))
+    for (( i = 1, j = 2; i < $#; ++i, ++j ))
     do
-        echo "For want of a ${words[$i]} the ${words[(( $i + 1 ))]} was lost."
+        echo "For want of a ${!i} the ${!j} was lost."
     done
 
-    (( $# > 0 )) && echo "And all for the want of a $1."
+    [[ -n $1 ]] && echo "And all for the want of a $1." || :
 }
 
-(( $# == 0 )) && echo "" && exit
 main "$@"
