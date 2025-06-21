@@ -1,3 +1,11 @@
 #!/usr/bin/env bash
 
-sed "s/\([[:alpha:]]\)[a-z'A-Z]*[^a-zA-Z]*/\1/g" <<< $1 | tr "[:lower:]" "[:upper:]"
+readonly re_word="([[:alpha:]])['[:alpha:]]*[^[:alpha:]]*"
+phrase=$1
+
+while [[ $phrase =~ $re_word ]]; do
+  acronym+=${BASH_REMATCH[1]}
+  phrase=${phrase#${BASH_REMATCH[0]}}
+done
+
+echo "${acronym^^}"
