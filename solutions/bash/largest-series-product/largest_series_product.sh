@@ -1,15 +1,10 @@
 #!/usr/bin/env bash
 
 die () {
-  echo "$1"; exit 1
+    echo "$1"; exit 1
 }
-
 one () {
-  echo 1; exit
-}
-
-digit () {
-  echo $(($1 % 10 ** $2 / 10 ** ($2 - 1)  ))
+    echo 1; exit
 }
 
 (( $# == 1 )) || (( $2 == 0 )) && one
@@ -20,43 +15,18 @@ readonly number="$1" span="$2"
 [[ $1 = *[^[:digit:]]* ]] && die "input must only contain digits"
 (( span < 0 )) && die "span must not be negative"
 
-declare -i max_index="${#number} - $span + 1" product
+declare -i max_index="${#number} - $span + 1" product max_product=0 digit
 
-for i in {1..$max_index}
+for (( i = 0; i < max_index; ++i ))
 do
-    (( product = ${number:${i}:1} ))
+    digit=${number:${i}:1}
+    (( product = digit ))
     for (( k = 1; k < span; ++k ))
     do
-       (( l = i + k, product *= ${number:${l}:1} ))
+       digit=${number:$((i + k)):1}
+       (( product *= digit ))
     done
-
-    if (( product > max_product ))
-    then
-        max_product=product
-    fi
+    (( max_product = product > max_product ? product : max_product ))
 done
 
 echo $max_product
-exit
-
-bc <<< "
-number = $number
-span = $span
-
-define digit(i) {
-    return number % 10^i / 10^--i
-}
-
-max_index = length(number) - span + 1
-
-for (i = 1; i <= max_index; ++i) {
-    product = digit(i)
-    for (k = 1; k < span; ++k) {
-        product *= digit(i + k)
-    }
-    if (product > max_product) {
-        max_product = product
-    }
-}
-
-print max_product"
