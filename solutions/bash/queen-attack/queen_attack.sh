@@ -13,8 +13,8 @@ main() {
 
   while getopts w:b: option; do
     case "$option" in
-    w) IFS=, read -r white_queen_row white_queen_col <<<"$OPTARG" ;;
-    b) IFS=, read -r black_queen_row black_queen_col <<<"$OPTARG" ;;
+    w) IFS=, read -r white_queen_row white_queen_col <<< "$OPTARG" ;;
+    b) IFS=, read -r black_queen_row black_queen_col <<< "$OPTARG" ;;
     *)
       echo invalid option
       exit 1
@@ -22,19 +22,24 @@ main() {
     esac
   done
 
-  ((white_queen_row < 0 || black_queen_row < 0)) && die "row not positive"
-  ((white_queen_row > 7 || black_queen_row > 7)) && die "row not on board"
-  ((white_queen_col < 0 || black_queen_col < 0)) && die "column not positive"
-  ((white_queen_col > 7 || black_queen_col > 7)) && die "column not on board"
-  ((white_queen_row == black_queen_row && white_queen_col == black_queen_col)) && die "same position"
+  (( white_queen_row < 0 || black_queen_row < 0 )) && die "row not positive"
+  (( white_queen_row > 7 || black_queen_row > 7 )) && die "row not on board"
+  (( white_queen_col < 0 || black_queen_col < 0 )) && die "column not positive"
+  (( white_queen_col > 7 || black_queen_col > 7 )) && die "column not on board"
+  (( white_queen_row == black_queen_row && white_queen_col == black_queen_col )) && die "same position"
 
-  bc -l <<<"
-    define abst(x) { if(x<0) return(-x) else return(x) }
+  bc << END_BC
+#    define abs_(x) {
+#      if (x < 0) return (-x)
+#      else return (x)
+#    }
     if ($white_queen_row == $black_queen_row \
       || $white_queen_col == $black_queen_col \
-      || abst($white_queen_row - $black_queen_row) \
-      == abst($white_queen_col - $black_queen_col) \
-    ) print \"true\" else print \"false\"
-  "
+      || abs($white_queen_row - $black_queen_row) \
+      == abs($white_queen_col - $black_queen_col) \
+    ) print "true" else print "false"
+END_BC
+
 }
+
 main "$@"
