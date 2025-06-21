@@ -2,14 +2,15 @@
 
 readonly phrase=${1//[!a-zA-Z?]/}
 
-if [[ $1 =~ ^[[:space:]\\t\\n]*$ ]]; then
-  echo "Fine. Be that way!"
-elif [[  $phrase =~ ^[A-Z]+\?$ ]]; then
-  echo "Calm down, I know what I'm doing!"
+if [[ $1 =~ ^[[:space:]]*$ ]]; then
+  response="Fine. Be that way!"
+elif [[  $phrase =~ ^[[:upper:]]+\?$ ]]; then
+  response="Calm down, I know what I'm doing!"
+elif [[ $phrase =~ ^[[:upper:]]+$ ]]; then
+  response="Whoa, chill out!"
 elif [[ $phrase =~ \?$ ]]; then
-  echo "Sure."
-elif [[ $phrase =~ ^[A-Z]+$ ]]; then
-  echo "Whoa, chill out!"
+  response="Sure."
 else
-  echo "Whatever."
+  response="Whatever."
 fi
+printf '%s' "$response"
