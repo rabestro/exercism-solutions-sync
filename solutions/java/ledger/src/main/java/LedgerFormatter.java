@@ -20,7 +20,6 @@ public final class LedgerFormatter implements Function<Ledger.LedgerEntry, Strin
         symbols.setCurrencySymbol(config.currency().getSymbol());
         amountFormatter = new DecimalFormat(resource.getString("decimal-format.pattern"), symbols);
 
-        // Load column widths
         var dateColWidth = (Integer) resource.getObject("date.column.width");
         var changeColWidth = (Integer) resource.getObject("change.column.width");
         int descriptionColWidth = (Integer) resource.getObject("description.column.width");
