@@ -8,6 +8,17 @@ declare -A Volume=( [one]="$1" [two]="$2" )
 declare -A Water=( [one]=0 [two]=0 )
 declare -i Step=0
 
+prepare_data () {
+    if [[ $4 == "one" ]]
+    then
+        Source=one
+        Target=two
+    else
+        Source=two
+        Target=one
+    fi
+}
+
 is_empty () {
     (( Water[$1] == 0 ))
 }
@@ -76,22 +87,13 @@ print_result () {
 }
 
 main () {
-    if [[ $4 == "one" ]]
-    then
-        Source=one
-        Target=two
-    else
-        Source=two
-        Target=one
-    fi
-
     until (( Water[one] == Goal || Water[two] == Goal ))
     do
         process_step
         record_step
     done
-
     print_result
 }
 
-main "$@"
+prepare_data "$@"
+main
