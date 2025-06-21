@@ -11,7 +11,7 @@ factors () {
         then
             (( ++factor ))
         else
-            factors+=( $factor )
+            factors+=( "$factor" )
             (( number /= factor ))
         fi
     done
