@@ -52,13 +52,14 @@ process_step() {
 }
 
 record_step () {
-    printf -v state "_%2d,%2d_" "${Water[$Source]}" "${Water[$Target]}"
+    printf -v state "_%d,%d_" "${Water[$Source]}" "${Water[$Target]}"
     if [[ $History =~ $state ]]
     then
         echo "invalid goal"
         exit 1
     else
         History+=$state
+        (( ++Step ))
     fi
 }
 
@@ -87,8 +88,7 @@ main () {
         winner=two
         second=one
     fi
-    echo "History: $History" >> log.txt
-    printf "moves: %d, goalBucket: %s, otherBucket: %d" $((${#History}/7)) $winner ${Water[$second]}
+    printf "moves: %d, goalBucket: %s, otherBucket: %d" "$Step" "$winner" ${Water[$second]}
 }
 
 main "$@"
