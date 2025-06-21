@@ -16,8 +16,9 @@ print_optional_triplet() {
 
 main () {
   local -ri sum="$1"
-  local -ri limit=$(( sum / 3 ))
+  ((sum % 2 == 0)) || return 0
 
+  local -ri limit=$(( sum / 3 ))
   for (( i=SMALLEST_POSSIBLE_A; i <= limit; i++ ))
   do
     print_optional_triplet "$sum" "$i"
