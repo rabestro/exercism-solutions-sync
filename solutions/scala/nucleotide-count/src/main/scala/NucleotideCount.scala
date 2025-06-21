@@ -1,11 +1,8 @@
 final case class DNA(strand: String):
-  private val validNucleotides = "ACGT"
+  private val validNucleotides = "ACGT".toSet
 
   def nucleotideCounts: Either[String, Map[Char, Int]] =
-    if strand forall (validNucleotides contains _) then
-      Right(
-        validNucleotides.map(_ -> 0).toMap ++
-          strand.groupBy(identity).view.mapValues(_.length).toMap
-      )
+    if strand forall validNucleotides.contains then
+      Right(validNucleotides.map(nucleotide => nucleotide -> strand.count(_ == nucleotide)).toMap)
     else
       Left("Invalid nucleotide found")
