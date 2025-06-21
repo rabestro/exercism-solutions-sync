@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-bc sieve.bc <<< "$1"
+OUT=$(bc sieve.bc <<< "$1")
+echo ${OUT//$'\\\n'/}
