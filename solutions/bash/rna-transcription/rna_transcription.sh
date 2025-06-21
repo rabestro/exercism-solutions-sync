@@ -5,4 +5,6 @@ die() {
   exit 1
 }
 
-[[ $1 =~ ^[GCTA]*$ ]] && tr "GCTA" "CGAU" <<<"$1" || die "Invalid nucleotide detected."
+[[ $1 =~ ^[GCTA]*$ ]] || die "Invalid nucleotide detected."
+
+tr "GCTA" "CGAU" <<<"$1"
