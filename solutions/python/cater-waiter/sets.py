@@ -35,8 +35,8 @@ def check_drinks(drink_name, drink_ingredients):
 
     """
 
-    drink_type = "Cocktail" if set(drink_ingredients) & ALCOHOLS else "Mocktail"
-    return f"{drink_name} {drink_type}"
+    drink_type = 'Cocktail' if set(drink_ingredients) & ALCOHOLS else 'Mocktail'
+    return f'{drink_name} {drink_type}'
 
 
 def categorize_dish(dish_name, dish_ingredients):
@@ -52,16 +52,14 @@ def categorize_dish(dish_name, dish_ingredients):
 
     """
 
-    category = next(
-        name for name, ingredients in (
+    for category, ingredients in (
             ('VEGAN', VEGAN),
             ('PALEO', PALEO),
             ('KETO', KETO),
             ('VEGETARIAN', VEGETARIAN),
-            ('OMNIVORE', OMNIVORE)
-        ) if dish_ingredients <= ingredients
-    )
-    return f"{dish_name}: {category}"
+            ('OMNIVORE', OMNIVORE)):
+        if dish_ingredients <= ingredients:
+            return f'{dish_name}: {category}'
 
 
 def tag_special_ingredients(dish):
