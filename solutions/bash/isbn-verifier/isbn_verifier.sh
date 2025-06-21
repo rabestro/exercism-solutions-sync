@@ -1,13 +1,8 @@
 #!/usr/bin/env bash
 
-false() {
-  echo "false"
-  exit 0
-}
-
-main() {
+is_isbn() {
   local isbn=${1//-/}
-  [[ $isbn =~ ^[[:digit:]]{9}[[:digit:]X]$ ]] || false
+  [[ $isbn =~ ^[[:digit:]]{9}[[:digit:]X]$ ]] || return 1
 
   local -i i=10 sum=0
   while ((i > 1)); do
@@ -17,8 +12,7 @@ main() {
   local check=${isbn: -1}
   ((sum += ${check/X/10}))
 
-  ((sum % 11)) && false
-  echo "true"
+  ((sum % 11)) && return 1
 }
 
-main "$@"
+is_isbn "$@" && echo true || echo false
