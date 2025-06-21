@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-bc factors.bc <<< "$1" | xargs
+factor "$1" | sed -E 's/[0-9]+: ?//'
