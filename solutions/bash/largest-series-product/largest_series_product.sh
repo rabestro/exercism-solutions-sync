@@ -12,7 +12,7 @@ one () {
 readonly number="$1" span="$2"
 
 (( ${#number} < $2 )) && die "span must be smaller than string length"
-[[ $1 = *[^[:digit:]]* ]] && die "input must only contain digits"
+[[ $1 == *[^[:digit:]]* ]] && die "input must only contain digits"
 (( span < 0 )) && die "span must not be negative"
 
 declare -i max_index="${#number} - $span + 1" product max_product=0 digit
