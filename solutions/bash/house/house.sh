@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 declare -ar subj=(
-    house malt rat cat dog
+    'house'
+    'malt'
+    'rat'
+    'cat'
+    'dog'
     'cow with the crumpled horn'
     'maiden all forlorn'
     'man all tattered and torn'
