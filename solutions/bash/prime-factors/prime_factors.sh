@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-main () {
+factors () {
     local -i number="$1"
     local -i factor=2
+    local -a factors
 
     while (( factor <= number ))
     do
@@ -10,10 +11,11 @@ main () {
         then
             (( ++factor ))
         else
-            printf "%d " "$factor"
+            factors+=( $factor )
             (( number /= factor ))
         fi
     done
+    echo "${factors[@]}"
 }
 
-main "$1" | sed 's/ $/\n/'
+factors "$1"
