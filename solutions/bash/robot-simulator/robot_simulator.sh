@@ -3,8 +3,7 @@
 die () { echo "$1" >&2; exit 1; }
 
 main () {
-    local -i x=$1
-    local -i y=$2
+    local -i x=$1 y=$2
     local direction=${3:-north}
     local movements=$4
 
