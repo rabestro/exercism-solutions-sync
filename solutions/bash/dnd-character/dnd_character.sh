@@ -9,11 +9,11 @@ dice () {
 }
 
 generate_ability () {
-    local -i round roll
+    local -i roll
     local -i sum=0 min=6
 
     # shellcheck disable=SC2034
-    for round in {1..4}
+    for _ in {1..4}
     do
         roll=$(dice)
         (( sum += roll ))
@@ -35,10 +35,10 @@ generate () {
     done
 }
 
-# main () {
-#     case "$1" in
-#         modifier|generate) "$@";;
-#     esac
-# }
+main () {
+    case "$1" in
+        modifier|generate) "$@";;
+    esac
+}
 
-"$@"
+main "$@"
