@@ -8,7 +8,7 @@ def create_inventory(items):
     :return: dict - the inventory dictionary.
     """
 
-    return {item: items.count(item) for item in set(items)}
+    return add_items({}, items)
 
 
 def add_items(inventory, items):
