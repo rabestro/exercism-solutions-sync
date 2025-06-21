@@ -1,19 +1,9 @@
 object NthPrime:
-  def prime(n: Int): Option[Int] =
-    if n < 1 then None
-    else Some(calculatePrime(n))
+  private val primes = 2 #:: LazyList.from(3, 2).filter(isPrime)
 
-  private def calculatePrime(nth: Int): Int =
-    val primes = scala.collection.mutable.ArrayBuffer(2)
+  private def isPrime(candidate: Int): Boolean =
+    primes.takeWhile(_ <= math.sqrt(candidate)).forall(candidate % _ != 0)
 
-    def isPrime(candidate: Int): Boolean =
-      primes
-        .takeWhile(_ <= Math.sqrt(candidate))
-        .forall(candidate % _ != 0)
-
-    LazyList.iterate(3)(_ + 2)
-      .takeWhile(_ => primes.size < nth)
-      .filter(isPrime)
-      .foreach(primes += _)
-
-    primes(nth - 1)
+  def prime(nth: Int): Option[Int] =
+    if nth < 1 then None
+    else Some(primes(nth - 1))
