@@ -14,7 +14,7 @@ public final class LedgerFormatter implements Function<Ledger.LedgerEntry, Strin
     private final String entryFormatPattern;
 
     public LedgerFormatter(Config config) {
-        var resource = ResourceBundle.getBundle("LedgerMessages", config.locale());
+        var resource = ResourceBundle.getBundle("resources.LedgerMessages", config.locale());
         dateFormatter = DateTimeFormatter.ofPattern(resource.getString("date.pattern"));
         var symbols = DecimalFormatSymbols.getInstance(config.locale());
         symbols.setCurrencySymbol(config.currency().getSymbol());
