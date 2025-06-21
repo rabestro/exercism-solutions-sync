@@ -38,14 +38,14 @@ main() {
 #    && echo true || echo false
 
   bc << END_BC
-    define abs_(x) {
+    define abst(x) {
       if (x < 0) return (-x)
       else return (x)
     }
     if ($white_queen_row == $black_queen_row \
       || $white_queen_col == $black_queen_col \
-      || abs_($white_queen_row - $black_queen_row) \
-      == abs_($white_queen_col - $black_queen_col) \
+      || abst($white_queen_row - $black_queen_row) \
+      == abst($white_queen_col - $black_queen_col) \
     ) print "true" else print "false"
 END_BC
 
