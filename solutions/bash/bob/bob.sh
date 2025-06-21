@@ -4,7 +4,7 @@ readonly phrase=${1//[!a-zA-Z?]/}
 
 if [[ $1 =~ ^[[:space:]]*$ ]]; then
   response="Fine. Be that way!"
-elif [[  $phrase =~ ^[[:upper:]]+\?$ ]]; then
+elif [[ $phrase =~ ^[[:upper:]]+\?$ ]]; then
   response="Calm down, I know what I'm doing!"
 elif [[ $phrase =~ ^[[:upper:]]+$ ]]; then
   response="Whoa, chill out!"
