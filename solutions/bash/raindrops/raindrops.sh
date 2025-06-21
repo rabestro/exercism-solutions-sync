@@ -1,17 +1,11 @@
 #!/usr/bin/env bash
 
-number=$1
+main() {
+  local -ir number="$1"
+  (( number % 3 == 0 )) && sound=Pling
+  (( number % 5 == 0 )) && sound+=Plang
+  (( number % 7 == 0 )) && sound+=Plong
+  echo ${sound:-$number}
+}
 
-if (( number % 3 == 0 )); then
-  sound=Pling
-fi
-
-if (( number % 5 == 0 )); then
-  sound+=Plang
-fi
-
-if (( number % 7 == 0 )); then
-  sound+=Plong
-fi
-
-echo ${sound:-$number}
+main "$@"
