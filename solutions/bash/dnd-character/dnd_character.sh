@@ -22,7 +22,7 @@ generate_ability () {
 
 generate () {
     local -ir constitution="$(generate_ability)"
-    local -ir hitpoints=$(( 10 + $(modifier $constitution) ))
+    local -ir hitpoints="$(( 10 + $(modifier $constitution) ))"
 
     echo "constitution $constitution"
     echo "hitpoints $hitpoints"
