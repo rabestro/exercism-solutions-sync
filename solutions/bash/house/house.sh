@@ -11,8 +11,7 @@ declare -ar subj=(
     'horse and the hound and the horn'
 )
 declare -ar verb=(
-    'lay in' ate killed worried tossed milked
-    kissed married woke kept 'belonged to'
+    'lay in' ate killed worried tossed milked kissed married woke kept 'belonged to'
 )
 declare -ir max_verse=${#subj[@]}
 
@@ -29,17 +28,17 @@ nursery_rhyme () {
 }
 
 main() {
-    local -ir from=$1 to=$2
-    local -i verse
-    
-    if (( from < 1 || from > max_verse || to < from || to > max_verse )); then
+    local -i verse=$1 end_verse=$2
+
+    if (( verse < 1 || verse > max_verse || end_verse < verse || end_verse > max_verse ))
+    then
         echo "invalid arguments"
         exit 1
     fi
 
-    for ((verse=$from; verse<=$to; verse++))
+    while (( verse<=$end_verse ))
     do
-        nursery_rhyme $verse
+        nursery_rhyme $(( verse++ ))
     done
 }
 
