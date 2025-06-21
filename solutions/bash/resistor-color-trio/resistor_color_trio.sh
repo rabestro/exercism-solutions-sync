@@ -23,9 +23,9 @@ c=${colors[$3]}
 validate "$c"
 
 if ((b == 0)) && ((a != 0)); then
-  unset b
+  b=""
   ((c++))
 fi
-((a == 0)) && unset a
+((a == 0)) && a=""
 
 echo "${a}${b}${suffix[$c]}ohms"
