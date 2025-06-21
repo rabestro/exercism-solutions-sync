@@ -3,19 +3,9 @@ max_number = read()
 for (n = 2; n <= max_number; ++n) {
     if (composite[n]) continue
 
+    print n, " "
     /* Sieve of Eratosthenes */
     for (i = 2 * n; i <= max_number; i += n) {
         composite[i] = 1
-    }
-}
-
-/* Print prime numbers */
-for (n = 2; n <= max_number; ++n) {
-    if (composite[n]) continue
-
-    if (n > 2) {
-        print " ", n
-    } else {
-        print n
     }
 }
