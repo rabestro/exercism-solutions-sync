@@ -29,3 +29,4 @@ object Frequency {
     results.flatten.groupBy(_._1).view.mapValues(_.map(_._2).sum).toMap
   }
 }
+
