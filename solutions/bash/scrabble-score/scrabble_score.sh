@@ -7,8 +7,8 @@ readonly -A letterValues=(
 readonly word="${1^^}"
 declare -i score=0
 
-for char in $(grep -o . <<<"$word") ; do
-    ((score+=letterValues[$char]))
+for letter in $(grep -o . <<<"$word"); do
+  ((score += letterValues[$letter]))
 done
 
 echo $score
