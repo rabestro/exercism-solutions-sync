@@ -1,6 +1,6 @@
-:while
+:do
 s/\(\)|\{\}|\[\]|[^][(){}]//g
-t while
+t do
 
 s/^$/true/p
 t
