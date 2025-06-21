@@ -13,7 +13,8 @@ main () {
       (( numerator = sum * sum - 2 * sum * a ))
       (( denominator = 2 * (sum - a) ))
       (( b = numerator / denominator ))
-      (( b * denominator == numerator && a < b )) || continue
+      (( b * denominator == numerator )) || continue
+      (( a < b )) || return 0
       (( c = sum - a - b ))
       (( c > b )) || return 0
       printf "%d,%d,%d\n" $a $b $c
