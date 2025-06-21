@@ -5,7 +5,9 @@ if ! [[ "$#" -eq 1 && $1 =~ ^[0-9]+$ ]]; then
   exit 1
 fi
 
-if [[ $(( $1%4 )) -eq 0 && $(( $1%100 )) -ne 0 || $(( $1%400 )) -eq 0 ]]; then
+readonly year=$1
+
+if ((year % 4 == 0 && year % 100 != 0 || year % 400 == 0)); then
   echo true
 else
   echo false
