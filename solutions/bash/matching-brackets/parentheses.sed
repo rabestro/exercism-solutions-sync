@@ -1,9 +1,6 @@
-:combine
-s/\(\)//g
-s/\{\}//g
-s/\[\]//g
-s/[^][(){}]//g
-t combine
+:while
+s/\(\)|\{\}|\[\]|[^][(){}]//g
+t while
 
 s/^$/true/p
 t
