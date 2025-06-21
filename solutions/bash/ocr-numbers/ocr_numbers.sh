@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-# cat /dev/stdin |
-gawk --exec ocr_numbers.awk
+if [[ -t 0 ]]
+then
+    echo ""
+    exit 0
+fi
 
-# read line
-# echo "Line: [$line]"
+gawk --exec ocr_numbers.awk
