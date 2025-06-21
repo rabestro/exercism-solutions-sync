@@ -9,16 +9,15 @@ dice() {
 }
 
 generate_ability() {
-    local -i result=0 roll min=6
+    local -i sum=0 roll min=6
 
     for round in {1..4}
     do
         roll=$(dice)
-        result+=roll
-        let "min = roll < min ? roll : min"
+        (( sum += roll ))
+        (( min = roll < min ? roll : min ))
     done
-
-    echo "$(( result -= min ))"
+    echo "$(( sum - min ))"
 }
 
 generate() {
@@ -35,12 +34,10 @@ generate() {
 }
 
 main () {
-    if [[ "$1" == "modifier" ]]
-    then
-        modifier "$2"
-    else
-        generate
-    fi
+    case "$1" in
+        modifier) modifier "$2";;
+        generate) generate;;
+    esac
 }
 
 main "$@"
