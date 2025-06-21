@@ -1,27 +1,24 @@
 #!/usr/bin/env bash
 declare -ri SMALLEST_POSSIBLE_A=3
 
-print_optional_triplet() {
-  local -ri sum="$1"
-  local -ri a="$2"
-  local -ri numerator=$(( sum * sum - 2 * sum * a ))
-  local -ri denominator=$(( 2 * (sum - a) ))
-  local -ri remainder=$(( numerator % denominator ))
-  (( remainder == 0 )) || return 0
-  local -ri b=$(( numerator / denominator ))
-  (( a < b )) || return 0
-  local -ri c=$(( sum - a - b ))
-  printf "%d,%d,%d\n" $a $b $c
-}
-
 main () {
   local -ri sum="$1"
   ((sum % 2 == 0)) || return 0
 
   local -ri limit=$(( sum / 3 ))
-  for (( i=SMALLEST_POSSIBLE_A; i <= limit; i++ ))
+  local -i a b c numerator denominator remainder
+
+  for (( a=SMALLEST_POSSIBLE_A; a <= limit; a++ ))
   do
-    print_optional_triplet "$sum" "$i"
+      (( numerator = sum * sum - 2 * sum * a ))
+      (( denominator = 2 * (sum - a) ))
+      (( remainder = numerator % denominator ))
+      (( remainder == 0 )) || continue
+      (( b = numerator / denominator ))
+      (( a < b )) || continue
+      (( c = sum - a - b ))
+      (( c > b )) || return 0
+      printf "%d,%d,%d\n" $a $b $c
   done
   return 0
 }
