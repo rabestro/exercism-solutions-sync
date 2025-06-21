@@ -11,7 +11,8 @@ class Alien:
 
     total_aliens_created: 'ClassVar[int]' = 0
 
-    def __post_init__(self):
+    @staticmethod
+    def __post_init__():
         Alien.total_aliens_created += 1
 
     def hit(self):
