@@ -23,7 +23,7 @@ print_max_product () {
     local -r number="$1"
     local -ir span="$2"
     local -i product digit max_product i k
-    local -i max_index=$(( ${#number} - $span + 1 ))
+    local -i max_index=$(( ${#number} - span + 1 ))
 
     for (( i = 0; i < max_index; ++i ))
     do
