@@ -5,9 +5,11 @@ readonly -A letterValues=(
   ["N"]=1 ["O"]=1 ["P"]=3 ["Q"]=10 ["R"]=1 ["S"]=1 ["T"]=1 ["U"]=1 ["V"]=4 ["W"]=4 ["X"]=8 ["Y"]=4 ["Z"]=10)
 
 readonly word="${1^^}"
+readonly len=${#word}
 declare -i score=0
 
-for letter in $(grep -o . <<<"$word"); do
+for ((i = 0; i < len; i++)); do
+  letter=${word:i:1}
   ((score += letterValues[$letter]))
 done
 
