@@ -23,7 +23,7 @@ public class Ledger {
                 .map(ledgerFormatter);
 
         return Stream.concat(ledgerFormatter.header(), body)
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 
     public record LedgerEntry(LocalDate date, String description, double change) {
