@@ -2,7 +2,7 @@
 
 main () {
     local -r phrase=${1@L}
-    local symbols=${phrase//[[:space:]-]/}
+    local symbols=${phrase//[^[:alpha:]]/}
 
     for letter in {a..z}
     do
