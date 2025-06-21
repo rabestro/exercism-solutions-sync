@@ -1,22 +1,43 @@
 #!/usr/bin/env bash
 
 die () {
-  echo "$1"
-  exit 1
+  echo "$1"; exit 1
 }
+
 one () {
-  echo 1
-  exit
+  echo 1; exit
+}
+
+digit () {
+  echo $(($1 % 10 ** $2 / 10 ** ($2 - 1)  ))
 }
 
 (( $# == 1 )) || (( $2 == 0 )) && one
 
-readonly number="$1"
-readonly span="$2"
+readonly number="$1" span="$2"
 
 (( ${#number} < $2 )) && die "span must be smaller than string length"
 [[ $1 = *[^[:digit:]]* ]] && die "input must only contain digits"
 (( span < 0 )) && die "span must not be negative"
+
+declare -i max_index="${#number} - $span + 1" product
+
+for i in {1..$max_index}
+do
+    (( product = ${number:${i}:1} ))
+    for (( k = 1; k < span; ++k ))
+    do
+       (( l = i + k, product *= ${number:${l}:1} ))
+    done
+
+    if (( product > max_product ))
+    then
+        max_product=product
+    fi
+done
+
+echo $max_product
+exit
 
 bc <<< "
 number = $number
