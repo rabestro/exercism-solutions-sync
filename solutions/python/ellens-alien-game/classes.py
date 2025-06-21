@@ -2,14 +2,22 @@
 
 
 class Alien:
+    """Create an Alien object with location x_coordinate and y_coordinate."""
     total_aliens_created = 0
 
     def __init__(self, x_coordinate, y_coordinate):
-        """Create an Alien object with location x_coordinate and y_coordinate."""
         self.x_coordinate = x_coordinate
         self.y_coordinate = y_coordinate
         self.health = 3
         Alien.total_aliens_created += 1
+
+    def __repr__(self):
+        # A great repr shows how to recreate the object
+        return f"Alien(x_coordinate={self.x_coordinate}, y_coordinate={self.y_coordinate})"
+
+    def __str__(self):
+        # A friendly string for printing
+        return f"An alien at ({self.x_coordinate}, {self.y_coordinate}) with {self.health} health."
 
     def hit(self):
         """Decrement Alien health by one point."""
