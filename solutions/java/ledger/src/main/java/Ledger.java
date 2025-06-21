@@ -14,8 +14,9 @@ public class Ledger {
         var ledgerFormatter = new LedgerFormatter(config);
 
         var comparator = Comparator
-                .comparing(LedgerEntry::change)
-                .thenComparing(LedgerEntry::date);
+                .comparing(LedgerEntry::date)
+                .thenComparing(LedgerEntry::description)
+                .thenComparing(LedgerEntry::change);
 
         var body = Arrays.stream(entries)
                 .sorted(comparator)
