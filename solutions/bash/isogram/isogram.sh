@@ -2,13 +2,7 @@
 
 main () {
    local phrase=${1@L}
-
-   if [[ $phrase =~ ([a-z]).*\1 ]]
-   then
-     echo false
-   else
-     echo true
-   fi
+   grep -qvE '([a-z]).*\1' <<< "$phrase" && echo true || echo false
 }
 
 main "$@"
