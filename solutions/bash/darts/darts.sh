@@ -5,7 +5,7 @@ die () { echo "$1"; exit 1; }
 main () {
   (( $# != 2 )) && die "Invalid arg count"
 
-  for i; do [[ $i == *[^[:digit:].-]* ]] && die "Non-numeric arg"; done
+  for i; do [[ $i = *[^[:digit:].-]* ]] && die "Non-numeric arg"; done
 
   bc <<<"
     x=$1
