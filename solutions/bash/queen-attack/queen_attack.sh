@@ -30,10 +30,10 @@ main() {
 
   bc -l <<<"
     define abst(x) { if(x<0) return(-x) else return(x) }
-
     if ($white_queen_row == $black_queen_row \
       || $white_queen_col == $black_queen_col \
-      || abst($white_queen_row - $black_queen_row) == abst($white_queen_col - $black_queen_col) \
+      || abst($white_queen_row - $black_queen_row) \
+      == abst($white_queen_col - $black_queen_col) \
     ) print \"true\" else print \"false\"
   "
 }
