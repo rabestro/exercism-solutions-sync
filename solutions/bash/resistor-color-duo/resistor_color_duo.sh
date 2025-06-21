@@ -15,4 +15,4 @@ color_number() {
 
 a=$(color_number "$1") || exit 1
 b=$(color_number "$2") || exit 1
-echo "$a$b"
+[[ $a == "0" ]] && echo "$b" || echo "$a$b"
