@@ -1,10 +1,11 @@
 """Functions to manage a users shopping cart items."""
+from typing import Iterable
 
 
 def add_item(current_cart: dict[str, int], items_to_add) -> dict[str, int]:
-    """Add items to shopping cart.
+    """Add items to a shopping cart.
 
-    :param current_cart: dict - the current shopping cart.
+    :param current_cart: Dict - the current shopping cart.
     :param items_to_add: iterable - items to add to the cart.
     :return: dict - the updated user cart dictionary.
     """
@@ -14,17 +15,17 @@ def add_item(current_cart: dict[str, int], items_to_add) -> dict[str, int]:
     return current_cart
 
 
-def read_notes(notes):
-    """Create user cart from an iterable notes entry.
+def read_notes(notes: Iterable) -> dict[str, int]:
+    """Create a user cart from an iterable notes entry.
 
-    :param notes: iterable of items to add to cart.
+    :param notes: Iterable of items to add to the cart.
     :return: dict - a user shopping cart dictionary.
     """
 
     return dict.fromkeys(notes, 1)
 
 
-def update_recipes(ideas, recipe_updates):
+def update_recipes(ideas: dict, recipe_updates: dict) -> dict[str, int]:
     """Update the recipe ideas dictionary.
 
     :param ideas: dict - The "recipe ideas" dict.
@@ -32,46 +33,44 @@ def update_recipes(ideas, recipe_updates):
     :return: dict - updated "recipe ideas" dict.
     """
 
-    ideas |= recipe_updates
-    return ideas
+    return ideas | dict(recipe_updates)
 
 
-def sort_entries(cart):
+def sort_entries(cart: dict) -> dict[str, int]:
     """Sort a users shopping cart in alphabetically order.
 
     :param cart: dict - a users shopping cart dictionary.
     :return: dict - users shopping cart sorted in alphabetical order.
     """
 
-    return {key: cart[key] for key in sorted(cart.keys())}
+    return dict(sorted(cart.items()))
 
 
-def send_to_store(cart, aisle_mapping):
+def send_to_store(cart: dict, aisle_mapping: dict) -> dict[str, list]:
     """Combine users order to aisle and refrigeration information.
 
     :param cart: dict - users shopping cart dictionary.
     :param aisle_mapping: dict - aisle and refrigeration information dictionary.
     :return: dict - fulfillment dictionary ready to send to store.
     """
-
     return {
-        key: [cart[key]] + aisle_mapping[key]
-        for key in sorted(cart.keys(), reverse=True)
+        item: [quantity, *aisle_mapping[item]]
+        for item, quantity in sorted(cart.items(), reverse=True)
     }
 
 
-def update_store_inventory(fulfillment_cart, store_inventory):
+def update_store_inventory(fulfillment_cart: dict, store_inventory: dict) -> dict[str, list]:
     """Update store inventory levels with user order.
 
-    :param fulfillment cart: dict - fulfillment cart to send to store.
+    :param fulfillment_cart: dict - fulfillment cart to send to store.
     :param store_inventory: dict - store available inventory
     :return: dict - store_inventory updated.
     """
-
-    for item, value in fulfillment_cart.items():
-        quantity = value[0]
-        store_inventory[item][0] = store_inventory[item][0] - quantity
-        if store_inventory[item][0] <= 0:
-            store_inventory[item][0] = 'Out of Stock'
-
-    return store_inventory
+    return {
+        item: [
+            quantity - fulfillment_cart.get(item, [0])[0] or 'Out of Stock',
+            aisle,
+            refrigeration
+        ]
+        for item, (quantity, aisle, refrigeration) in store_inventory.items()
+    }
