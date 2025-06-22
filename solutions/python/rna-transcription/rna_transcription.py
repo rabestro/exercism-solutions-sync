@@ -1,5 +1,6 @@
-_DNA_RNA = {'G': 'C', 'C': 'G', 'T': 'A', 'A': 'U'}
+_DNA_RNA = str.maketrans("GCTA", "CGAU")
 
 
-def to_rna(dna_strand):
-    return "".join(_DNA_RNA[nucleotid] for nucleotid in dna_strand)
+def to_rna(dna_strand: str) -> str:
+    """Transcribe a DNA strand into its RNA equivalent."""
+    return dna_strand.translate(_DNA_RNA)
