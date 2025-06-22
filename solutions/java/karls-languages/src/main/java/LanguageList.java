@@ -17,7 +17,7 @@ public class LanguageList {
     }
 
     public String firstLanguage() {
-        return languages.get(0);
+        return languages.getFirst();
     }
 
     public int count() {
@@ -29,6 +29,6 @@ public class LanguageList {
     }
 
     public boolean isExciting() {
-        return languages.contains("Java") || languages.contains("Kotlin");
+        return containsLanguage("Java") || containsLanguage("Kotlin");
     }
 }
