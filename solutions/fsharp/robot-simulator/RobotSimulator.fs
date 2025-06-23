@@ -27,11 +27,12 @@ let turnLeft robot =
     | West -> { robot with direction = South }
 
 let advance robot =
-    match robot.direction with
-    | North -> { robot with position = (fst robot.position, snd robot.position + 1) }
-    | East -> { robot with position = (fst robot.position + 1, snd robot.position) }
-    | South -> { robot with position = (fst robot.position, snd robot.position - 1) }
-    | West -> { robot with position = (fst robot.position - 1, snd robot.position) }
+    match (robot.direction, robot.position) with
+    | North, (x, y) -> x, y + 1
+    | East, (x, y) -> x + 1, y
+    | South, (x, y) -> x, y - 1
+    | West, (x, y) -> x - 1, y
+    |> fun position -> { robot with position = position }
 
 let act robot instruction =
     match instruction with
