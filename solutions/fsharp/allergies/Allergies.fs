@@ -10,10 +10,9 @@ type Allergen =
     | Pollen = 64
     | Cats = 128
 
-let allergicTo codedAllergies allergen = int <| allergen &&& codedAllergies <> 0
+let allergicTo codedAllergies allergen = codedAllergies &&& int allergen <> 0
 
 let list codedAllergies =
-    System.Enum.GetValues(typeof<Allergen>)
-    |> Seq.cast<Allergen>
+    System.Enum.GetValues<Allergen>()
     |> Seq.filter (allergicTo codedAllergies)
     |> Seq.toList
