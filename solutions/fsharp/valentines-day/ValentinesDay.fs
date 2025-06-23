@@ -21,6 +21,6 @@ let rateActivity (activity: Activity): Approval =
     | Movie Romance -> Yes
     | Restaurant Korean -> Yes
     | Restaurant Turkish -> Maybe
-    | Walk d when d < 5 -> Maybe
+    | Walk distance when distance < 3 -> Yes
+    | Walk distance when distance < 5 -> Maybe
     | _ -> No
-    
