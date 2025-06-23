@@ -25,11 +25,8 @@ var RomanNumerals = []RomanNumeral{
 	{1, "I"},
 }
 
-const MINIMUM = 1
-const MAXIMUM = 3999
-
 func validateRange(number int) error {
-	if number < MINIMUM || number > MAXIMUM {
+	if number < 1 || number > 3999 {
 		return errors.New("number has to be in range [1..3999]")
 	}
 	return nil
