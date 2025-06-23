@@ -6,9 +6,7 @@ type Node =
       right: Node option }
 
 let left node = node.left
-
 let right node = node.right
-
 let data node = node.data
 
 let rec create items =
@@ -25,15 +23,6 @@ let rec create items =
 let rec sortedData node: int list =
     match node.data, node.left, node.right with
     | x, None, None -> [ x ]
-    | x, Some left, None ->
-        List.concat
-            [ sortedData left
-              [ x ] ]
-    | x, None, Some right ->
-        List.concat
-            [ [ x ]
-              sortedData right ]
-
-    | x, Some left, Some right ->
-        List.concat
-        [ sortedData left; [ x ]; sortedData right ]
+    | x, Some left, None -> sortedData left @ [ x ]
+    | x, None, Some right -> [ x ] @ sortedData right
+    | x, Some left, Some right -> sortedData left @ [ x ] @ sortedData right
