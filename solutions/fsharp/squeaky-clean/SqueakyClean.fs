@@ -12,4 +12,4 @@ let transform (c: char) : string =
     | _ -> $"{c}"
 
 let clean (identifier: string): string =
-    failwith "Please implement the 'clean' function"
+    String.collect transform identifier
