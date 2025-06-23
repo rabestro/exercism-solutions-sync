@@ -29,10 +29,10 @@ func (tm Clock) String() string {
 
 // Add increases the Clock by given minutes
 func (tm Clock) Add(minutes int) Clock {
-	return New(0, tm.hour*60+tm.minute+minutes)
+	return New(tm.hour, tm.minute+minutes)
 }
 
 // Subtract decreases the Clock by given minutes
 func (tm Clock) Subtract(minutes int) Clock {
-	return New(0, tm.hour*60+tm.minute-minutes)
+	return New(tm.hour, tm.minute-minutes)
 }
