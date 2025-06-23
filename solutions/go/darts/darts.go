@@ -1,13 +1,11 @@
 package darts
 
-import "math"
-
 func Score(x, y float64) int {
-	distance := math.Sqrt(x*x + y*y)
+	distance := x*x + y*y
 	switch {
-	case distance > 10:
+	case distance > 100:
 		return 0
-	case distance > 5:
+	case distance > 25:
 		return 1
 	case distance > 1:
 		return 5
