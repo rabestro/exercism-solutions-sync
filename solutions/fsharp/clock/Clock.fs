@@ -1,17 +1,20 @@
 module Clock
 
+let private minutesPerHour = 60
+let private hoursPerDay = 24
+
 type Clock =
     { Hours: int
       Minutes: int }
 
 let create hours minutes =
-    let mutable h = hours + minutes / 60
-    let mutable m = minutes % 60
+    let mutable h = hours + minutes / minutesPerHour
+    let mutable m = minutes % minutesPerHour
     if m < 0 then
         h <- h - 1
-        m <- m + 60
-    h <- h % 24
-    if h < 0 then h <- h + 24
+        m <- m + minutesPerHour
+    h <- h % hoursPerDay
+    if h < 0 then h <- h + hoursPerDay
 
     { Hours = h
       Minutes = m }
