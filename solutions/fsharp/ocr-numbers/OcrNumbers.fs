@@ -16,7 +16,7 @@ let digit =
     | " _ |_| _|   " -> "9"
     | _ -> "?"
 
-let line (input: list<string>) =
+let line (input: string list) =
     let box i =
         seq { 0 .. 3 }
         |> Seq.map (fun l -> input.[l].Substring(i, 3))
@@ -27,11 +27,15 @@ let line (input: list<string>) =
     |> Seq.map digit
     |> String.Concat
 
-let page (input: list<string>) =
+let convertText (input: string list) =
     List.chunkBySize 4 input
     |> List.map line
     |> String.concat ","
 
-let convert (input: list<string>) =
-    let isValidSize = input.Length % 4 = 0 && input |> Seq.forall (fun x -> x.Length % 3 = 0)
-    if isValidSize then page input |> Some else None
+let incorrectSize (input: string list) =
+    input.Length % 4 <> 0 || input |> Seq.exists (fun x -> x.Length % 3 <> 0)
+    
+let convert (input: string list) =
+    match input with
+    | _ when incorrectSize input -> None
+    | _ -> convertText input |> Some
