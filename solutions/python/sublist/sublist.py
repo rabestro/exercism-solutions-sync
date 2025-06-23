@@ -1,11 +1,13 @@
-from enum import Enum
+import enum
 
-class ListRelation(Enum):
+
+class ListRelation(enum.IntEnum):
     """Categorizes the relationship between two lists."""
     EQUAL = 1
     SUBLIST = 2
     SUPERLIST = 3
     UNEQUAL = 4
+
 
 # Exposing constants for the test runner.
 SUBLIST = ListRelation.SUBLIST
@@ -19,6 +21,7 @@ def is_contained(inner: list, outer: list) -> bool:
         inner == outer[i:i + inner_len]
         for i in range(len(outer) - inner_len + 1)
     )
+
 
 def sublist(list_one: list, list_two: list) -> ListRelation:
     """
