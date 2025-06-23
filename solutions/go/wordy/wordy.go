@@ -16,12 +16,23 @@ func Answer(question string) (int, bool) {
 		return 0, false
 	}
 
-	initialNumber, _ := strconv.Atoi(matches[1])
-	r := Result{initialNumber}
+	result, _ := strconv.Atoi(matches[1])
 
 	operations := operationPattern.FindAllStringSubmatch(question, -1)
 	for _, operation := range operations {
-		r.process(operation[1], operation[2])
+		operator := operation[1]
+		number, _ := strconv.Atoi(operation[2])
+		switch operator {
+		case "plus":
+			result += number
+		case "minus":
+			result -= number
+		case "multiplied by":
+			result *= number
+		case "divided by":
+			result /= number
+		}
 	}
-	return r.value, true
+
+	return result, true
 }
