@@ -1,26 +1,21 @@
 module Clock
 
+[<Literal>]
 let private minutesPerHour = 60
+[<Literal>]
 let private hoursPerDay = 24
 
-type Clock =
-    { Hours: int
-      Minutes: int }
+[<Literal>]
+let private minutesPerDay = minutesPerHour * hoursPerDay
 
-let create hours minutes =
-    let mutable h = hours + minutes / minutesPerHour
-    let mutable m = minutes % minutesPerHour
-    if m < 0 then
-        h <- h - 1
-        m <- m + minutesPerHour
-    h <- h % hoursPerDay
-    if h < 0 then h <- h + hoursPerDay
+type Clock = Clock of Minutes:int
 
-    { Hours = h
-      Minutes = m }
+let normalize minutes = (minutes % minutesPerDay + minutesPerDay) % minutesPerDay
 
-let add minutes clock = create clock.Hours (clock.Minutes + minutes)
+let create hours minutes = Clock (normalize <| hours * minutesPerHour + minutes )
 
-let subtract minutes clock = create clock.Hours (clock.Minutes - minutes)
+let add minutes (Clock totalMinutes) = create 0 (totalMinutes + minutes)
 
-let display clock = $"%02d{clock.Hours}:%02d{clock.Minutes}"
+let subtract minutes clock = add -minutes clock
+
+let display (Clock totalMinutes) = $"%02d{totalMinutes / minutesPerHour}:%02d{totalMinutes % minutesPerHour}"
