@@ -25,13 +25,6 @@ var RomanNumerals = []RomanNumeral{
 	{1, "I"},
 }
 
-func validateRange(number int) error {
-	if number < 1 || number > 3999 {
-		return errors.New("number has to be in range [1..3999]")
-	}
-	return nil
-}
-
 func arabicToRoman(number int) string {
 	roman := ""
 	for _, numeral := range RomanNumerals {
@@ -45,8 +38,8 @@ func arabicToRoman(number int) string {
 
 // ToRomanNumeral converts an integer to its roman numeral string equivalent
 func ToRomanNumeral(number int) (string, error) {
-	if err := validateRange(number); err != nil {
-		return "", err
+	if number < 1 || number > 3999 {
+		return "", errors.New("number has to be in range [1..3999]")
 	}
 	return arabicToRoman(number), nil
 }
