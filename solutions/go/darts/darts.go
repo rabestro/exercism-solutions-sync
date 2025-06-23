@@ -2,16 +2,16 @@ package darts
 
 import "math"
 
-func Score(x float64, y float64) int {
+func Score(x, y float64) int {
 	distance := math.Sqrt(x*x + y*y)
-	if distance > 10 {
+	switch {
+	case distance > 10:
 		return 0
-	}
-	if distance > 5 {
+	case distance > 5:
 		return 1
-	}
-	if distance > 1 {
+	case distance > 1:
 		return 5
+	default:
+		return 10
 	}
-	return 10
 }
