@@ -18,17 +18,14 @@ let validateLength (digits:string) =
     | 11 -> validateNumber digits[1..]
     | _ -> Error "incorrect number of digits"
         
-let digits input =
-    input
-    |> Seq.filter Char.IsDigit
-    |> String.Concat
+let keepDigits input = input |> Seq.filter Char.IsDigit |> String.Concat
 
 let isPunctuation (symbol:char) = ",:;".Contains symbol
     
-let validateSymbols input =
+let validate input =
     match input with
     | _ when Seq.exists Char.IsLetter input -> Error "letters not permitted"
     | _ when Seq.exists isPunctuation input -> Error "punctuations not permitted"
-    | _ -> digits input |> validateLength 
+    | _ -> keepDigits input |> validateLength 
     
-let clean input = validateSymbols input
+let clean input = validate input
