@@ -4,6 +4,5 @@ open System
 
 let abbreviate (phrase: string) =
     phrase.Split([| ' '; '-'; '_' |], StringSplitOptions.RemoveEmptyEntries)
-    |> Array.map Seq.head
-    |> Array.map Char.ToUpper
+    |> Array.map (Seq.head >> Char.ToUpper)
     |> String
