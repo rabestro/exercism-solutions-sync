@@ -1,9 +1,10 @@
 module DifferenceOfSquares
 
 let squareOfSum (number: int): int =
-    let sum = number * (number + 1) / 2
-    sum * sum
+    pown (number * (number + 1) / 2) 2
 
-let sumOfSquares (number: int): int = number * (number + 1) * (2 * number + 1) / 6
+let sumOfSquares (number: int): int =
+    number * (number + 1) * (2 * number + 1) / 6
 
-let differenceOfSquares (number: int): int = squareOfSum number - sumOfSquares number
+let differenceOfSquares (number: int): int =
+    squareOfSum number - sumOfSquares number
