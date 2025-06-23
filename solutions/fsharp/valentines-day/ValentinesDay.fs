@@ -1,13 +1,7 @@
 module ValentinesDay
 
-type Approval =
-    | Yes
-    | No 
-    | Maybe
-
-type Cuisine =
-    | Korean
-    | Turkish
+type Approval = Yes | No | Maybe
+type Cuisine = Korean | Turkish
 
 type Genre =
     | Crime
@@ -22,14 +16,11 @@ type Activity =
     | Restaurant of Cuisine
     | Walk of int
 
-let rateMovie (genre: Genre): Approval =
-    match genre with
-    | Romance -> Yes
-    | _ -> No
-
 let rateActivity (activity: Activity): Approval = 
     match activity with 
-    | BoardGame -> No
-    | Chill -> No
-    | Movie genre -> rateMovie genre
-    | _ -> Maybe
+    | Movie Romance -> Yes
+    | Restaurant Korean -> Yes
+    | Restaurant Turkish -> Maybe
+    | Walk d when d < 5 -> Maybe
+    | _ -> No
+    
