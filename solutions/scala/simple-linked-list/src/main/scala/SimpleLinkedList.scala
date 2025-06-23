@@ -31,7 +31,7 @@ case object EmptyList extends SimpleLinkedList[Any]:
 
   override def value: Any = throw new NoSuchElementException("value called on Empty")
 
-  override def add(item: Any): SimpleLinkedList[Any] = SimpleLinkedList(item)
+  override def add(item: Any): SimpleLinkedList[Any] = Node(item, this)
 
   override def next: SimpleLinkedList[Any] = throw new NoSuchElementException("next called on Empty")
 
