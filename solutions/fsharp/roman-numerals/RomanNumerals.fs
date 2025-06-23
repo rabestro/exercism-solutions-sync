@@ -1,7 +1,12 @@
 module RomanNumerals
 
 let roman arabicNumeral =
-    [ ""; "M"; "MM"; "MMM" ].[arabicNumeral / 1000]
-    + [ ""; "C"; "CC"; "CCC"; "CD"; "D"; "DC"; "DCC"; "DCCC"; "CM" ].[arabicNumeral % 1000 / 100]
-    + [ ""; "X"; "XX"; "XXX"; "XL"; "L"; "LX"; "LXX"; "LXXX"; "XC" ].[arabicNumeral % 100 / 10]
-    + [ ""; "I"; "II"; "III"; "IV"; "V"; "VI"; "VII"; "VIII"; "IX" ].[arabicNumeral % 10]
+    let thousands = arabicNumeral / 1000
+    let hundreds = arabicNumeral % 1000 / 100
+    let tens = arabicNumeral % 100 / 10
+    let units = arabicNumeral % 10
+    
+    [ ""; "M"; "MM"; "MMM" ].[thousands]
+    + [ ""; "C"; "CC"; "CCC"; "CD"; "D"; "DC"; "DCC"; "DCCC"; "CM" ].[hundreds]
+    + [ ""; "X"; "XX"; "XXX"; "XL"; "L"; "LX"; "LXX"; "LXXX"; "XC" ].[tens]
+    + [ ""; "I"; "II"; "III"; "IV"; "V"; "VI"; "VII"; "VIII"; "IX" ].[units]
