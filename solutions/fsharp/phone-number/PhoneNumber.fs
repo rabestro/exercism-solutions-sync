@@ -24,7 +24,7 @@ let private validateLength (digits:string) =
 let private keepDigits input = input |> Seq.filter Char.IsDigit |> String.Concat
 
 let private isPunctuation (symbol:char) =
-     not (".()-".Contains symbol) && (Char.IsPunctuation symbol)
+      not <| ".()-".Contains symbol && (Char.IsPunctuation symbol)
     
 let private validateSymbols input =
     match input with
