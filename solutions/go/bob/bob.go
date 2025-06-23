@@ -3,25 +3,41 @@ package bob
 
 import (
 	"strings"
+	"unicode"
 )
 
-// Hey takes a remark as input, and returns Bob's response to that remark.
-func Hey(remark string) string {
-	remark = strings.TrimSpace(remark)
+type Remark string
 
-	if remark == "" {
-		return "Fine. Be that way!"
-	}
+func newRemark(remark string) Remark {
+	return Remark(strings.TrimSpace(remark))
+}
+func (remark Remark) isSilence() bool {
+	return remark == ""
+}
+func (remark Remark) isShouting() bool {
+	hasLetters := strings.IndexFunc(string(remark), unicode.IsLetter) >= 0
+	isUpcased := strings.ToUpper(string(remark)) == string(remark)
+	return hasLetters && isUpcased
+}
+func (remark Remark) isQuestion() bool {
+	return strings.HasSuffix(string(remark), "?")
+}
+func (remark Remark) isExasperated() bool {
+	return remark.isShouting() && remark.isQuestion()
+}
 
-	isQuestion := strings.HasSuffix(remark, "?")
-	isYelling := strings.ToUpper(remark) == remark && strings.ToLower(remark) != remark
+// Hey takes a message as input, and returns Bob's response to that remark.
+func Hey(message string) string {
+	remark := newRemark(message)
 
 	switch {
-	case isQuestion && isYelling:
+	case remark.isSilence():
+		return "Fine. Be that way!"
+	case remark.isExasperated():
 		return "Calm down, I know what I'm doing!"
-	case isYelling:
+	case remark.isShouting():
 		return "Whoa, chill out!"
-	case isQuestion:
+	case remark.isQuestion():
 		return "Sure."
 	default:
 		return "Whatever."
