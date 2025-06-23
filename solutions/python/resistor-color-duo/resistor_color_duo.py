@@ -11,6 +11,4 @@ def value(colors: Sequence[str]) -> int:
     Calculates the two-band resistor value from a list of color names.
     This version uses a more scalable string-joining technique.
     """
-    return int("".join(
-        map(str, (COLOR_MAP[c] for c in colors[:2]))
-    ))
+    return int("".join(str(COLOR_MAP[c]) for c in colors[:2]))
