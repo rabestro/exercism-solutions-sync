@@ -7,10 +7,10 @@ let handleErrorByReturningOption input =
         int input |> Some
     with _ -> None
 
-let handleErrorByReturningResult =
-    function
-    | "1" -> Ok 1
-    | _ -> Error "Could not convert input to integer"
+let handleErrorByReturningResult input =
+    try
+        int input |> Ok
+    with _ -> Error "Could not convert input to integer"
 
 let bind switchFunction twoTrackInput =
     match twoTrackInput with
