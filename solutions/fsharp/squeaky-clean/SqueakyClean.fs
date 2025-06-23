@@ -6,9 +6,9 @@ let transform (c: char) : string =
     match c with
     | '-' -> "_"
     | ' ' -> ""
-    | _ when System.Char.IsUpper c -> $"-{System.Char.ToLower c}"
-    | _ when System.Char.IsDigit c -> ""
-    | _ when System.Char.IsLower c && not (System.Char.IsAsciiLetter c) -> "?"
+    | _ when Char.IsUpper c -> $"-{Char.ToLower c}"
+    | _ when Char.IsDigit c -> ""
+    | _ when Char.IsLower c && not (Char.IsAsciiLetter c) -> "?"
     | _ -> $"{c}"
 
 let clean (identifier: string): string =
