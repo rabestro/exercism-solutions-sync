@@ -28,9 +28,8 @@ let line (input: list<string>) =
     |> String.Concat
 
 let page (input: list<string>) =
-    seq { 0 .. 4 .. input.Length - 1 }
-    |> Seq.map (fun i -> input.[i..i + 3])
-    |> Seq.map line
+    List.chunkBySize 4 input
+    |> List.map line
     |> String.concat ","
 
 let convert (input: list<string>) =
