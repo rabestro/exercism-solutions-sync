@@ -1,7 +1,7 @@
 module ProteinTranslation
 
-let toPolypeptide (codons: char []) =
-    match System.String(codons) with
+let toPolypeptide codons =
+    match codons with
     | "AUG" -> "Methionine"
     | "UUC"
     | "UUU" -> "Phenylalanine"
@@ -19,8 +19,7 @@ let toPolypeptide (codons: char []) =
     | _ -> "STOP"
 
 let proteins (rna: string) =
-    rna
-    |> Seq.chunkBySize 3
-    |> Seq.map toPolypeptide
-    |> Seq.takeWhile (fun x -> x <> "STOP")
+    Seq.chunkBySize 3 rna
+    |> Seq.map (System.String >> toPolypeptide)
+    |> Seq.takeWhile ((<>) "STOP")
     |> Seq.toList
