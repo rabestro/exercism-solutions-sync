@@ -1,7 +1,7 @@
 final case class Bst(value: Int, left: Option[Bst] = None, right: Option[Bst] = None):
-  def insert(x: Int): Bst = x match
-    case x if x <= value => Bst(value, left.map(_.insert(x)).orElse(Some(Bst(x))), right)
-    case x => Bst(value, left, right.map(_.insert(x)).orElse(Some(Bst(x))))
+  def insert(x: Int): Bst = if x <= value
+  then copy(left = left.map(_.insert(x)) orElse Some(Bst(x)))
+  else copy(right = right.map(_.insert(x)) orElse Some(Bst(x)))
 
 object Bst:
   def fromList(list: List[Int]): Bst = list match
