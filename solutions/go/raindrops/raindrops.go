@@ -1,4 +1,4 @@
-// The package contains function Convert
+// Package raindrops is the solution to http://exercism.io/exercises/go/raindrops
 package raindrops
 
 import "fmt"
