@@ -12,9 +12,10 @@ SUPERLIST = ListRelation.SUPERLIST
 EQUAL = ListRelation.EQUAL
 UNEQUAL = ListRelation.UNEQUAL
 
-_SEP = '\x1e\x1f'
-
 def sublist(list_one: list, list_two: list) -> ListRelation:
+    """
+    Determines if list_one is a sublist, superlist, or equal to list_two.
+    """
     if list_one == list_two:
         return ListRelation.EQUAL
     if not list_one:
@@ -22,10 +23,14 @@ def sublist(list_one: list, list_two: list) -> ListRelation:
     if not list_two:
         return ListRelation.SUPERLIST
 
-    str_one = _SEP + _SEP.join(map(repr, list_one)) + _SEP
-    str_two = _SEP + _SEP.join(map(repr, list_two)) + _SEP
-    if str_one in str_two:
-        return ListRelation.SUBLIST
-    if str_two in str_one:
-        return ListRelation.SUPERLIST
+    len_one, len_two = len(list_one), len(list_two)
+    if len_one < len_two:
+        for i in range(len_two - len_one + 1):
+            if list_one == list_two[i:i + len_one]:
+                return ListRelation.SUBLIST
+    elif len_one > len_two:
+        for i in range(len_one - len_two + 1):
+            if list_two == list_one[i:i + len_two]:
+                return ListRelation.SUPERLIST
+
     return ListRelation.UNEQUAL
