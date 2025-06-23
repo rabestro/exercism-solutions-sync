@@ -5,8 +5,7 @@ import (
 	"strconv"
 )
 
-var pattern = regexp.MustCompile(`What is (-?\d+)( (plus|minus|multiplied by|divided by) -?\d+)*\?`)
-var tokens = regexp.MustCompile(`-?\d+|is|plus|minus|multiplied by|divided by`)
+var pattern = regexp.MustCompile(`What is (-?\d+)(?: (?:plus|minus|multiplied by|divided by) -?\d+)*\?`)
 var operationPattern = regexp.MustCompile(`(plus|minus|multiplied by|divided by) (-?\d+)`)
 
 func Answer(question string) (int, bool) {
