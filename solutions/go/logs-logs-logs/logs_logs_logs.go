@@ -1,23 +1,23 @@
 package logs
 
 import (
+	"regexp"
 	"strings"
 	"unicode/utf8"
 )
 
+var icons = regexp.MustCompile("[❗🔍☀]")
+
+var applications = map[string]string{
+	"❗": "recommendation",
+	"🔍": "search",
+	"☀": "weather",
+	"":  "default",
+}
+
 // Application identifies the application emitting the given log.
 func Application(log string) string {
-	for _, symbol := range log {
-		switch symbol {
-		case '❗':
-			return "recommendation"
-		case '🔍':
-			return "search"
-		case '☀':
-			return "weather"
-		}
-	}
-	return "default"
+	return applications[icons.FindString(log)]
 }
 
 // Replace replaces all occurrences of old with new, returning the modified log
