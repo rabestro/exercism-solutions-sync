@@ -2,10 +2,10 @@ module ErrorHandling
 
 let handleErrorByThrowingException() = (failwith "Some exception")
 
-let handleErrorByReturningOption =
-    function
-    | "1" -> Some 1
-    | _ -> None
+let handleErrorByReturningOption input =
+    try
+        int input |> Some
+    with _ -> None
 
 let handleErrorByReturningResult =
     function
