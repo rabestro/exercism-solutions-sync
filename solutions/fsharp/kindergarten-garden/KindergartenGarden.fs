@@ -15,7 +15,7 @@ let toPlant symbol =
     | _ -> failwith $"Unknown symbol '{symbol}'"
     
 let plants (diagram: string) (student:string) =
-    let startIndex = 2 * int (student[ 0 ] - 'A')
+    let startIndex = 2 * int (student[0] - 'A')
     
     diagram.Split('\n')
     |> Seq.map _.Substring(startIndex, 2)
