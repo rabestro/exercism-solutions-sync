@@ -34,5 +34,5 @@ func Answer(question string) (int, bool) {
 			result /= number
 		}
 	}
-	return int(result), true
+	return result, true
 }
