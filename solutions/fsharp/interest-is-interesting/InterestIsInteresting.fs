@@ -8,7 +8,7 @@ let interestRate (balance: decimal): single =
     | _ -> 2.475f
     
 let interest (balance: decimal): decimal =
-   (interestRate balance) / 100f |> decimal |> (*) balance 
+   0.01f * interestRate balance |> decimal |> (*) balance 
 
 let annualBalanceUpdate(balance: decimal): decimal =
    balance + interest balance
