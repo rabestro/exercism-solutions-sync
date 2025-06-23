@@ -26,14 +26,15 @@ let private keepDigits input = input |> Seq.filter Char.IsDigit |> String.Concat
 let private isPunctuation (symbol:char) =
      not (".()-".Contains symbol) && (Char.IsPunctuation symbol)
     
-let private validate input =
+let private validateSymbols input =
     match input with
     | _ when Seq.exists Char.IsLetter input -> Error "letters not permitted"
     | _ when Seq.exists isPunctuation input -> Error "punctuations not permitted"
     | _ -> keepDigits input |> Ok 
     
 let clean input =
-    validate input
+    input
+    |> validateSymbols 
     |> Result.bind validateLength
     |> Result.bind (validateCode Code.Area)
     |> Result.bind (validateCode Code.Exchange)
