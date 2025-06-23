@@ -12,7 +12,8 @@ let verse number =
             $"Take one down and pass it around, {number - 1} bottles of beer on the wall."]
     
 let recite (startBottles: int) (takeDown: int) =
-    seq { startBottles .. -1 .. startBottles - takeDown + 1}
-    |> Seq.collect (fun n -> verse n @ if n > startBottles - takeDown + 1 then [""] else [])
+    let endBottles = startBottles - takeDown + 1
+    seq { startBottles .. -1 .. endBottles}
+    |> Seq.collect (fun n -> verse n @ if n > endBottles then [""] else [])
     |> Seq.toList
         
