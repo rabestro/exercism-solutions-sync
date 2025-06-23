@@ -8,8 +8,11 @@ object Say:
     Option(sayNumber(number))
 
   private def sayNumber(number: Long): String =
-    def say(x: Long, s: String): String =
-      sayNumber(number / x) + " " + s + " " + sayNumber(number % x)
+    def sayMagnitude(divisor: Long, name: String) =
+      val quotientPart = sayNumber(number / divisor) + " " + name
+      number % divisor match
+        case 0 => quotientPart
+        case remainder => quotientPart + " " + sayNumber(remainder)
 
     number match
       case x if x < 0 || MaxPronounceableNumber < x => null
@@ -42,13 +45,9 @@ object Say:
       case 80 => "eighty"
       case 90 => "ninety"
       case n if n < 100 => sayNumber(n / 10 * 10) + "-" + sayNumber(n % 10)
-      case 100 => "one hundred"
-      case n if n < Thousand => say(100, "hundred")
-      case Thousand => "one thousand"
-      case n if n < Million => say(Thousand, "thousand")
-      case Million => "one million"
-      case n if n < Billion => say(Million, "million")
-      case Billion => "one billion"
-      case _ => say(Billion, "billion")
-
+      case n if n < Thousand => sayMagnitude(100, "hundred")
+      case n if n < Million => sayMagnitude(Thousand, "thousand")
+      case n if n < Billion => sayMagnitude(Million, "million")
+      case _ => sayMagnitude(Billion, "billion")
+  end sayNumber
 end Say
