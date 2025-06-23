@@ -1,5 +1,7 @@
+// Package darts has a utility to calculate points earned in a game of darts
 package darts
 
+// Score computes the result for a throw.
 func Score(x, y float64) int {
 	distance := x*x + y*y
 	switch {
