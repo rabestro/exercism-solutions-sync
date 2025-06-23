@@ -6,11 +6,11 @@ import (
 )
 
 func Cost(booksInStore []int) int {
-	books := []int{0, 0, 0, 0, 0}
+	books := [5]int{}
 	for _, book := range booksInStore {
 		books[book-1]++
 	}
-	sort.Ints(books)
+	sort.Ints(books[:])
 
 	p1 := books[4] - books[3]
 	p2 := books[3] - books[2]
