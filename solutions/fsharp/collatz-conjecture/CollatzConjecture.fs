@@ -1,14 +1,15 @@
 module CollatzConjecture
 
-let rec count number : int =
-    if number < 1 then 1
-    elif number % 2 = 0 then 1 + count number / 2
-    else 1 + count 3 * number + 1
 let rec steps (number: int): int option =
-    match number with
-    | _ when number < 0 -> None
-    | 1 -> Some 1
-    | _ -> Some <| count number
+    let rec countStepsFor number : int =
+        if number < 2 then 0
+        elif number % 2 = 0 then 1 + countStepsFor (number / 2)
+        else 1 + countStepsFor (3 * number + 1)
+    
+    if number < 1 then None
+    else Some <| countStepsFor number
+    
+
     
     
      
