@@ -1,4 +1,5 @@
 from enum import Enum
+from more_itertools import windowed
 
 class ListRelation(Enum):
     """Categorizes the relationship between two lists."""
@@ -12,9 +13,23 @@ SUPERLIST = ListRelation.SUPERLIST
 EQUAL = ListRelation.EQUAL
 UNEQUAL = ListRelation.UNEQUAL
 
-_SEP = '\x1e\x1f'
+
+def is_contained(inner_list, outer_list):
+    """Checks for containment using a memory-efficient sliding window."""
+    if not inner_list:
+        return True
+
+    inner_tuple = tuple(inner_list)
+
+    for window in windowed(outer_list, len(inner_list)):
+        if window == inner_tuple:
+            return True
+    return False
 
 def sublist(list_one: list, list_two: list) -> ListRelation:
+    """
+    Determines if list_one is a sublist, superlist, or equal to list_two.
+    """
     if list_one == list_two:
         return ListRelation.EQUAL
     if not list_one:
@@ -22,10 +37,9 @@ def sublist(list_one: list, list_two: list) -> ListRelation:
     if not list_two:
         return ListRelation.SUPERLIST
 
-    str_one = _SEP + _SEP.join(map(repr, list_one)) + _SEP
-    str_two = _SEP + _SEP.join(map(repr, list_two)) + _SEP
-    if str_one in str_two:
+    if is_contained(list_one, list_two):
         return ListRelation.SUBLIST
-    if str_two in str_one:
+    if is_contained(list_two, list_one):
         return ListRelation.SUPERLIST
+
     return ListRelation.UNEQUAL
