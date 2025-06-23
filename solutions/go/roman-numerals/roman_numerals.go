@@ -1,13 +1,11 @@
-/*
-Package romannumerals provides methods for manipulating numbers into roman numerals
-*/
+// Package romannumerals provides methods for manipulating numbers into roman numerals
 package romannumerals
 
 import "errors"
 
-//ToRomanNumeral converts an integer to its roman numeral string equivalent
+// ToRomanNumeral converts an integer to its roman numeral string equivalent
 func ToRomanNumeral(number int) (string, error) {
-	if number < 1 || number > 3000 {
+	if number < 1 || number > 3999 {
 		return "", errors.New("number has to be in range [1..3000]")
 	}
 	roman := []string{"", "M", "MM", "MMM"}[number/1000] +
