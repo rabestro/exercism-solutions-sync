@@ -6,7 +6,7 @@ object Queen {
     else Some(Queen(x, y))
 }
 
-case class Queen(row: Int, col: Int) {
+final case class Queen(row: Int, col: Int) {
 
 }
 
