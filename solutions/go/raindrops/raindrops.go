@@ -1,7 +1,7 @@
 // Package raindrops is the solution to http://exercism.io/exercises/go/raindrops
 package raindrops
 
-import "fmt"
+import "strconv"
 
 // Convert - convert a number into a string that contains raindrop sounds corresponding to certain potential factors.
 func Convert(drops int) string {
@@ -16,7 +16,7 @@ func Convert(drops int) string {
 		output += "Plong"
 	}
 	if len(output) == 0 {
-		output = fmt.Sprint(drops)
+		output = strconv.Itoa(drops)
 	}
 	return output
 }
