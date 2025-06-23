@@ -16,17 +16,13 @@ type DNA string
 // The receiver appears in its own argument list between the func keyword and the method name.
 // Here, the Counts method has a receiver of type DNA named d.
 func (d DNA) Counts() (Histogram, error) {
-	h := Histogram{'A': 0, 'C': 0, 'G': 0, 'T': 0}
-	for _, r := range d {
-		if isNucleotide(r) {
-			h[r] += 1
+	results := Histogram{'A': 0, 'C': 0, 'G': 0, 'T': 0}
+	for _, nucleotide := range d {
+		if _, ok := results[nucleotide]; ok {
+			results[nucleotide]++
 		} else {
-			return nil, errors.New("invalid nucleotide: " + string(r))
+			return nil, errors.New("invalid nucleotide: " + string(nucleotide))
 		}
 	}
-	return h, nil
-}
-
-func isNucleotide(r rune) bool {
-	return r == 'A' || r == 'C' || r == 'G' || r == 'T'
+	return results, nil
 }
