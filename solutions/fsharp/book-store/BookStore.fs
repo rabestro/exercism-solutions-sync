@@ -29,7 +29,9 @@ let total books =
         2 * 8 * 95
         1 * 8 * 100
     ]
-    
+    let calculatePrice i x = 
+        decimal (x * groupPrice[i]) / 100m
+        
     // Calculate the total price
-    groups |> Array.mapi (fun i x -> decimal (x * groupPrice[i]) / 100m) |> Array.sum
+    groups |> Array.mapi calculatePrice |> Array.sum
     
