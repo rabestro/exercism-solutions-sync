@@ -1,7 +1,5 @@
 package resistorcolor
 
-import "golang.org/x/exp/slices"
-
 // Colors should return the list of all colors.
 func Colors() []string {
 	return []string{
@@ -20,5 +18,10 @@ func Colors() []string {
 
 // ColorCode returns the resistance value of the given color.
 func ColorCode(color string) int {
-	return slices.Index(Colors(), color)
+	for i, v := range Colors() {
+		if color == v {
+			return i
+		}
+	}
+	return -1
 }
