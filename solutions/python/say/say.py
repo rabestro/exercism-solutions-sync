@@ -7,18 +7,20 @@ _WORDS = {
     60: 'sixty', 70: 'seventy', 80: 'eighty', 90: 'ninety'
 }
 
-_MAGNITUDES = [
+_MAGNITUDES = (
     (1_000_000_000, 'billion'),
     (1_000_000, 'million'),
     (1_000, 'thousand'),
     (100, 'hundred'),
-]
+)
+
 
 def say(number: int) -> str:
     """Converts a number to its English word representation."""
     if not 0 <= number <= 999_999_999_999:
         raise ValueError("input out of range")
     return _number_to_words(number)
+
 
 def _number_to_words(number: int) -> str:
     if number in _WORDS:
@@ -35,4 +37,4 @@ def _number_to_words(number: int) -> str:
             remainder_part = f" {_number_to_words(remainder)}" if remainder else ""
             return quotient_part + remainder_part
 
-    return ""
+    raise AssertionError("Unhandled number case in _number_to_words")
