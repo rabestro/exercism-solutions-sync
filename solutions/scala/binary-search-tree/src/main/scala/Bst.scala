@@ -8,8 +8,5 @@ object Bst:
     case head :: tail => tail.foldLeft(Bst(head))(_.insert(_))
     case Nil => throw new IllegalArgumentException("Cannot create a BST from an empty list")
 
-  def toList(bst: Bst): List[Int] = bst match
-    case Bst(value, Some(left), Some(right)) => toList(left) ++ List(value) ++ toList(right)
-    case Bst(value, Some(left), None) => toList(left) ++ List(value)
-    case Bst(value, None, Some(right)) => List(value) ++ toList(right)
-    case Bst(value, None, None) => List(value)
+  def toList(bst: Bst): List[Int] =
+    bst.left.toList.flatMap(toList) ::: bst.value :: bst.right.toList.flatMap(toList)
