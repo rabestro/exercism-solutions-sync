@@ -32,10 +32,10 @@ let convertText (input: string list) =
     |> List.map line
     |> String.concat ","
 
-let incorrectSize (input: string list) =
-    input.Length % 4 <> 0 || input |> Seq.exists (fun x -> x.Length % 3 <> 0)
+let incorrectSize (input: string list) = input.Length % 4 <> 0 || input |> Seq.exists (fun x -> x.Length % 3 <> 0)
+
+let convert =
+    function
+    | input when incorrectSize input -> None
+    | input -> convertText input |> Some
     
-let convert (input: string list) =
-    match input with
-    | _ when incorrectSize input -> None
-    | _ -> convertText input |> Some
