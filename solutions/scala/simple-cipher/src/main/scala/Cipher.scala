@@ -18,13 +18,16 @@ object Cipher:
   private val lettersInAlphabet = 'z' - 'a' + 1
 
   def apply(cipherKey: Option[String]): Cipher =
-    require(cipherKey.forall(_.forall(_.isLower)))
-    require(cipherKey.forall(_.nonEmpty))
+    require(cipherKey.forall(_.nonEmpty), "Key cannot be empty")
+    require(cipherKey.forall(_.forall(_.isLower)), "Key must contain only lowercase letters")
     new Cipher(cipherKey getOrElse randomKey)
 
-  def randomKey: String =
+  private def randomKey: String =
     val keyLength = Random.between(MinKeyLength, MaxKeyLength)
-    Random.alphanumeric.filter(_.isLower).take(keyLength).mkString
+    LazyList.fill(keyLength)(Random nextInt lettersInAlphabet)
+      .map(i => 'a' + i)
+      .map(_.toChar)
+      .mkString
 
   def cipherChar(algorithm: (Int, Int) => Int)(symbol: Char, key: Char): Char =
     val keyIndex = key - 'a'
