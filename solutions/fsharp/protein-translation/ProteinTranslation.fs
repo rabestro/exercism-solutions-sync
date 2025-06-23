@@ -1,7 +1,7 @@
 module ProteinTranslation
 
-let toPolypeptide codons =
-    match codons with
+let toPolypeptide =
+    function
     | "AUG" -> "Methionine"
     | "UUC"
     | "UUU" -> "Phenylalanine"
