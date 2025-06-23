@@ -14,17 +14,19 @@ type Robot =
 
 let turnRight robot =
     match robot.direction with
-    | North -> { robot with direction = East }
-    | East -> { robot with direction = South }
-    | South -> { robot with direction = West }
-    | West -> { robot with direction = North }
+    | North -> East
+    | East -> South
+    | South -> West
+    | West -> North
+    |> fun x -> { robot with direction = x }
 
 let turnLeft robot =
     match robot.direction with
-    | North -> { robot with direction = West }
-    | East -> { robot with direction = North }
-    | South -> { robot with direction = East }
-    | West -> { robot with direction = South }
+    | North -> West
+    | East -> North
+    | South -> East
+    | West -> South
+    |> fun x -> { robot with direction = x }
 
 let advance robot =
     match (robot.direction, robot.position) with
