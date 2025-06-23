@@ -6,8 +6,15 @@ import (
 )
 
 const series = 5
+const oneBookPrice = 8
 
-var discount = map[int]int{1: 0, 2: 5, 3: 10, 4: 20, 5: 25}
+var discount = map[int]int{
+	1: 0,
+	2: 5,
+	3: 10,
+	4: 20,
+	5: 25,
+}
 
 func Cost(booksInStore []int) int {
 	books := make([]int, series)
@@ -29,9 +36,9 @@ func Cost(booksInStore []int) int {
 	batch[4] += correction * 2
 	batch[5] -= correction
 
-	total := 0
+	totalPrice := 0
 	for booksInBatch, countOfBatch := range batch {
-		total += 8 * booksInBatch * (100 - discount[booksInBatch]) * countOfBatch
+		totalPrice += oneBookPrice * booksInBatch * (100 - discount[booksInBatch]) * countOfBatch
 	}
-	return total
+	return totalPrice
 }
