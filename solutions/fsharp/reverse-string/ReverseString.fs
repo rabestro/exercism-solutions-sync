@@ -1,6 +1,6 @@
 module ReverseString
 
 let reverse (input: string): string =
-    input.ToCharArray()
-    |> Array.rev
-    |> System.String
+    input
+    |> Seq.rev
+    |> System.String.Concat
