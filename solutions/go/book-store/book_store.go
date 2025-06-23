@@ -5,20 +5,33 @@ import (
 	"sort"
 )
 
+const series = 5
+
+var discount = map[int]int{1: 0, 2: 5, 3: 10, 4: 20, 5: 25}
+
 func Cost(booksInStore []int) int {
-	books := [5]int{}
+	books := make([]int, series)
 	for _, book := range booksInStore {
 		books[book-1]++
 	}
-	sort.Ints(books[:])
+	sort.Ints(books)
 
-	p1 := books[4] - books[3]
-	p2 := books[3] - books[2]
-	p3 := books[2] - books[1]
-	p4 := books[1] - books[0]
-	p5 := books[0]
+	batch := map[int]int{
+		1: books[4] - books[3],
+		2: books[3] - books[2],
+		3: books[2] - books[1],
+		4: books[1] - books[0],
+		5: books[0],
+	}
 
-	pc := int(math.Min(float64(p3), float64(p5)))
+	correction := int(math.Min(float64(batch[3]), float64(batch[5])))
+	batch[3] -= correction
+	batch[4] += correction * 2
+	batch[5] -= correction
 
-	return 8 * (100*p1 + 95*2*p2 + 90*3*(p3-pc) + 80*4*(p4+2*pc) + 75*5*(p5-pc))
+	total := 0
+	for booksInBatch, countOfBatch := range batch {
+		total += 8 * booksInBatch * (100 - discount[booksInBatch]) * countOfBatch
+	}
+	return total
 }
