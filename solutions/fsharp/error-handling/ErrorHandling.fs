@@ -12,10 +12,7 @@ let handleErrorByReturningResult input =
         int input |> Ok
     with _ -> Error "Could not convert input to integer"
 
-let bind switchFunction twoTrackInput =
-    match twoTrackInput with
-    | Ok x -> switchFunction x
-    | error -> error
+let bind switchFunction twoTrackInput = twoTrackInput |> Result.bind switchFunction
 
 let cleanupDisposablesWhenThrowingException (resource: System.IDisposable) =
     try
