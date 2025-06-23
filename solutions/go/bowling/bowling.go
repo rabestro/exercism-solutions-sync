@@ -7,10 +7,6 @@ type Game struct {
 	frames     [10]int
 	pinsLog    []int
 	secondRoll bool
-	bonus      int
-}
-
-type Frame struct {
 }
 
 func NewGame() *Game {
