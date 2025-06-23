@@ -1,5 +1,7 @@
 package space
 
+import "math"
+
 type Planet string
 
 const earthOrbitalPeriod = 31_557_600
@@ -17,7 +19,7 @@ var orbitalPeriods = map[Planet]float64{
 
 func Age(seconds float64, planet Planet) float64 {
 	if orbitalPeriods[planet] == 0 {
-		return -1
+		return math.NaN()
 	}
 	return seconds / orbitalPeriods[planet]
 }
