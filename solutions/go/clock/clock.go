@@ -2,6 +2,7 @@ package clock
 
 import "fmt"
 
+// Clock type represents time in HH:MM format
 type Clock struct {
 	hour, minute int
 }
