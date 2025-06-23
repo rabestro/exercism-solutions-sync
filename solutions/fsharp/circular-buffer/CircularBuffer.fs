@@ -7,6 +7,7 @@ type CircularBuffer<'a> =
 type CircularBuffer<'a> with
     member this.isFull() = this.items.Length = this.size
     member this.append value = { this with items = this.items @ [ value ] }
+    member this.overwrite value = { this with items = this.items.Tail @ [ value ] }
 
 let mkCircularBuffer size =
     { items = []
@@ -21,7 +22,7 @@ let write value (buffer: CircularBuffer<'a>) =
 
 let forceWrite value (buffer: CircularBuffer<'a>) =
     if buffer.isFull()
-    then { buffer with items = buffer.items.Tail @ [ value ] }
+    then buffer.overwrite value
     else buffer.append value
 
 let read buffer =
