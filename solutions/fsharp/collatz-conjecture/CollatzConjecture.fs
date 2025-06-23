@@ -5,7 +5,7 @@ let (|Even|Odd|) (number: uint64) =
     | 0UL -> Even
     | _ -> Odd
 
-let steps number: int option =
+let steps2 number: int option =
     let next (number: uint64) =
         match number with
         | Even -> number / 2UL
@@ -17,3 +17,14 @@ let steps number: int option =
         | _ -> 1 + countStepsFor (next number)
 
     if number < 1 then None else Some <| countStepsFor (uint64 number)
+
+let steps number: int option =
+    if number < 1 then
+        None
+    else
+        let mutable current = (uint64 number)
+        let mutable count = 0
+        while current > 1UL do
+            count <- count + 1
+            current <- if current &&& 1UL = 1UL then 3UL * current + 1UL else current / 2UL
+        Some count
