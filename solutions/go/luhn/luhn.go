@@ -15,7 +15,7 @@ func Valid(cardNumber string) bool {
 	digits := strings.Split(number, "")
 
 	sum := 0
-	for isEven, i := false, len(digits) - 1; i >= 0; i-- {
+	for isEven, i := false, len(digits)-1; i >= 0; i-- {
 		digit, _ := strconv.Atoi(digits[i])
 		if isEven {
 			digit *= 2
@@ -26,5 +26,5 @@ func Valid(cardNumber string) bool {
 		isEven = !isEven
 		sum += digit
 	}
-	return sum % 10 == 0
+	return sum%10 == 0
 }
