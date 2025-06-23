@@ -1,22 +1,18 @@
 module BeerSong
 
+let verse number =
+    match number with
+    | 0 -> ["No more bottles of beer on the wall, no more bottles of beer."
+            "Go to the store and buy some more, 99 bottles of beer on the wall."]
+    | 1 -> ["1 bottle of beer on the wall, 1 bottle of beer."
+            "Take it down and pass it around, no more bottles of beer on the wall."]
+    | 2 -> ["2 bottles of beer on the wall, 2 bottles of beer."
+            "Take one down and pass it around, 1 bottle of beer on the wall."]
+    | _ -> [$"{number} bottles of beer on the wall, {number} bottles of beer."
+            $"Take one down and pass it around, {number - 1} bottles of beer on the wall."]
+    
 let recite (startBottles: int) (takeDown: int) =
-    let takeIt number =
-        match number with
-        | 0 -> "Take it down and pass it around, no more bottles of beer on the wall."
-        | 1 -> "Take one down and pass it around, 1 bottle of beer on the wall."
-        | _ when number > 1 -> $"Take one down and pass it around, {number} bottles of beer on the wall."
-        | _ -> "Go to the store and buy some more, 99 bottles of beer on the wall."
-    
-    let onTheWall number =
-        match number with
-        | 0 -> "No more bottles of beer on the wall, no more bottles of beer."
-        | 1 -> "1 bottle of beer on the wall, 1 bottle of beer."
-        | _ -> $"{number} bottles of beer on the wall, {number} bottles of beer."
-   
-    let verse number = (onTheWall number, takeIt number)
-    
-    seq { startBottles .. -1 .. startBottles - takeDown }
-    |> Seq.map verse
+    seq { startBottles .. -1 .. startBottles - takeDown + 1}
+    |> Seq.collect (fun n -> verse n @ if n > startBottles - takeDown + 1 then [""] else [])
     |> Seq.toList
         
