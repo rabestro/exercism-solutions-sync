@@ -4,7 +4,7 @@ open System
 
 let [<Literal>] digitHeight = 4
 let [<Literal>] digitWidth = 3
-let digit =
+let convertDigit =
     function
     | " _ | ||_|   " -> "0"
     | "     |  |   " -> "1"
@@ -26,7 +26,7 @@ let convertLine (input: string list) =
 
     seq { 0 .. digitWidth .. input.[0].Length - 1 }
     |> Seq.map box
-    |> Seq.map digit
+    |> Seq.map convertDigit
     |> String.Concat
 
 let convertPage = 
