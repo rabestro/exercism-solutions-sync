@@ -1,24 +1,29 @@
-from functools import cache
+import functools
 import string
 
-_LOWER = string.ascii_lowercase
-_UPPER = string.ascii_uppercase
-_ALPHABET = _LOWER + _UPPER
+ALPHABET_LOWER = string.ascii_lowercase
+ALPHABET_UPPER = string.ascii_uppercase
 
 
-@cache
+@functools.cache
 def _get_translation_map(key: int) -> dict[int, int]:
     """
-    Creates and caches a translation map for a given rotation key.
-    The @cache decorator saves the result for each key, so this
-    expensive work is only ever done once per key.
+    Creates and caches the translation map for a given key.
+    The result is memoized, so this heavy lifting is only done once per key.
     """
-    rotated_alphabet = _LOWER[key:] + _LOWER[:key] + _UPPER[key:] + _UPPER[:key]
-    return str.maketrans(_ALPHABET, rotated_alphabet)
+    key = key % 26
+
+    original_chars = ALPHABET_LOWER + ALPHABET_UPPER
+
+    shifted_lower = ALPHABET_LOWER[key:] + ALPHABET_LOWER[:key]
+    shifted_upper = ALPHABET_UPPER[key:] + ALPHABET_UPPER[:key]
+    shifted_chars = shifted_lower + shifted_upper
+
+    return str.maketrans(original_chars, shifted_chars)
 
 
 def rotate(text: str, key: int) -> str:
-    """Rotate letters in a text by a given key, preserving a case."""
+    """Rotates letters in text by the given key."""
     if key == 0 or key == 26:
         return text
 
