@@ -1,22 +1,22 @@
 package secret
 
+const reverseSignsBit = 16
+
+var signs = []string{"wink", "double blink", "close your eyes", "jump"}
+var secretSigns = len(signs)
+
 func Handshake(code uint) []string {
-	actions := []string{"wink", "double blink", "close your eyes", "jump"}
+	action, increment, end := 0, 1, secretSigns
 
-	var handshake []string
-	for i, action := range actions {
-		// We use bitwise AND operation to check if specific bit is set
-		if (code>>i)&1 == 1 {
-			handshake = append(handshake, action)
-		}
+	if (code & reverseSignsBit) != 0 {
+		action, increment, end = secretSigns-1, -1, -1
 	}
 
-	// If the 5th bit is set we need to reverse the actions
-	if (code>>4)&1 == 1 {
-		for left, right := 0, len(handshake)-1; left < right; left, right = left+1, right-1 {
-			handshake[left], handshake[right] = handshake[right], handshake[left]
+	var output []string
+	for ; action != end; action += increment {
+		if (code & (1 << action)) != 0 {
+			output = append(output, signs[action])
 		}
 	}
-
-	return handshake
+	return output
 }
