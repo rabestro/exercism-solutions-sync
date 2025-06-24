@@ -1,10 +1,9 @@
-trait BankAccount {
+trait BankAccount:
   def closeAccount(): Unit
   def getBalance: Option[Int]
   def incrementBalance(increment: Int): Option[Int]
-}
 
-class BankAccountImpl extends BankAccount {
+class BankAccountImpl extends BankAccount:
   private var balance: Option[Int] = Some(0)
 
   def closeAccount(): Unit = balance = None
@@ -12,13 +11,9 @@ class BankAccountImpl extends BankAccount {
   def getBalance: Option[Int] = balance
 
   def incrementBalance(increment: Int): Option[Int] =
-    synchronized {
+    synchronized:
       balance = balance.map(_ + increment)
       balance
-    }
-}
 
-object Bank {
+object Bank:
   def openAccount(): BankAccount = BankAccountImpl()
-}
-
