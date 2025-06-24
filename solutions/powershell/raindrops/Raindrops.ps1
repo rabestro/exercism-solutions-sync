@@ -40,8 +40,8 @@ Function Get-Raindrops() {
     if ($Rain % 7 -eq 0) {
         $sounds += 'Plong'
     }
-    if ($sounds -eq '') {
-        $sounds = $Rain.ToString()
+    if (-not $sounds) {
+        $sounds += $Rain
     }
     return $sounds
 }
