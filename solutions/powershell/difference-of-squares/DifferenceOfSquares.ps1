@@ -62,7 +62,5 @@ Function Get-DifferenceOfSquares() {
         [Int64]$Number
     )
 
-    $a = Get-SquareOfSum($Number) 
-    $b = Get-SumOfSquares($Number)
-    $a - $b
+    (Get-SquareOfSum $Number)  - (Get-SumOfSquares $Number)
 }
