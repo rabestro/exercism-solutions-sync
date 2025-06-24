@@ -28,17 +28,17 @@ Function Get-BobResponse() {
         [string]$HeyBob
     )
 
-    $sentence = $HeyBob.Trim()
-    $isYell = $sentence -match "[A-Z]" -and $sentence.Equals($sentence.ToUpper())
-    $isQuestion = $sentence.EndsWith("?")
-    
-    if ($sentence.Length -eq 0) {
+    if ([string]::IsNullOrWhiteSpace($HeyBob)) {
         return "Fine. Be that way!"
     }
-    if ($isYell -and $isQuestion) {
+    $sentence = $HeyBob.Trim()
+    $isYelling = $sentence -match "[A-Z]" -and $sentence.Equals($sentence.ToUpper())
+    $isQuestion = $sentence.EndsWith("?")
+    
+    if ($isYelling -and $isQuestion) {
         return  "Calm down, I know what I'm doing!"
     }
-    if ($isYell) {
+    if ($isYelling) {
         return "Whoa, chill out!"
     }
     if ($isQuestion) {
