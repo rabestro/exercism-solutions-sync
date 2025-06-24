@@ -32,16 +32,18 @@ Function Get-BobResponse() {
         return "Fine. Be that way!"
     }
 
-    if ($HeyBob -match "[A-Z]" -and $HeyBob -eq $HeyBob.ToUpper()) {
-        if ($HeyBob.EndsWith("?")) {
-            return "Calm down, I know what I'm doing!"
-        }
+    $sentence = $HeyBob.Trim()
+    $isYell = $sentence -match "[A-Z]" -and $sentence -eq $sentence.ToUpper()
+    $isQuestion = $sentence.EndsWith("?")
+
+    if ($isYell -and $isQuestion) {
+        return  "Calm down, I know what I'm doing!"
+    }
+    if ($isYell) {
         return "Whoa, chill out!"
     }
-
-    if ($HeyBob.EndsWith("?")) {
+    if ($isQuestion) {
         return "Sure."
     }
-    
     return "Whatever."
 }
