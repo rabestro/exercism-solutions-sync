@@ -13,8 +13,8 @@ object ProteinTranslation:
       case "UAU" | "UAC" => "Tyrosine"
       case "UGU" | "UGC" => "Cysteine"
       case "UGG" => "Tryptophan"
-      case _ => Stop
+      case "UAA" | "UAG" | "UGA"  => Stop
 
 
   def proteins(rna: RnaSequence): Seq[Protein] =
-    rna.sliding(3, 3).map(codonToProtein).takeWhile(_ != Stop).toSeq
+    rna.grouped(3).map(codonToProtein).takeWhile(_ != Stop).toSeq
