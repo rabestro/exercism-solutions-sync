@@ -45,21 +45,41 @@ Class ChessBoard {
     [int[]]$White 
     [int[]]$Black 
 
-    ChessBoard(
-        [int[]]$w,
-        [int[]]$b
-    ) {
-        $this.White = $w
-        $this.Black = $b
-    }
     ChessBoard() {
         $this.White = @(7,3)
         $this.Black = @(0,3)
     }   
+
+    ChessBoard([int[]]$w, [int[]]$b) {
+        $this.White = $w
+        $this.Black = $b
+    }
+
     [bool] CanAttack() {
         return $this.White[0] -eq $this.Black[0] -or
             $this.White[1] -eq $this.Black[1] -or
             [Math]::Abs($this.White[0] - $this.Black[0]) -eq 
             [Math]::Abs($this.White[1] - $this.Black[1])
+    }
+
+    [string] DrawBoard() {
+        $board = New-Object 'object[,]' 8,8
+        $board[7-$this.White[0], $this.White[1]] = 'W'
+        $board[7-$this.Black[0], $this.Black[1]] = 'B'
+        $board = $board | ForEach-Object { $_ -replace $null, '_' }
+        $board = $board | ForEach-Object { $_ -join ' ' }
+        return $board -join "`r`n"
+    }
+
+    static [void] ValidateQueens([int[]]$WhitePos, [int[]]$BlackPos) {
+        if ($WhitePos | Where-Object {$_ -gt 7 -or $_ -lt 0 }) {
+            throw "White queen must be placed on the board"
+        }
+        if ($BlackPos | Where-Object {$_ -gt 7 -or $_ -lt 0 }) {
+            throw "Black queen must be placed on the board"
+        }
+        if (-not (Compare-Object $WhitePos $BlackPos)) {
+            throw 'Queens can not share the same space'
+        }
     }
 }
