@@ -33,7 +33,7 @@ Function Get-BobResponse() {
     }
 
     $sentence = $HeyBob.Trim()
-    $isYell = $sentence -match "[A-Z]" -and $sentence -eq $sentence.ToUpper()
+    $isYell = $sentence -match "[A-Z]" -and $sentence.Equals($sentence.ToUpper())
     $isQuestion = $sentence.EndsWith("?")
 
     if ($isYell -and $isQuestion) {
