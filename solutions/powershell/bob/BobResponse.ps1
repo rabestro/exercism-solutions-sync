@@ -31,11 +31,10 @@ Function Get-BobResponse() {
     $sentence = $HeyBob.Trim()
     $isYell = $sentence -match "[A-Z]" -and $sentence.Equals($sentence.ToUpper())
     $isQuestion = $sentence.EndsWith("?")
-
+    
     if ($sentence.Length -eq 0) {
         return "Fine. Be that way!"
     }
-
     if ($isYell -and $isQuestion) {
         return  "Calm down, I know what I'm doing!"
     }
