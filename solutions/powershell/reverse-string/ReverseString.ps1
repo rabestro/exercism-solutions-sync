@@ -25,6 +25,5 @@ Function Get-ReverseString {
         [string]$Forward
 	)
 	
-
-    -join $Forward[-1..-($Forward.Length)]
+    -join $Forward[-1..-$Forward.Length]
 }
