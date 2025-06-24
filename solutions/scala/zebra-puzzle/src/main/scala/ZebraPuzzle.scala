@@ -1,6 +1,6 @@
 import Category.Person
 
-object ZebraPuzzle {
+object ZebraPuzzle:
 
   sealed trait Resident
 
@@ -36,4 +36,3 @@ object ZebraPuzzle {
 
     Solution(waterDrinker, zebraOwner)
 
-}  
