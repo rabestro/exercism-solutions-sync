@@ -1,11 +1,12 @@
+from operator import add, mul, sub, floordiv
 import re
 
 _OPERATIONS = {
-    "What is": lambda x, y: y,
-    "plus": lambda x, y: x + y,
-    "minus": lambda x, y: x - y,
-    "multiplied by": lambda x, y: x * y,
-    "divided by": lambda x, y: x // y,
+    "What is": add,
+    "plus": add,
+    "minus": sub,
+    "multiplied by": mul,
+    "divided by": floordiv,
 }
 _OPERATION_PATTERN = r"(?P<operation>\w+(?: (?:by|is))?)(?P<number> -?\d+)?"
 
