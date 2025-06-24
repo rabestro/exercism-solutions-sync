@@ -1,11 +1,17 @@
-object Raindrops {
-  def convert(n: Int): String =
-    val sound = Seq(
-      3 -> "Pling", 
-      5 -> "Plang", 
-      7 -> "Plong"
-    ).filter(n % _._1 == 0).map(_._2)
+import scala.collection.SortedMap
 
-    if sound.isEmpty then n.toString else sound.mkString
+object Raindrops {
+  private val drops = SortedMap(
+    3 -> "Pling",
+    5 -> "Plang",
+    7 -> "Plong"
+  )
+
+  def convert(n: Int): String =
+    val sounds = for {
+      (factor, sound) <- drops if n % factor == 0
+    } yield sound
+
+    if sounds.isEmpty then n.toString else sounds.mkString
 }
 
