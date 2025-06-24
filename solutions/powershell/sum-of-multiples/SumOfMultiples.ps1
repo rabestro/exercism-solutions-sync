@@ -30,8 +30,7 @@ Function Get-SumOfMultiples {
         $Multiples | Where-Object { $number % $_ -eq 0 } 
     }
 
-    1..--$Limit | 
-    Where-Object $isMultiply |
-    Measure-Object -Sum |
-    Select-Object -ExpandProperty Sum
+    $sum = 0
+    (1..--$Limit).where($isMultiply).foreach({ $sum += $_ });
+    $sum
 }
