@@ -23,18 +23,13 @@ Function Get-Slices() {
         [int]$SliceLength
     )
 
-    switch ($SliceLength) {
-        { $Series.Length -eq 0 } { Throw "Series cannot be empty." }
-        0 { Throw "Slice length cannot be zero." }
-        { $_ -lt 0 } { Throw "Slice length cannot be negative." }
-        { $_ -gt $Series.Length } { Throw "Slice length cannot be greater than series length." }  
-        
-        Default {
-            @(
-                for ($i = 0; $i -le $Series.Length - $SliceLength; $i++) {
-                    $Series.Substring($i, $SliceLength)
-                }
-            )
+    if ($Series.Length -eq 0) { Throw "Series cannot be empty." }
+    if ($SliceLength -eq 0) { Throw "Slice length cannot be zero." }
+    if ($SliceLength -lt 0 ) { Throw "Slice length cannot be negative." }
+    if ($SliceLength -gt $Series.Length ) { Throw "Slice length cannot be greater than series length." }  
+    @(
+        for ($i = 0; $i -le $Series.Length - $SliceLength; $i++) {
+            $Series.Substring($i, $SliceLength)
         }
-    }
+    )
 }
