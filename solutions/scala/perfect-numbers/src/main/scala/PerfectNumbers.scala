@@ -5,12 +5,15 @@ object PerfectNumbers:
   def classify(number: Int): Either[String, NumberType] =
     if number <= 0 then
       Left("Classification is only possible for natural numbers.")
+    else if number == 1 then
+      Right(NumberType.Deficient)
     else
       Right {
-        aliquotSum(number) match
-          case sum if number == 1 || sum < number => NumberType.Deficient
+        aliquotSum(number) match {
+          case sum if sum < number => NumberType.Deficient
           case sum if sum == number => NumberType.Perfect
           case sum if sum > number => NumberType.Abundant
+        }
       }
 
   private def aliquotSum(number: Int): Int =
