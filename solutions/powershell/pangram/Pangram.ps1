@@ -21,11 +21,11 @@ Function Invoke-Panagram() {
 
     $alphabet = 'a'..'z'
     
-    $letters = $Sentence.ToLower().ToCharArray() | 
+    $count = $Sentence.ToLower().ToCharArray() | 
     Where-Object { $_ -in $alphabet } | 
     Select-Object -Unique | 
     Measure-Object | 
     Select-Object -ExpandProperty Count 
-
-    $letters -eq $alphabet.Length
+    
+    $count -eq $alphabet.Length
 }
