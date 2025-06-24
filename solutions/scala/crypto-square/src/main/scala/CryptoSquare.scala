@@ -3,13 +3,10 @@ object CryptoSquare:
     text.filter(_.isLetterOrDigit).toLowerCase
 
   private val transpose = (normalizedText: String) =>
-    val length = normalizedText.length
-    val side = math.sqrt(length).toInt
-    val cols = if side * side < length then side + 1 else side
-    val rows = if side * cols < length then side + 1 else side
-    val remainder = rows * cols - length
-    val expandedText = normalizedText + " " * remainder
-    expandedText.grouped(cols).toList
+    val chunkSize = math.ceil(math.sqrt(normalizedText.length)).toInt
+    normalizedText
+      .grouped(chunkSize).toList
+      .map(_.padTo(chunkSize, ' '))
       .transpose
       .map(_.mkString)
       .mkString(" ")
