@@ -30,11 +30,8 @@ function Get-HammingDifference([string]$strand1, [string]$strand2) {
         Throw "strands must be of equal length."
     }
 
-    $difference = 0
-    for ($i = 0; $i -lt $strand1.Length; $i++) {
-        if ($strand1[$i] -ne $strand2[$i]) {
-            $difference++
-        }
-    }
-    $difference
+    0..($strand1.Length - 1) | 
+    Where-Object {$strand1[$_] -ne $strand2[$_]} | 
+    Measure-Object | 
+    Select-Object -ExpandProperty Count
 }
