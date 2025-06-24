@@ -26,12 +26,7 @@ Function Get-NucleotideCount() {
         [string]$Strand
     )
 
-    $nucleotides = @{
-        A = 0
-        C = 0
-        G = 0
-        T = 0
-    }
+    $nucleotides = @{A = 0; C = 0; G = 0; T = 0}
 
     foreach ($nucleotide in $Strand.ToCharArray()) {
         switch ($nucleotide) {
@@ -42,6 +37,5 @@ Function Get-NucleotideCount() {
             default { throw 'Invalid nucleotide in strand' }
         }
     }
-
     $nucleotides
 }
