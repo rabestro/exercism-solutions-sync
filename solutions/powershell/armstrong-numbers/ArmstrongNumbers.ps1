@@ -20,7 +20,7 @@ Function Invoke-ArmstrongNumbers() {
     $exponent = $Number.ToString().Length
 
     $sumOfDigits = $Number.ToString().ToCharArray() | 
-    ForEach-Object { [Math]::Pow($_, $exponent) } |
+    ForEach-Object { [Math]::Pow([int]::Parse($_), $exponent) } |
     Measure-Object -Sum | 
     Select-Object -ExpandProperty Sum
 
