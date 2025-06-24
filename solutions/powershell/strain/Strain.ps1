@@ -22,13 +22,7 @@ Function Invoke-Keep() {
         [Object[]]$Data,
         [ScriptBlock]$Predicate
     )
-    $result = @()
-    foreach ($element in $Data) {
-        if (&$Predicate $element) {
-            $result += $element
-        }
-    }
-    return $result
+    $Data | Where-Object { &$Predicate $_ }
 }
 
 Function Invoke-Discard() {
@@ -55,12 +49,5 @@ Function Invoke-Discard() {
         [Object[]]$Data,
         [ScriptBlock]$Predicate
     )
-
-    $result = @()
-    foreach ($element in $Data) {
-        if (-not (&$Predicate $element)) {
-            $result += $element
-        }
-    }
-    return $result
+    $Data | Where-Object { -not (&$Predicate $_) }
 }
