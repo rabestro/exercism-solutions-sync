@@ -1,5 +1,4 @@
-Function Get-ResistorLabel()
-{
+Function Get-ResistorLabel() {
     <#
     .SYNOPSIS
     Implement a function to get the label of a resistor from its color-coded bands.
@@ -22,54 +21,50 @@ Function Get-ResistorLabel()
         [string[]]$Colors
     )
 
-    $colorMap = [ordered]@{
-        'black' = 0
-        'brown' = 1
-        'red' = 2
+    $colorMap = @{
+        'black'  = 0
+        'brown'  = 1
+        'red'    = 2
         'orange' = 3
         'yellow' = 4
-        'green' = 5
-        'blue' = 6
+        'green'  = 5
+        'blue'   = 6
         'violet' = 7
-        'grey' = 8
-        'white' = 9
+        'grey'   = 8
+        'white'  = 9
     }
     $toleranceMap = @{
-        'grey' = '0.05%'
+        'grey'   = '0.05%'
         'violet' = '0.1%'
-        'blue' = '0.25%'
-        'green' = '0.5%'
-        'brown' = '1%'
-        'red' = '2%'
-        'gold' = '5%'
+        'blue'   = '0.25%'
+        'green'  = '0.5%'
+        'brown'  = '1%'
+        'red'    = '2%'
+        'gold'   = '5%'
         'silver' = '10%'
     }
 
-    if ($Colors.Length -eq 1)
-    {
+    if ($Colors.Length -eq 1) {
         return "$( $colorMap[$Colors[0]] ) ohms"
     }
 
     $resistance = $colorMap[$Colors[0]] * 10 + $colorMap[$Colors[1]]
 
-    if ($Colors.Length -eq 5)
-    {
+    if ($Colors.Length -eq 5) {
         $resistance *= 10
         $resistance += $colorMap[$Colors[2]]
     }
     $resistance *= [Math]::Pow(10, $colorMap[$Colors[-2]])
-    $resistanceUnit = "ohms"
 
+    $resistanceUnit = "ohms"
     if ($resistance -ge 1000) {
         $resistance = $resistance / 1000
         $resistanceUnit = "kiloohms"
     }
-
     if ($resistance -ge 1000) {
         $resistance = $resistance / 1000
         $resistanceUnit = "megaohms"
     }
-
     if ($resistance -ge 1000) {
         $resistance = $resistance / 1000
         $resistanceUnit = "gigaohms"
