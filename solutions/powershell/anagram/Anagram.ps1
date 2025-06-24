@@ -22,11 +22,11 @@ Function Invoke-Anagram() {
         [string[]]$Candidates
     )
 
-    $word = $Subject.ToLower().ToCharArray() | Sort-Object 
+    $chars = -join ($Subject.ToLower().ToCharArray() | Sort-Object)
 
     $isAnagram = {
-        $candidate = $_.ToLower().ToCharArray() | Sort-Object
-        $_ -ne $Subject -and -not (Compare-Object $candidate $word)
+        $candidate = -join ($_.ToLower().ToCharArray() | Sort-Object)
+        $_ -ne $Subject -and $candidate -eq $chars
     }
 
     $Candidates | Where-Object $isAnagram
