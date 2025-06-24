@@ -22,12 +22,16 @@ Function Invoke-Darts() {
         [Double]$X,
         [Double]$Y
     )
+
     $distance = [Math]::Sqrt($X * $X + $Y * $Y)
+    
     if ($distance -le 1) {
         return 10
-    } elseif ($distance -le 5) {
+    } 
+    if ($distance -le 5) {
         return 5
-    } elseif ($distance -le 10) {
+    } 
+    if ($distance -le 10) {
         return 1
     }
     return 0
