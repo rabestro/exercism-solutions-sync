@@ -28,15 +28,16 @@ Function Test-MatchingBrackets() {
     $stack = New-Object System.Collections.Stack
     
     foreach ($char in $chars) {
-        if ($brackets.ContainsKey($char.ToString())) {
-            $stack.Push($char.ToString())
+        $current = $char.ToString()
+        if ($brackets.ContainsKey($current)) {
+            $stack.Push($current)
             continue
         } 
         if ($stack.Count -eq 0) {
             return $false
         }
         $last = $stack.Pop()
-        if ($brackets[$last] -ne $char.ToString()) {
+        if ($brackets[$last] -ne $current) {
             return $false
         }
     }
