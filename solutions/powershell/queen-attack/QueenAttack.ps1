@@ -51,6 +51,7 @@ Class ChessBoard {
     }   
 
     ChessBoard([int[]]$w, [int[]]$b) {
+        [ChessBoard]::ValidateQueens($w, $b)
         $this.White = $w
         $this.Black = $b
     }
