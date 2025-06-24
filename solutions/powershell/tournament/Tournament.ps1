@@ -67,10 +67,11 @@ Function Invoke-Tournament {
         $Table[$team2].MP += 1
     }
 
-    Write-Output "Team                           | MP |  W |  D |  L |  P"
+    $report = @("Team                           | MP |  W |  D |  L |  P")
     $Table.Values | 
-    Sort-Object -Property P -Descending -Property Name | 
+    Sort-Object -Property @{Expression = "P"; Descending = $true}, @{Expression = "Name"} | 
     ForEach-Object {
-        Write-Output ("{0,-30} | {1,2} | {2,2} | {3,2} | {4,2} | {5,2}" -f $_.Name, $_.MP, $_.W, $_.D, $_.L, $_.P)
+        $report += ("{0,-30} | {1,2} | {2,2} | {3,2} | {4,2} | {5,2}" -f $_.Name, $_.MP, $_.W, $_.D, $_.L, $_.P)
     }
+    $report -join "`n"
 }
