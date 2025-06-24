@@ -8,6 +8,6 @@ object HighScores:
   def report(scores: List[Int]): String =
     val last = latest(scores)
     val best = personalBest(scores)
-    val short = if last == best then "" else s" ${best - last} short of"
+    val diff = if last == best then "" else s" ${best - last} short of"
 
-    s"Your latest score was $last. That's$short your personal best!"
+    s"Your latest score was $last. That's$diff your personal best!"
