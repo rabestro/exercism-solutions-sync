@@ -64,12 +64,11 @@ Class ChessBoard {
     }
 
     [string] DrawBoard() {
-        $board = New-Object 'object[,]' 8,8
-        $board[7-$this.White[0], $this.White[1]] = 'W'
-        $board[7-$this.Black[0], $this.Black[1]] = 'B'
-        $board = $board | ForEach-Object { $_ -replace $null, '_' }
-        $board = $board | ForEach-Object { $_ -join ' ' }
-        return $board -join "`r`n"
+        $empty_row = @('_') * 8
+        $Board = @(0..7 | ForEach-Object {,$empty_row.Clone()})
+        $Board[$this.White[0]][$this.White[1]] = 'W'
+        $Board[$this.Black[0]][$this.Black[1]] = 'B'
+        return ($Board | ForEach-Object {$_ -join " "}) -join "`r`n"
     }
 
     static [void] ValidateQueens([int[]]$WhitePos, [int[]]$BlackPos) {
