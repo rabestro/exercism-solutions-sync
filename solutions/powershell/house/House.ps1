@@ -1,25 +1,23 @@
 Function Get-Verse([int]$verse) {
-$subject = [ordered]@{
-    'the malt'                             = 'lay in'
-    'the rat'                              = 'ate'
-    'the cat'                              = 'killed'
-    'the dog'                              = 'worried'
-    'the cow with the crumpled horn'       = 'tossed'
-    'the maiden all forlorn'               = 'milked'
-    'the man all tattered and torn'        = 'kissed'
-    'the priest all shaven and shorn'      = 'married'
-    'the rooster that crowed in the morn'  = 'woke'
-    'the farmer sowing his corn'           = 'kept'
-    'the horse and the hound and the horn' = 'belonged to'
-}
-
-
     if ($verse -eq 1) {
         return 'This is the house that Jack built.'
     }
+    $subject = [ordered]@{
+        'the malt'                             = 'lay in'
+        'the rat'                              = 'ate'
+        'the cat'                              = 'killed'
+        'the dog'                              = 'worried'
+        'the cow with the crumpled horn'       = 'tossed'
+        'the maiden all forlorn'               = 'milked'
+        'the man all tattered and torn'        = 'kissed'
+        'the priest all shaven and shorn'      = 'married'
+        'the rooster that crowed in the morn'  = 'woke'
+        'the farmer sowing his corn'           = 'kept'
+        'the horse and the hound and the horn' = 'belonged to'
+    }
     $verse -= 2
     $sentence = $verse..0 | 
-    ForEach-Object { $subject.Keys[$_] + ' that ' + $subject.Values[$_]} 
+    ForEach-Object { $subject.Keys[$_] + ' that ' + $subject.Values[$_] } 
     'This is ' + ($sentence -join ' ') + ' the house that Jack built.'
 }
 
