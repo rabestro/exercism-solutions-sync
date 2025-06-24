@@ -28,13 +28,13 @@ Function Get-BobResponse() {
         [string]$HeyBob
     )
 
-    if ($HeyBob -eq $null -or $HeyBob.Trim().Length -eq 0) {
-        return "Fine. Be that way!"
-    }
-
     $sentence = $HeyBob.Trim()
     $isYell = $sentence -match "[A-Z]" -and $sentence.Equals($sentence.ToUpper())
     $isQuestion = $sentence.EndsWith("?")
+
+    if ($sentence.Length -eq 0) {
+        return "Fine. Be that way!"
+    }
 
     if ($isYell -and $isQuestion) {
         return  "Calm down, I know what I'm doing!"
