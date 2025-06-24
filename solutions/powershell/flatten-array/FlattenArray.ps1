@@ -18,5 +18,5 @@ Function Invoke-FlattenArray() {
         [System.Object[]]$Array
     )
     
-    $Array | ForEach-Object { $_ } | Where-Object { $_ -ne $null }
+    $Array | ForEach-Object { $_ } | Where-Object { $_ -ne $null } | ForEach-Object { $_ }
 }
