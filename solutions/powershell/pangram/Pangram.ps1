@@ -19,11 +19,13 @@ Function Invoke-Panagram() {
         [string]$Sentence
     )
 
+    $alphabet = 'a'..'z'
+    
     $letters = $Sentence.ToLower().ToCharArray() | 
-    Where-Object { $_ -ge 'a' -and $_ -le 'z' } | 
+    Where-Object { $_ -in $alphabet } | 
     Select-Object -Unique | 
     Measure-Object | 
     Select-Object -ExpandProperty Count 
 
-    $letters -eq 26
+    $letters -eq $alphabet.Length
 }
