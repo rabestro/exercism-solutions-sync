@@ -22,13 +22,8 @@ Function Get-TwoFer() {
     #>
     [CmdletBinding()]
     Param(
-        [string]$Name
+        [string]$Name='you'
     )
 
-    if ($Name) {
-        return "One for $Name, one for me"
-    }
-    else {
-        return "One for you, one for me"
-    }
+    return "One for $Name, one for me"
 }
