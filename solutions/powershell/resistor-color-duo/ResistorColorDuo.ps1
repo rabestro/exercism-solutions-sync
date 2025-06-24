@@ -17,7 +17,7 @@ Function Get-ColorCodeValue() {
         [string[]]$Colors
     )
 
-    $colorMap = [ordered]@{
+    $colorMap = @{
         'black'  = 0
         'brown'  = 1
         'red'    = 2
