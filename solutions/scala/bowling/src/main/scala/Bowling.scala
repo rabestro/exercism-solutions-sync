@@ -55,15 +55,15 @@ case class AwaitingSpareBonus(frames: List[CompletedFrame]) extends IncompleteGa
     CompletedGame(frames, pins :: Nil)
   }
 
-case class AwaitingStrikeBonus(completed: List[CompletedFrame], rolls: List[Int] = Nil) extends IncompleteGame:
+case class AwaitingStrikeBonus(frames: List[CompletedFrame], rolls: List[Int] = Nil) extends IncompleteGame:
   override def roll(pins: Int): Bowling = Bowling.withPinValidation(pins) { pins =>
     rolls match
       case first :: Nil if first < MaxPins && first + pins > MaxPins =>
         IncorrectGame(s"Second bonus roll after a strike in the last frame cannot score more than $MaxPins points")
       case first :: Nil =>
-        CompletedGame(completed, first :: pins :: Nil)
+        CompletedGame(frames, first :: pins :: Nil)
       case _ =>
-        AwaitingStrikeBonus(completed, pins :: Nil)
+        AwaitingStrikeBonus(frames, pins :: Nil)
   }
 
 case class IncorrectGame(reason: String) extends Bowling:
