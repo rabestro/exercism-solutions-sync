@@ -11,5 +11,4 @@ object CryptoSquare:
       .map(_.mkString)
       .mkString(" ")
 
-  def ciphertext(plaintext: String): String =
-    normalize.andThen(transpose).apply(plaintext)
+  val ciphertext: String => String = normalize.andThen(transpose)
