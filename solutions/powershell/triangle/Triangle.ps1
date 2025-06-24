@@ -25,15 +25,13 @@ Function Get-Triangle() {
         [double[]]$Sides
     )
 
-    $Sides | Where-Object { $_ -le 0 } | ForEach-Object {
-        throw 'All side lengths must be positive.'
+    if ($Sides | Where-Object { $_ -le 0 }) {
+        throw 'All side lengths must be positive.' 
     }
-
-    $sum = ($Sides | Measure-Object -Sum).Sum
-    $Sides | Where-Object { 2 * $_ -gt $sum } | ForEach-Object {
+    $measure = $Sides | Measure-Object -Maximum -Sum
+    if ($measure.Maximum * 2 -gt $measure.Sum) {
         throw 'Side lengths violate triangle inequality.'
     }
-
     if ($Sides[0] -eq $Sides[1] -and $Sides[1] -eq $Sides[2]) {
         return [Triangle]::EQUILATERAL
     }
