@@ -6,8 +6,10 @@ def rebase(input_base: int, digits: list[int], output_base: int) -> list[int]:
     if not all(0 <= digit < input_base for digit in digits):
         raise ValueError('all digits must satisfy 0 <= d < input base')
 
-    digits.reverse()
-    number = sum(digit * input_base ** power for power, digit in enumerate(digits))
+    number = sum(
+        digit * input_base ** power
+        for power, digit in enumerate(reversed(digits))
+    )
     result = []
     while number > 0:
         result.append(number % output_base)
