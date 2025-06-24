@@ -26,7 +26,5 @@ Function Get-ReverseString {
 	)
 	
 
-    $reversed = ''
-    $Forward.ToCharArray() | ForEach-Object {$reversed = $_ + $reversed}
-    $reversed
+    -join $Forward[-1..-($Forward.Length)]
 }
