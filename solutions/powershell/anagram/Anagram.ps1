@@ -23,9 +23,11 @@ Function Invoke-Anagram() {
     )
 
     $word = $Subject.ToLower().ToCharArray() | Sort-Object 
-    
-    $Candidates | Where-Object {
+
+    $isAnagram = {
         $candidate = $_.ToLower().ToCharArray() | Sort-Object
-        $candidate -eq $word -and $_ -ne $Subject
+        $_ -ne $Subject -and -not (Compare-Object $candidate $word)
     }
+
+    $Candidates | Where-Object $isAnagram
 }
