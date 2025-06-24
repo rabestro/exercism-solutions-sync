@@ -17,8 +17,12 @@ Function Get-WordCount() {
     Param(
         [string]$Phrase
     )
-    $Phrase.ToLower() -split '\W+' | 
+    $result = @{}
+    $Phrase.ToLower() -split '\n|[ ,.:!&@$%^_]' | 
+    ForEach-Object { $_.Trim("'") } |
+    Where-Object { $_ -ne '' } |
     Group-Object -NoElement | 
-    ForEach-Object { @{ $_.Name = $_.Count } }
+    ForEach-Object { $result[$_.Name] = $_.Count }
+    $result 
 }
 
