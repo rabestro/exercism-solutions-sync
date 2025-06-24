@@ -6,4 +6,3 @@ object Raindrops {
     if n % 7 == 0 then sound += "Plong"
     if sound.isEmpty then n.toString else sound
 }
-
