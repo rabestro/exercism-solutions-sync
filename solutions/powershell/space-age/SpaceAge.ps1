@@ -39,6 +39,5 @@ Function Get-SpaceAge() {
     }
 
     # Calculate the age on the planet
-    $ageOnPlanet = [Math]::Round($Seconds / ($secondsOnEarth * $planetOrbitalPeriods[$Planet]), 2)
-    return $ageOnPlanet
+    [Math]::Round($Seconds / ($secondsOnEarth * $planetOrbitalPeriods[$Planet]), 2)
 }
