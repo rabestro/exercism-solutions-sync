@@ -25,12 +25,13 @@ Function Get-SumOfMultiples {
         [int]$Limit
     )
 
-    $sum = 0
-
-    foreach ($number in 1..--$Limit) {
-        if ($Multiples | Where-Object { $number % $_ -eq 0 }) {
-            $sum += $number
-        }
+    $isMultiply = { 
+        $number = $_; 
+        $Multiples | Where-Object { $number % $_ -eq 0 } 
     }
-    return $sum
+
+    1..--$Limit | 
+    Where-Object $isMultiply |
+    Measure-Object -Sum |
+    Select-Object -ExpandProperty Sum
 }
