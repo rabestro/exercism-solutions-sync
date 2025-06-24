@@ -18,11 +18,9 @@ Function Get-WordCount() {
         [string]$Phrase
     )
     $result = @{}
-    $Phrase.ToLower() -split '\n|[ ,.:!&@$%^_]' | 
-    ForEach-Object { $_.Trim("'") } |
-    Where-Object { $_ -ne '' } |
-    Group-Object -NoElement | 
+    [regex]::Matches($Phrase.ToLower(), '\p{L}+(''\p{L}+)?|\d+') | 
+    Group-Object -NoElement |
     ForEach-Object { $result[$_.Name] = $_.Count }
-    $result 
+    $result
 }
 
