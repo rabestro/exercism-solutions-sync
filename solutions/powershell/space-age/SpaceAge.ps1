@@ -20,8 +20,9 @@ Function Get-SpaceAge() {
     #>
     [CmdletBinding()]
     Param(
+        [Parameter(Mandatory)]
         [int]$Seconds,
-        [ValidateSet('Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune')]
+        [ValidateSet('Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', ErrorMessage = 'Invalid planet')]
         [string]$Planet = 'Earth'
     )
     $secondsOnEarth = 31557600
