@@ -24,12 +24,8 @@ Function Invoke-Anagram() {
 
     $word = $Subject.ToLower().ToCharArray() | Sort-Object 
     
-    # $Candidates | Where-Object {
-    #     $candidate = $_.ToLower().ToCharArray() | Sort-Object
-    #     $candidate -eq $word -and $_ -ne $Subject
-    # }
-
-    $Candidates | 
-    Where-Object { $_ -ne $Subject -and $_.Length -eq $Subject.Length } |
-    Where-Object { ($_.ToLower().ToCharArray() | Sort-Object) -eq $word }
+    $Candidates | Where-Object {
+        $candidate = $_.ToLower().ToCharArray() | Sort-Object
+        $candidate -eq $word -and $_ -ne $Subject
+    }
 }
