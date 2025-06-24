@@ -34,12 +34,14 @@ Function Get-NucleotideCount() {
     }
 
     foreach ($nucleotide in $Strand.ToCharArray()) {
-        if ($nucleotides.ContainsKey($nucleotide.toString())) {
-            $nucleotides[$nucleotide.toString()]++
-        } else {
-            throw "Invalid nucleotide in strand"
+        switch ($nucleotide) {
+            'A' { $nucleotides.A++ }
+            'C' { $nucleotides.C++ }
+            'G' { $nucleotides.G++ }
+            'T' { $nucleotides.T++ }
+            default { throw 'Invalid nucleotide in strand' }
         }
     }
 
-    return $nucleotides
+    $nucleotides
 }
