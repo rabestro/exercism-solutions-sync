@@ -2,21 +2,10 @@ from math import sqrt
 
 
 def classify(number: int) -> str:
-    """
-    Classifies a given positive integer as "perfect", "deficient", or "abundant"
-    based on the sum of its proper divisors excluding the number itself. A number
-    is classified as:
-
-    - Perfect: if the sum of its divisors equals the number.
-    - Deficient: if the sum of its divisors is less than the number.
-    - Abundant: if the sum of its divisors is greater than the number.
-
-    :param number: The positive integer to be classified.
-    :type number: int
-    :return: A string indicating the classification of the number ("perfect",
-        "deficient", or "abundant").
-    :rtype: str
-    :raises ValueError: If the input number is not a positive integer.
+    """ A perfect number equals the sum of its positive divisors.
+ 
+    :param number: int a positive integer
+    :return: str the classification of the input integer
     """
     if number <= 0:
         raise ValueError("Classification is only possible for positive integers.")
