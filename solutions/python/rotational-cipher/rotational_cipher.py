@@ -1,31 +1,20 @@
 import functools
-import string
-
-ALPHABET_LOWER = string.ascii_lowercase
-ALPHABET_UPPER = string.ascii_uppercase
+from string import ascii_uppercase, ascii_lowercase
 
 
 @functools.cache
 def _get_translation_map(key: int) -> dict[int, int]:
-    """
-    Creates and caches the translation map for a given key.
-    The result is memoized, so this heavy lifting is only done once per key.
-    """
+    """Create and cache the translation map for a given key."""
+
     key = key % 26
-
-    original_chars = ALPHABET_LOWER + ALPHABET_UPPER
-
-    shifted_lower = ALPHABET_LOWER[key:] + ALPHABET_LOWER[:key]
-    shifted_upper = ALPHABET_UPPER[key:] + ALPHABET_UPPER[:key]
+    original_chars = ascii_lowercase + ascii_uppercase
+    shifted_lower = ascii_lowercase[key:] + ascii_lowercase[:key]
+    shifted_upper = ascii_uppercase[key:] + ascii_uppercase[:key]
     shifted_chars = shifted_lower + shifted_upper
-
     return str.maketrans(original_chars, shifted_chars)
 
 
 def rotate(text: str, key: int) -> str:
-    """Rotates letters in text by the given key."""
-    if key == 0 or key == 26:
-        return text
+    """Rotate letters in text by the given key."""
 
-    translation_map = _get_translation_map(key)
-    return text.translate(translation_map)
+    return text.translate(_get_translation_map(key))
