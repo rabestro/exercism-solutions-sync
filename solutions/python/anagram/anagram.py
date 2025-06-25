@@ -1,9 +1,11 @@
+from collections import Counter
+
 def find_anagrams(word: str, candidates: list[str]) -> list[str]:
-    sorted_word = sorted(word := word.lower())
+    lower_word = word.lower()
+    word_counts = Counter(lower_word)
 
-    def is_anagram(candidate: str) -> bool:
-        return (len(candidate) == len(word)
-                and (candidate := candidate.lower()) != word
-                and sorted(candidate) == sorted_word)
-
-    return list(filter(is_anagram, candidates))
+    return [
+        candidate for candidate in candidates
+        if candidate.lower() != lower_word and
+           Counter(candidate.lower()) == word_counts
+    ]
