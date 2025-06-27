@@ -1,6 +1,6 @@
 object Diamond:
   def rows(widest: Char): List[String] =
-    def line(current: Char): String =
+    val line = (current: Char) =>
       lazy val innerSpaces = " " * (2 * (current - 'A') - 1)
       val outerSpaces = " " * (widest - current)
       if current == 'A' then outerSpaces + current + outerSpaces
