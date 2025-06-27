@@ -1,7 +1,7 @@
 import scala.util.matching.Regex
 
 object PigLatin {
-  private val WordPattern: Regex =
+  private val WordPattern =
     """(?x)                         # Enable verbose mode for comments
        (?<consonants>               # Define possible consonants
           (?!xr|yt)                 # Consonants should not start with "xr" or "yt"
