@@ -3,12 +3,11 @@ object RotationalCipher:
 
   def rotate(text: String, key: Int): String =
 
-    def shift(letter: Char, base: Char): Char =
+    def shift(letter: Char) =
+      val base = if letter.isLower then 'a' else 'A'
       (base + (letter - base + key) % AlphabetSize).toChar
 
-    def encode(symbol: Char): Char =
-      if !symbol.isLetter then symbol
-      else if symbol.isLower then shift(symbol, 'a')
-      else shift(symbol, 'A')
+    def encode(symbol: Char) =
+      if symbol.isLetter then shift(symbol) else symbol
 
     text.map(encode)
