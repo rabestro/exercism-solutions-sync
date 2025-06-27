@@ -4,11 +4,11 @@ object BookStore:
 
   def total(books: List[Int]): Int =
     // Count the occurrences of each book series
-    val bookCounts = (1 to SeriesCount).map(i => books.count(_ == i)).sorted.toArray
+    val seriesCounts = (1 to SeriesCount).map(i => books.count(_ == i)).sorted.toArray
 
     // Calculate the differences between each count and the previous one, reversed
     val groupCounts = (0 until SeriesCount).map { i =>
-      if i == 0 then bookCounts(0) else bookCounts(i) - bookCounts(i - 1)
+      if i == 0 then seriesCounts(0) else seriesCounts(i) - seriesCounts(i - 1)
     }.reverse.toArray
 
     // Rearrange books in groups to get maximum discount
@@ -19,4 +19,4 @@ object BookStore:
       .updated(3, groupCounts(3) + 2 * combined)
 
     // Calculate the total price with maximum discount
-    (1 to SeriesCount).map(i => i * BookPrice(i) * adjustedGroups(i - 1)).sum
+    (1 to SeriesCount).map { i => i * BookPrice(i) * adjustedGroups(i - 1) }.sum
