@@ -18,5 +18,3 @@ object Minesweeper:
       (0 until cols).map(annotateCell(row, _)).mkString
 
     (0 until rows).map(annotateRow).toList
-
-
