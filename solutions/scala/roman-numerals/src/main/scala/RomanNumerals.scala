@@ -8,8 +8,12 @@ object RomanNumerals {
   )
 
   @tailrec
-  def roman(number: Int, result: String = ""): String =
-    romanNumerals.find { case (value, _) => number >= value } match
-      case None => result
-      case Some((value, numeral)) => roman(number - value, result + numeral)
+  private def convert(remaining: Int, acc: List[String] = Nil): String =
+    romanNumerals.find { case (value, _) => remaining >= value } match
+      case None => acc.reverse.mkString
+      case Some((value, numeral)) => convert(remaining - value, numeral :: acc)
+
+  def roman(number: Int): String =
+    require(number > 0 && number <= 3999, "Number must be in the range 1 to 3999")
+    convert(number)
 }
