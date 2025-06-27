@@ -8,10 +8,11 @@ def annotate(garden: list[str]) -> list[str]:
     height = len(garden)
     width = len(garden[0])
 
-    if any(len(row) != width or
-           any(char not in ' *' for char in row)
-           for row in garden):
-        raise ValueError('The board is invalid with current input.')
+    def is_valid_row(row: str) -> bool:
+        return len(row) == width and all(char in " *" for char in row)
+
+    if not all(is_valid_row(row) for row in garden):
+        raise ValueError("The board is invalid with current input.")
 
     def count_flowers(row: int, col: int) -> str:
         if garden[row][col] == '*':
