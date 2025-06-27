@@ -2,7 +2,7 @@ import scala.collection.{SortedSet, mutable}
 
 object Change:
   def findFewestCoins(amount: Int, denominations: List[Int]): Option[List[Int]] =
-    optimal(amount, SortedSet(denominations *))
+    optimal(amount, SortedSet.from(denominations))
 
   private def optimal(amount: Int, denominations: SortedSet[Int]): Option[List[Int]] =
     val changes = mutable.HashMap[Int, List[Int]](0 -> Nil)
