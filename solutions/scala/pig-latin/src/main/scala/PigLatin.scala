@@ -1,6 +1,4 @@
-import scala.util.matching.Regex
-
-object PigLatin {
+object PigLatin:
   private val WordPattern =
     """(?x)                         # Enable verbose mode for comments
        (?<consonants>               # Define possible consonants
@@ -12,7 +10,5 @@ object PigLatin {
 
   private val PigLatinFormat = "${base}${consonants}ay"
 
-  def translate(sentence: String): String = {
+  def translate(sentence: String): String =
     WordPattern.replaceAllIn(sentence, PigLatinFormat)
-  }
-}
