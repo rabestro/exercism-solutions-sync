@@ -1,11 +1,8 @@
 object Luhn:
-  def valid(numberToValidate: String): Boolean =
-    val number = numberToValidate.replace(" ", "")
-    if !number.matches("\\d{2,}") then false
-    else
-      number.map(_.asDigit).reverse.zipWithIndex.map { case (digit, index) =>
-        if index % 2 == 0 then digit
-        else
-          val x = digit * 2
-          if x > 9 then x - 9 else x
-      }.sum % 10 == 0
+  def valid(candidate: String): Boolean =
+    candidate
+      .filterNot(_.isWhitespace)
+      .reverse.map(_.asDigit).zipWithIndex
+      .map((digit, index) => digit * (1 + index % 2))
+      .map(x => if x > 9 then x - 9 else x)
+      .sum % 10 == 0 && candidate.trim.length > 1
