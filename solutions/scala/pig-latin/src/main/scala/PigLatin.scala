@@ -13,6 +13,6 @@ object PigLatin {
   private val PigLatinFormat = "${base}${consonants}ay"
 
   def translate(sentence: String): String = {
-    PigLatin.WordPattern.replaceAllIn(sentence, PigLatin.PigLatinFormat)
+    WordPattern.replaceAllIn(sentence, PigLatinFormat)
   }
 }
