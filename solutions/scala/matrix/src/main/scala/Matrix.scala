@@ -1,6 +1,5 @@
 class Matrix(data: String):
-  private lazy val matrix = data.linesIterator.map(_.split(' ').map(_.toInt)).toSeq
 
-  def row(i: Int): Seq[Int] = matrix(i)
+  lazy val row: Seq[Array[Int]] = data.linesIterator.map(_.split(' ').map(_.toInt)).toSeq
 
-  def column(i: Int): Seq[Int] = matrix.transpose.toSeq(i)
+  lazy val column: Seq[Seq[Int]] = row.transpose
