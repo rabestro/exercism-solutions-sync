@@ -7,7 +7,7 @@ case class Garden(cups: List[List[Plant]]):
 object Garden:
   def defaultGarden(cups: String): Garden =
     val garden = cups.linesIterator.toList
-      .map(_.sliding(2, 2).toList)
+      .map(_.grouped(2).toList)
       .transpose
       .map(_.flatten)
       .map(_.flatMap(Plant.apply))
