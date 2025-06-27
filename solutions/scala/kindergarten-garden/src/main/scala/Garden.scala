@@ -1,25 +1,14 @@
-enum Plant:
-  case Grass, Clover, Radishes, Violets
+case class Garden(cups: List[List[Plant]]):
+  private def order(name: String) = name.charAt(0) - 'A'
 
-case class Garden(var plants: List[List[Plant]]):
-  def plants(child: String): List[Plant] =
-    val index = child.head - 'A'
-    plants(index)
+  def plants(name: String): List[Plant] = 
+    cups.drop(order(name)).headOption.getOrElse(Nil)
 
 object Garden:
-  private def charToPlant(c: Char): Option[Plant] = c match
-    case 'G' => Some(Plant.Grass)
-    case 'C' => Some(Plant.Clover)
-    case 'R' => Some(Plant.Radishes)
-    case 'V' => Some(Plant.Violets)
-    case _ => None
-
-  def defaultGarden(diagram: String): Garden =
-    val lines = diagram.split('\n').map(_.grouped(2))
-    val garden = lines.head.zip(lines.tail.head)
-      .map(_ + _)
-      .map(_.flatMap(charToPlant))
-      .map(_.toList)
-      .toList
+  def defaultGarden(cups: String): Garden =
+    val garden = cups.linesIterator.toList
+      .map(_.sliding(2, 2).toList)
+      .transpose
+      .map(_.flatten)
+      .map(_.flatMap(Plant.apply))
     Garden(garden)
-
