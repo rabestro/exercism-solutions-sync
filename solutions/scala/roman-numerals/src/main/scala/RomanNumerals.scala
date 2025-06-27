@@ -1,21 +1,15 @@
 import scala.annotation.tailrec
 
 object RomanNumerals {
+  private val romanNumerals = Seq(
+    1000 -> "M", 900 -> "CM", 500 -> "D", 400 -> "CD",
+    100 -> "C", 90 -> "XC", 50 -> "L", 40 -> "XL",
+    10 -> "X", 9 -> "IX", 5 -> "V", 4 -> "IV", 1 -> "I"
+  )
+
   @tailrec
   def roman(number: Int, result: String = ""): String =
-    number match
-      case x if x >= 1000 => roman(number - 1000, result + "M")
-      case x if x >= 900 => roman(number - 900, result + "CM")
-      case x if x >= 500 => roman(number - 500, result + "D")
-      case x if x >= 400 => roman(number - 400, result + "CD")
-      case x if x >= 100 => roman(number - 100, result + "C")
-      case x if x >= 90 => roman(number - 90, result + "XC")
-      case x if x >= 50 => roman(number - 50, result + "L")
-      case x if x >= 40 => roman(number - 40, result + "XL")
-      case x if x > 9 => roman(x - 10, result + "X")
-      case 9 => roman(number - 9, result + "IX")
-      case 5 | 6 | 7 | 8 => roman(number - 5, result + "V")
-      case 4 => roman(number - 4, result + "IV")
-      case 1 | 2 | 3 => roman(number - 1, result + "I")
-      case 0 => result
+    romanNumerals.find { case (value, _) => number >= value } match
+      case None => result
+      case Some((value, numeral)) => roman(number - value, result + numeral)
 }
