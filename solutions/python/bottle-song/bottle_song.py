@@ -2,7 +2,7 @@ NUMBERS = ("no", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
 
 
 def hanging(bottles):
-    suffix = '' if bottles == 1 else 's'
+    suffix = "" if bottles == 1 else "s"
     return f"{NUMBERS[bottles]} green bottle{suffix} hanging on the wall"
 
 
@@ -19,8 +19,13 @@ def verse(bottles):
 
 
 def recite(start: int, take=1) -> list[str]:
-    return [
-               line
-               for lines in map(verse, range(start, start - take, -1))
-               for line in lines
-           ][:-1]
+    """Recite verses from a countdown song, starting from a given number for a certain count.
+
+    Args:
+        start: The starting verse number to recite from.
+        take: The number of verses to recite, taken in reverse order. Defaults to 1.
+
+    Returns:
+        A list of strings, where each string contains a line of the recited lyrics.
+    """
+    return list(line for i in range(start, start - take, -1) for line in verse(i))[:-1]
