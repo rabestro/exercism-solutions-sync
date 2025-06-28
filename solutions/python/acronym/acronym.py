@@ -12,7 +12,7 @@ def abbreviate(words: str) -> str:
     """
     cleaned_string = words.translate(CLEANING_TABLE)
 
-    return "".join(
+    return ''.join(
         word[0].upper()
         for word in cleaned_string.split()
     )
