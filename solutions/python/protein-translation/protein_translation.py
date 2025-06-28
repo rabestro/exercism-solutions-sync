@@ -1,4 +1,4 @@
-import re
+from textwrap import wrap
 
 CODONS = {
     'AUG': 'Methionine',
@@ -20,15 +20,12 @@ CODONS = {
     'UGA': 'Stop',
 }
 
-PATTERN = re.compile(r'...')
-
 
 def proteins(strand: str) -> list[str]:
     result = []
-    for codon in PATTERN.findall(strand):
+    for codon in wrap(strand, 3):
         protein = CODONS[codon]
         if protein == 'Stop':
             break
         result.append(protein)
     return result
-
