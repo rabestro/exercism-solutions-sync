@@ -23,8 +23,7 @@ CODONS = {
 
 def proteins(strand: str) -> list[str]:
     result = []
-    for codon in wrap(strand, 3):
-        protein = CODONS[codon]
+    for protein in map(CODONS.get, wrap(strand, 3)):
         if protein == 'Stop':
             break
         result.append(protein)
