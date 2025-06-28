@@ -19,7 +19,11 @@ record NaturalNumber(int number) {
     }
 
     public Classification getClassification() {
-        int index = 1 + (int) Math.signum(aliquotSum() - number());
-        return Classification.values()[index];
+        int comparison = Integer.compare(aliquotSum(), number());
+        return switch (comparison) {
+            case -1 -> Classification.DEFICIENT;
+            case 1 -> Classification.ABUNDANT;
+            default -> Classification.PERFECT;
+        };
     }
 }
