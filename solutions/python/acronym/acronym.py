@@ -1,5 +1,4 @@
-import re
-WORD_PATTERN = re.compile(r"([^\W_])[\w']*[\W_]*")
+CLEANING_TABLE = str.maketrans('-', ' ', '_')
 
 
 def abbreviate(words: str) -> str:
@@ -11,4 +10,9 @@ def abbreviate(words: str) -> str:
     Returns:
         The acronym is formed by capitalizing the first letter of each word in the input.
     """
-    return WORD_PATTERN.sub(lambda m: m.group(1).upper(), words)
+    cleaned_string = words.translate(CLEANING_TABLE)
+
+    return "".join(
+        word[0].upper()
+        for word in cleaned_string.split()
+    )
