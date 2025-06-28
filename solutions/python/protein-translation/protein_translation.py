@@ -1,4 +1,5 @@
 from textwrap import wrap
+from itertools import takewhile
 
 CODONS = {
     'AUG': 'Methionine',
@@ -22,9 +23,4 @@ CODONS = {
 
 
 def proteins(strand: str) -> list[str]:
-    result = []
-    for protein in map(CODONS.get, wrap(strand, 3)):
-        if protein == 'Stop':
-            break
-        result.append(protein)
-    return result
+    return list(takewhile(lambda x: x != 'Stop', map(CODONS.get, wrap(strand, 3))))
