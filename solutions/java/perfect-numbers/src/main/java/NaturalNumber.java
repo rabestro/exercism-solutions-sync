@@ -9,16 +9,17 @@ record NaturalNumber(int number) {
         }
     }
 
+    private int aliquotSum() {
+        return number < 2 ? 0 : 1 +
+                rangeClosed(2, (int) Math.sqrt(number))
+                        .filter(i -> number % i == 0)
+                        .flatMap(i -> IntStream.of(i, number / i))
+                        .distinct()
+                        .sum();
+    }
+
     public Classification getClassification() {
-        int aliquotSum = rangeClosed(1, number / 2)
-                .filter(i -> number % i == 0)
-                .sum();
-        if (aliquotSum < number) {
-            return Classification.DEFICIENT;
-        }
-        if (aliquotSum > number) {
-            return Classification.ABUNDANT;
-        }
-        return Classification.PERFECT;
+        int index = 1 + (int) Math.signum(aliquotSum() - number());
+        return Classification.values()[index];
     }
 }
