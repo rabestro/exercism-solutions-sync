@@ -27,18 +27,23 @@ def solve(puzzle: str) -> Solution | None:
     if any(len(s) > max_length for s in summands):
         return None  # A summand cannot be longer than the result
 
+    column_equations = []
+    for i in range(max_length):
+        summand_indices = tuple(
+            letter_to_index[word[i]] for word in summands if i < len(word)
+        )
+        result_index = letter_to_index[result[i]]
+        column_equations.append((summand_indices, result_index))
+
     def is_valid(hypothesis: Hypothesis) -> bool:
         # Check for leading zeros first, a quick filter
         if any(hypothesis[i] == 0 for i in leading_indexes):
             return False
 
         carry = 0
-        for i in range(max_length):
-            column_sum = carry + sum(
-                hypothesis[letter_to_index[word[i]]]
-                for word in summands if i < len(word)
-            )
-            if hypothesis[letter_to_index[result[i]]] != column_sum % 10:
+        for summand_indices, result_index in column_equations:
+            column_sum = carry + sum(hypothesis[i] for i in summand_indices)
+            if hypothesis[result_index] != column_sum % 10:
                 return False
             carry = column_sum // 10
 
