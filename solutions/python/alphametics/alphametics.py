@@ -8,6 +8,23 @@ type Hypothesis = tuple[int, ...]
 
 
 def solve(puzzle: str) -> Solution | None:
+    """Solves an alphametics puzzle.
+
+    This function takes a string representing a cryptarithmetic puzzle
+    (e.g., "SEND + MORE == MONEY") and finds a valid mapping of letters
+    to digits (0-9) that satisfies the mathematical equation.
+
+    Args:
+        puzzle: A string representing the puzzle. Words should consist of
+            uppercase letters and be separated by non-alphabetic characters.
+            The final two words are expected to be separated by "==".
+
+    Returns:
+        A dictionary mapping each letter to its assigned integer value if a
+        solution is found. For example, {'S': 9, 'E': 5, ...}.
+        Returns None if no solution exists or if the puzzle is impossible
+        (e.g., contains more than 10 unique letters).
+    """
     words = WORD_PATTERN.findall(puzzle)
     unique_letters = sorted(tuple(set(''.join(words))))
 
@@ -19,24 +36,22 @@ def solve(puzzle: str) -> Solution | None:
     leading_letters = {word[0] for word in words if len(word) > 1}
     leading_indexes = {letter_to_index[letter] for letter in leading_letters}
 
-    # --- Prepare data for validation ---
     summands = tuple(word[::-1] for word in words[:-1])
     result = words[-1][::-1]
     max_length = len(result)
 
     if any(len(s) > max_length for s in summands):
-        return None  # A summand cannot be longer than the result
+        return None
 
-    column_equations = []
-    for i in range(max_length):
-        summand_indices = tuple(
-            letter_to_index[word[i]] for word in summands if i < len(word)
+    column_equations = tuple(
+        (
+            tuple(letter_to_index[word[i]] for word in summands if i < len(word)),
+            letter_to_index[result[i]]
         )
-        result_index = letter_to_index[result[i]]
-        column_equations.append((summand_indices, result_index))
+        for i in range(max_length)
+    )
 
     def is_valid(hypothesis: Hypothesis) -> bool:
-        # Check for leading zeros first, a quick filter
         if any(hypothesis[i] == 0 for i in leading_indexes):
             return False
 
