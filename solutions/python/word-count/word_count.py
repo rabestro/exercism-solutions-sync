@@ -20,4 +20,4 @@ def count_words(sentence: str) -> dict[str, int]:
         - Numbers are considered words
         - Words can be separated by any punctuation or whitespace
     """
-    return dict(Counter(WORD_PATTERN.findall(sentence.lower())).items())
+    return Counter(WORD_PATTERN.findall(sentence.lower()))
