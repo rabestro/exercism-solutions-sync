@@ -1,8 +1,3 @@
-"""A module for translating English text to Pig Latin.
-
-This implementation uses a single, pre-compiled regular expression to handle
-all translation rules efficiently in one pass using `re.sub`.
-"""
 import re
 
 _WORD_PATTERN = re.compile(r"""
