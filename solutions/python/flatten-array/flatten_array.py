@@ -12,4 +12,19 @@ def deep_flatten(nested: Iterable):
 
 
 def flatten(iterable: Iterable[Any]) -> list[int]:
+    """Flattens a nested iterable into a single-level list, excluding None values.
+
+    Takes an arbitrarily nested iterable and returns a flattened list containing
+    all non-None values from the input, preserving the order of elements.
+
+    Args:
+        iterable: An iterable that may contain nested iterables and None values.
+
+    Returns:
+        list[int]: A flattened list containing all non-None values from the input.
+
+    Example:
+        >>> flatten([1, [2, None, [3, None]], 4])
+        [1, 2, 3, 4]
+    """
     return [x for x in deep_flatten(iterable) if x is not None]
