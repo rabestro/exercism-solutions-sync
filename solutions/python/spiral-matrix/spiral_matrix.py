@@ -3,7 +3,7 @@ def spiral_matrix(size: int) -> list[list[int]]:
         if rows == 0:
             return []
         else:
-            top_row = [x for x in range(start, start + columns)]
+            top_row = list(range(start, start + columns))
             inner_matrix = construct_matrix(columns, rows - 1, start + columns)
             inner_matrix.reverse()
             return [top_row] + [list(row) for row in zip(*inner_matrix)]
