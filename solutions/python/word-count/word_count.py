@@ -1,7 +1,7 @@
 from collections import Counter
 import re
 
-WORD_PATTERN = re.compile(r"[a-zA-Z]+(?:'[a-zA-Z]+)*|-?\d+(?:\.\d+)?")
+WORD_PATTERN = re.compile(r"[0-9]+|[a-z]+(?:'[a-z]+)?", re.IGNORECASE)
 
 
 def count_words(sentence: str) -> dict[str, int]:
