@@ -1,6 +1,6 @@
 class TwoFer {
 
     static String twoFer(String name = 'you') {
-        "One for $name, one for me."
+        "One for ${name == ''? 'you' : name}, one for me."
     }
 }
