@@ -8,7 +8,7 @@ final class Anagram {
     }
 
     def find(candidates) {
-        candidates.stream().filter(this::isAnagram).toList()
+        candidates.findAll { isAnagram(it) }
     }
 
     private isAnagram(otherWord) {
