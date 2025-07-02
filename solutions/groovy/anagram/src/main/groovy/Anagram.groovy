@@ -13,7 +13,7 @@ final class Anagram {
 
     private isAnagram(otherWord) {
         !sourceWord.equalsIgnoreCase(otherWord)
-                && Arrays.equals(sortedChars, toSortedChars(otherWord));
+                && sortedChars == toSortedChars(otherWord)
     }
 
     private static toSortedChars(word) {
