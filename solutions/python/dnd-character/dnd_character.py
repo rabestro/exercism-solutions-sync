@@ -22,6 +22,9 @@ class Character:
         self.charisma = ability()
         self.hitpoints = 10 + modifier(self.constitution)
 
+    def ability(self) -> int:
+        """Roll 4d6 and return the sum of the highest 3 dice."""
+        return ability()
 
 def ability() -> int:
     """Roll 4d6 and return the sum of the highest 3 dice."""
