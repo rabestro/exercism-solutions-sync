@@ -2,19 +2,17 @@ final class Anagram {
     final sourceWord
 
     Anagram(String sourceWord) {
-        this.sourceWord = sourceWord;
+        this.sourceWord = sourceWord.toLowerCase()
     }
 
     def find(candidates) {
         candidates.findAll { isAnagram(it) }
     }
 
-    private isAnagram(otherWord) {
-        !sourceWord.equalsIgnoreCase(otherWord)
-                && toSortedChars(sourceWord) == toSortedChars(otherWord)
+    private isAnagram(word) {
+        def otherWord = word.toLowerCase()
+        sourceWord != otherWord &&
+                sourceWord.collect().toSorted() == otherWord.collect().toSorted()
     }
 
-    private static toSortedChars(word) {
-        word.collect({ it.toLowerCase() }).toSorted()
-    }
 }
