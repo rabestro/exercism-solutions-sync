@@ -6,10 +6,10 @@ class Gigasecond {
     static def GIGA_SECOND = Duration.ofSeconds(1_000_000_000)
 
     static add(LocalDateTime moment) {
-        return moment + GIGA_SECOND
+        moment + GIGA_SECOND
     }
 
     static add(LocalDate moment) {
-        return add(moment.atStartOfDay())
+        add(moment.atStartOfDay())
     }
 }
