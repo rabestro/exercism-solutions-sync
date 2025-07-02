@@ -1,6 +1,6 @@
 class TwoFer {
 
-    static String twoFer(String name = 'you') {
-        "One for ${name == ''? 'you' : name}, one for me."
+    static String twoFer(name) {
+        "One for ${name ? name : 'you'}, one for me."
     }
 }
