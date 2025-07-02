@@ -1,10 +1,8 @@
 final class Anagram {
-    final int[] sortedChars
     final sourceWord
 
-    Anagram(String word) {
-        sourceWord = word;
-        sortedChars = toSortedChars(sourceWord);
+    Anagram(String sourceWord) {
+        this.sourceWord = sourceWord;
     }
 
     def find(candidates) {
@@ -13,10 +11,10 @@ final class Anagram {
 
     private isAnagram(otherWord) {
         !sourceWord.equalsIgnoreCase(otherWord)
-                && sortedChars == toSortedChars(otherWord)
+                && toSortedChars(sourceWord) == toSortedChars(otherWord)
     }
 
     private static toSortedChars(word) {
-        word.chars().map(Character::toLowerCase).sorted().toArray()
+        word.collect({ it.toLowerCase() }).toSorted()
     }
 }
