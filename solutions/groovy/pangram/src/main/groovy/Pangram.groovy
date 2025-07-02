@@ -1,6 +1,6 @@
 class Pangram {
 
     static boolean isPangram(String sentence) {
-        !'abcdefghijklmnopqrstuvwxyz'.replaceAll("(?i)[$sentence ]", '')
+        sentence.toLowerCase().toSet().containsAll(('a'..'z'))
     }
 }
