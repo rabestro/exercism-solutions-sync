@@ -8,6 +8,8 @@ def deep_flatten(nested: Iterable):
         if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
             yield from deep_flatten(item)
         else:
+            if item is None:
+                continue
             yield item
 
 
@@ -27,4 +29,4 @@ def flatten(iterable: Iterable[Any]) -> list[Any]:
         >>> flatten([1, [2, None, [3, None]], 4])
         [1, 2, 3, 4]
     """
-    return [x for x in deep_flatten(iterable) if x is not None]
+    return list(deep_flatten(iterable))
