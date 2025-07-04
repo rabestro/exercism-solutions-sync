@@ -9,10 +9,10 @@ def prime(number):
     if number <= len(_primes):
         return _primes[number - 1]
 
-    max_prime = _primes[-1]
+    candidate = _primes[-1]
     while len(_primes) < number:
-        max_prime += 2
-        if all(max_prime % prime for prime in _primes):
-            _primes.append(max_prime)
+        candidate += 2
+        if all(candidate % prime for prime in _primes):
+            _primes.append(candidate)
 
     return _primes[-1]
