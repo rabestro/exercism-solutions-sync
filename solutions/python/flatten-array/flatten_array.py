@@ -5,13 +5,13 @@ from typing import Any
 def deep_flatten(nested: Iterable):
     """Flattens an arbitrarily deep and irregular list."""
     for item in nested:
-        if isinstance(item, Iterable):
+        if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
             yield from deep_flatten(item)
         else:
             yield item
 
 
-def flatten(iterable: Iterable[Any]) -> list[int]:
+def flatten(iterable: Iterable[Any]) -> list[Any]:
     """Flattens a nested iterable into a single-level list, excluding None values.
 
     Takes an arbitrarily nested iterable and returns a flattened list containing
