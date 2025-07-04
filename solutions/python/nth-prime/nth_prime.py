@@ -12,12 +12,7 @@ def prime(number):
     max_prime = _primes[-1]
     while len(_primes) < number:
         max_prime += 2
-        is_prime = True
-        for prime in _primes:
-            if max_prime % prime == 0:
-                is_prime = False
-                break
-        if is_prime:
+        if all(max_prime % prime for prime in _primes):
             _primes.append(max_prime)
 
     return _primes[-1]
