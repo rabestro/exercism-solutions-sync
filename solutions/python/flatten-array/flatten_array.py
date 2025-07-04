@@ -7,9 +7,7 @@ def deep_flatten(nested: Iterable):
     for item in nested:
         if isinstance(item, Iterable) and not isinstance(item, (str, bytes)):
             yield from deep_flatten(item)
-        else:
-            if item is None:
-                continue
+        elif item is not None:
             yield item
 
 
