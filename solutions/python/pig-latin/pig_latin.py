@@ -1,6 +1,6 @@
 import re
 
-_WORD_PATTERN = re.compile(r"""
+WORD_PATTERN = re.compile(r"""
     \b                                  # Assert position at a word boundary.
     (?P<consonants>                     # Capture group for possible consonants at the start of a word.
         (?!xr|yt)                       # Negative lookahead: "xr" and "yt" are vowel sounds.
@@ -10,10 +10,10 @@ _WORD_PATTERN = re.compile(r"""
     \b                                  # Assert position at a word boundary.
     """, re.VERBOSE)
 
-_PIG_LATIN_FORMAT = r"\g<base>\g<consonants>ay"
+PIG_LATIN_FORMAT = r"\g<base>\g<consonants>ay"
 
 
-def translate(text):
+def translate(text: str) -> str:
     """Translate a given English text into Pig Latin.
 
     This function applies a set of Pig Latin rules to each word in the
@@ -29,10 +29,10 @@ def translate(text):
         of the word, followed by "ay".
 
     Args:
-        text (str): The English text to be translated. Can contain one
+        text: The English text to be translated. Can contain one
             or more words.
 
     Returns:
-        str: The text translated into Pig Latin.
+        The text translated into Pig Latin.
     """
-    return _WORD_PATTERN.sub(_PIG_LATIN_FORMAT, text)
+    return WORD_PATTERN.sub(PIG_LATIN_FORMAT, text)
