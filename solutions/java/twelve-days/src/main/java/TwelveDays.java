@@ -1,4 +1,3 @@
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -23,15 +22,14 @@ class TwelveDays {
     };
 
     String verse(int verseNumber) {
-        var i = verseNumber - 1;
-        var song = new StringJoiner(" ",
-            "On the " + DAYS[i] + " day of Christmas my true love gave to me: ",
-            ".\n");
+        var dayIndex = verseNumber - 1;
+        var gifts = IntStream.rangeClosed(0, dayIndex)
+            .map(i -> dayIndex - i) // Iterate backwards from dayIndex down to 0
+            .mapToObj(i -> GIFTS[i])
+            .collect(Collectors.joining(" "));
 
-        for (; i >= 0; --i) {
-            song.add(GIFTS[i]);
-        }
-        return song.toString();
+        return "On the %s day of Christmas my true love gave to me: %s.\n"
+            .formatted(DAYS[dayIndex], gifts);
     }
 
     String verses(int startVerse, int endVerse) {
