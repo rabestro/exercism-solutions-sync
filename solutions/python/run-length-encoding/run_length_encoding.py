@@ -7,7 +7,6 @@ def decode(encoded_text: str) -> str:
     Decodes a run-length encoded string.
     For example, '4A3B2CD2A' becomes 'AAAABBBCCDAA'.
     """
-    # Find either a number-and-character pair OR a single character
     return re.sub(r'(\d+)(\D)|(\D)',
                   lambda m: m.group(2) * int(m.group(1)) if m.group(1) else m.group(3),
                   encoded_text)
