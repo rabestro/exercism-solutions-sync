@@ -7,9 +7,17 @@ def decode(encoded_text: str) -> str:
     Decodes a run-length encoded string.
     For example, '4A3B2CD2A' becomes 'AAAABBBCCDAA'.
     """
-    return re.sub(r'(\d+)(\D)|(\D)',
-                  lambda m: m.group(2) * int(m.group(1)) if m.group(1) else m.group(3),
-                  encoded_text)
+    count = 0
+    plan_text = ""
+    for char in encoded_text:
+        if char.isdigit():
+            count *= 10
+            count += int(char)
+        else:
+            count += count == 0
+            plan_text += char * count
+            count = 0
+    return plan_text
 
 
 def encode(plain_text: str) -> str:
