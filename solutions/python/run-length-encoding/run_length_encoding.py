@@ -3,21 +3,11 @@ from itertools import groupby
 
 
 def decode(encoded_text: str) -> str:
-    """
-    Decodes a run-length encoded string.
-    For example, '4A3B2CD2A' becomes 'AAAABBBCCDAA'.
-    """
-    count = 0
-    plan_text = ""
-    for char in encoded_text:
-        if char.isdigit():
-            count *= 10
-            count += int(char)
-        else:
-            count += count == 0
-            plan_text += char * count
-            count = 0
-    return plan_text
+    """Decodes a run-length encoded string using a regex."""
+    return "".join(
+        int(count or 1) * char
+        for count, char in re.findall(r"(\d*)(\D)", encoded_text)
+    )
 
 
 def encode(plain_text: str) -> str:
