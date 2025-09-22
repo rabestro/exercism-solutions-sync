@@ -1,8 +1,11 @@
 #include <cmath>
 
+constexpr auto hours_per_day = 8;
+constexpr auto billable_days_per_month = 22;
+
 // daily_rate calculates the daily rate given an hourly rate
 double daily_rate(double hourly_rate) {
-    return hourly_rate * 8;
+    return hourly_rate * hours_per_day;
 }
 
 // apply_discount calculates the price after a discount
@@ -10,10 +13,10 @@ double apply_discount(double before_discount, double discount) {
     return before_discount * (1 - discount / 100);
 }
 
-// monthly_rate calculates the monthly rate, given an hourly rate and a discount
+// monthly_rate calculates the monthly rate, given an hourly rate and a discount.
 // The returned monthly rate is rounded up to the nearest integer.
 int monthly_rate(double hourly_rate, double discount) {
-    auto monthly = apply_discount(22 * daily_rate(hourly_rate), discount);
+    auto monthly = apply_discount(billable_days_per_month * daily_rate(hourly_rate), discount);
     return static_cast<int>(std::ceil(monthly));
 }
 
@@ -22,5 +25,5 @@ int monthly_rate(double hourly_rate, double discount) {
 // the next integer.
 int days_in_budget(int budget, double hourly_rate, double discount) {
     auto daily = apply_discount(daily_rate(hourly_rate), discount);
-    return static_cast<int>(std::floor(budget / daily));
+    return static_cast<int>(budget / daily);
 }
