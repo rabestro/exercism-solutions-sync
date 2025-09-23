@@ -10,11 +10,11 @@ namespace vehicle_purchase {
     // choose_vehicle recommends a vehicle for selection. It always recommends the
     // vehicle that comes first in lexicographical order.
     std::string choose_vehicle(std::string option1, std::string option2) {
-        auto option = option1;
+        auto preferred_option{option1};
         if (option1 > option2) {
-            option = option2;
+            preferred_option = option2;
         }
-        return option + " is clearly the better choice.";
+        return preferred_option + " is clearly the better choice.";
     }
 
     // calculate_resell_price calculates how much a vehicle can resell for at a
