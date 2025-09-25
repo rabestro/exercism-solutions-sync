@@ -1,19 +1,25 @@
 // interest_rate returns the interest rate for the provided balance.
-double interest_rate(double balance) {
-    if (balance < 0) return 3.213;
-    if (balance < 1000) return 0.5;
-    if (balance < 5000) return 1.621;
+constexpr double interest_rate(double balance) {
+    if (balance < 0) {
+        return 3.213;
+    }
+    if (balance < 1000.0) {
+        return 0.5;
+    }
+    if (balance < 5000.0) {
+        return 1.621;
+    }
     return 2.475;
 }
 
 // yearly_interest calculates the yearly interest for the provided balance.
-double yearly_interest(double balance) {
+constexpr double yearly_interest(double balance) {
     return balance * interest_rate(balance) / 100;
 }
 
 // annual_balance_update calculates the annual balance update, taking into
 // account the interest rate.
-double annual_balance_update(double balance) {
+constexpr double annual_balance_update(double balance) {
     return balance + yearly_interest(balance);
 }
 
