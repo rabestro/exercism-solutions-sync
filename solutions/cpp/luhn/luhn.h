@@ -9,7 +9,8 @@ namespace luhn {
         for (const unsigned char digit_char: card_number | std::views::reverse) {
             if (std::isspace(digit_char)) continue;
             if (!std::isdigit(digit_char)) return false;
-            const int digit{(digit_char - '0') * (1 + length++ % 2)};
+            const int factor{++length % 2 ? 1 : 2};
+            const int digit{(digit_char - '0') * factor};
             sum += digit > 9 ? digit - 9 : digit;
         }
         return length > 1 && sum % 10 == 0;
