@@ -1,9 +1,7 @@
 namespace targets {
     class Alien {
     public:
-        Alien(int x, int y) {
-            x_coordinate = x;
-            y_coordinate = y;
+        Alien(int x, int y) : x_coordinate{x}, y_coordinate{y} {
         };
         int x_coordinate;
         int y_coordinate;
@@ -12,13 +10,13 @@ namespace targets {
             return health;
         }
 
+        [[nodiscard]] bool is_alive() const {
+            return health > 0;
+        }
+
         bool hit() {
             health -= is_alive();
             return true;
-        }
-
-        [[nodiscard]] bool is_alive() const {
-            return health > 0;
         }
 
         bool teleport(int x_new, int y_new) {
