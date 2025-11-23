@@ -10,7 +10,5 @@
   grey: 8,
   white: 9
 } as $colors
-|
-.colors[0:2]
-|
-$colors[first] * 10 + $colors[last]
+| .colors[0:2]
+| $colors[first] * 10 + $colors[last]
