@@ -20,8 +20,5 @@ def letter_grade:
 
 def count_letter_grades:
   reduce (.[] | letter_grade) as $grade 
-  (
-    {A:0, B:0, C:0, D:0, F:0};
-    .[$grade] += 1
-  )
+  ({A:0, B:0, C:0, D:0, F:0}; .[$grade] += 1)
 ;
