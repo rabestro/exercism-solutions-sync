@@ -42,7 +42,7 @@ def check_phone_number:
 # input: {string} userInput
 # output: {array} all the domains in the input
 def get_domains:
-  [scan("\\w+[.]\\w{2,3}\\b")]
+  [ scan("\\w+[.]\\w{2,3}\\b") ]
 ;
 
 # Greet the user using their name
@@ -51,7 +51,8 @@ def get_domains:
 # input: {string} sentence with name clause
 # output: {string} greeting from the Chatbot
 def nice_to_meet_you:
-  sub(".* name is (?<name>[^ ]+).*"; "Nice to meet you, \(.name)")
+  capture("name is (?<name>[^ ]+)")
+  | "Nice to meet you, \(.name)"
 ;
 
 # Perform very simple CSV parsing
