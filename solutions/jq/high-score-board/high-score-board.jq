@@ -32,4 +32,4 @@ def apply_monday_bonus:
 #   input: a score board object.
 #   output: the sum of all scores, or zero for an empty board.
 def total_score:
-  values | add // 0;
+  add // 0;
