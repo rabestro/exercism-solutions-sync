@@ -1,1 +1,2 @@
-.phrase | test("([[:alpha:]]).*\\1"; "i") | not
+.phrase | 
+test("([[:alpha:]]).*\\1"; "i") | not
