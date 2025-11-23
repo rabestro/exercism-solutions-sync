@@ -1,7 +1,7 @@
 def yell: test("[[:upper:]]") and (test("[[:lower:]]") | not);
 def question: test("[?][[:space:]]*$");
-def forceful_question: yell and question;
 def silence: test("^[[:space:]]*$");
+def forceful_question: yell and question;
 
 .heyBob |
 
