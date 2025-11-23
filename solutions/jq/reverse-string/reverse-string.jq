@@ -1,1 +1,1 @@
-.value | split("") | reverse | join("")
+.value | explode | reverse | implode
