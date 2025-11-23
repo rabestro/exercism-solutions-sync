@@ -6,8 +6,8 @@ def new_remote_control_car:
    }
 ;
 
-def new_remote_control_car(nickname):
-  new_remote_control_car + {"nickname": nickname}
+def new_remote_control_car($nickname):
+  new_remote_control_car + {$nickname}
 ;
 
 def display_distance:
@@ -25,6 +25,8 @@ def drive:
   # Update the input's attributes as required
   if .battery_percentage == 0
   then .
-  else .battery_percentage -= 1 | .distance_driven_in_meters += 20
+  else 
+    .battery_percentage -= 1 | 
+    .distance_driven_in_meters += 20
   end 
 ;
