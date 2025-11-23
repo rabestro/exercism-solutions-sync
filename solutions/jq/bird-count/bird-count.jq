@@ -9,10 +9,10 @@
 
 {
   # Task 1: output the array for last week's data
-  last_week: .[7],
+  last_week: (.[-2]),
 
   # Task 2: output count for yesterday in this week's data
-  yesterday: .[-1][-2],
+  yesterday: (last[-2]),
   
   # Task 3: output sum of counts for this week's data
   total: (last | add),
