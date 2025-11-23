@@ -11,6 +11,6 @@
   white: 9
 } as $colors
 |
-.colors
+.colors[0:2]
 |
-$colors[first] * 10 + $colors[.[1]]
+$colors[first] * 10 + $colors[last]
