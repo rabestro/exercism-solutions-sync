@@ -1,22 +1,18 @@
-def colorCode:
-  . as $i |
-  {
-      black: 0,
-      brown: 1,
-      red: 2,
-      orange: 3,
-      yellow: 4,
-      green: 5,
-      blue: 6,
-      violet: 7,
-      grey: 8,
-      white: 9
-  }
-  | .[$i]
-;
-
+{
+  black: 0,
+  brown: 1,
+  red: 2,
+  orange: 3,
+  yellow: 4,
+  green: 5,
+  blue: 6,
+  violet: 7,
+  grey: 8,
+  white: 9
+} as $colors
+|
 if .property == "colors" then
-    ["black","brown","red","orange","yellow","green","blue","violet","grey","white"]
+    $colors | keys_unsorted
 else
-    .input.color | colorCode
+    $colors[.input.color]
 end
