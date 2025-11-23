@@ -8,9 +8,11 @@
 #
 # Task: output a JSON object with keys:
 
-{
+.actual_minutes_in_oven //= 0
+| .number_of_layers //= 1
+| {
   "expected_minutes_in_oven": 40,
-  "remaining_minutes_in_oven": (40 - (.actual_minutes_in_oven // 0)),
-  "preparation_time": ((.number_of_layers // 1) * 2),
-  "total_time": (((.actual_minutes_in_oven // 0)) + ((.number_of_layers // 1) * 2))
+  "remaining_minutes_in_oven": (40 - .actual_minutes_in_oven),
+  "preparation_time": (.number_of_layers * 2),
+  "total_time": (.actual_minutes_in_oven + .number_of_layers * 2)
 }
