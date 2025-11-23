@@ -5,6 +5,8 @@
 ]
 +
 [
-    $words | first | values |
-    "And all for the want of a \(.)."
+    if ($words | length) > 0
+    then "And all for the want of a \($words | first)."
+    else empty
+    end
 ]
