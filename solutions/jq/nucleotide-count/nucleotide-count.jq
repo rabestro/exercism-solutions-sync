@@ -1,9 +1,9 @@
-reduce (.strand / "")[] as $item 
+reduce (.strand / "")[] as $nucleotide 
 (
     {A:0,C:0,G:0,T:0}; 
-    if has($item) 
+    if has($nucleotide) 
     then 
-        .[$item] += 1
+        .[$nucleotide] += 1
     else 
         "Invalid nucleotide in strand" | 
         halt_error
