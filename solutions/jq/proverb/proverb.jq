@@ -1,10 +1,10 @@
-.strings as $words |
+.strings as $words | $words |
 [
-    range(1; $words | length) |
-    "For want of a \($words[. - 1]) the \($words[.]) was lost."
+    range(length - 1) |
+    "For want of a \($words[.]) the \($words[. + 1]) was lost."
 ]
 +
 [
-    $words | first | values |
+    first | values |
     "And all for the want of a \(.)." 
 ]
