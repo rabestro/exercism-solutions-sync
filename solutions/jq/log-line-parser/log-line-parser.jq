@@ -14,7 +14,7 @@ def message:
 
 # Task 2. Get log level from a log line
 def log_level:
-  .[index("[") + 1:index("]")] | ascii_downcase
+  .[1:index("]")] | ascii_downcase
 ;
 
 # Task 3. Reformat a log line
