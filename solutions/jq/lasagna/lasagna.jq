@@ -10,9 +10,13 @@
 
 .actual_minutes_in_oven //= 0
 | .number_of_layers //= 1
+| 40 as $expected_minutes_in_oven
+| (.number_of_layers * 2) as $preparation_time
+| ($expected_minutes_in_oven - .actual_minutes_in_oven) as $remaining_minutes_in_oven
+| ($preparation_time + .actual_minutes_in_oven) as $total_time
 | {
-  "expected_minutes_in_oven": 40,
-  "remaining_minutes_in_oven": (40 - .actual_minutes_in_oven),
-  "preparation_time": (.number_of_layers * 2),
-  "total_time": (.actual_minutes_in_oven + .number_of_layers * 2)
+  $expected_minutes_in_oven,
+  $remaining_minutes_in_oven,
+  $preparation_time,
+  $total_time
 }
