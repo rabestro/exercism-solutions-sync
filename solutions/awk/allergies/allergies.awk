@@ -1,34 +1,28 @@
 BEGIN {
     OFS = FS = ","
-    Items["eggs"] = 1
-    Items["peanuts"] = 2
-    Items["shellfish"] = 4
-    Items["strawberries"] = 8
-    Items["tomatoes"] = 16
-    Items["chocolate"] = 32
-    Items["pollen"] = 64
-    Items["cats"] = 128
+    Allergens["eggs"] = 1
+    Allergens["peanuts"] = 2
+    Allergens["shellfish"] = 4
+    Allergens["strawberries"] = 8
+    Allergens["tomatoes"] = 16
+    Allergens["chocolate"] = 32
+    Allergens["pollen"] = 64
+    Allergens["cats"] = 128
+    PROCINFO["sorted_in"] = "@val_num_asc"
 }
 {
-    score = $1 % 256
+    score = $1
 }
 /allergic_to/ {
-    print isAllegric(score, Items[$3]) ? "true" : "false"
+    print is_allegric(score, $3) ? "true" : "false"
 }
 /list/ {
     NF = 0
-    for (i = 1; i <= 128; i *= 2)
-        if (isAllegric(score, i))
-            $(++NF) = itemName(i)
+    for (allergen in Allergens)
+        if (is_allegric(score, allergen))
+            $++NF = allergen
     print
 }
-
-function isAllegric(score, item) {
-    return and(score, item) == item
-}
-
-function itemName(score,   name) {
-    for (name in Items)
-        if (Items[name] == score)
-            return name
+function is_allegric(score, name) {
+    return and(score, Allergens[name])
 }
