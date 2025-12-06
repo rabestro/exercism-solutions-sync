@@ -4,7 +4,6 @@ import itertools
 def proverb(*things: str, qualifier: str | None = None) -> list[str]:
     if not things:
         return []
-
     verses = [
         f"For want of a {want} the {lost} was lost."
         for want, lost in itertools.pairwise(things)
