@@ -1,4 +1,4 @@
-def proverb(*things: tuple[str, ...], qualifier: str | None) -> list[str]:
+def proverb(*things: str, qualifier: str | None) -> list[str]:
     last_thing = len(things) - 1
     return [
         f"For want of a {things[i]} the {things[i + 1]} was lost." if i < last_thing else
