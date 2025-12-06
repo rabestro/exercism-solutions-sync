@@ -1,7 +1,14 @@
-def proverb(*things: tuple[str, ...], qualifier: str | None) -> list[str]:
-    last_thing = len(things) - 1
-    return [
-        f"For want of a {things[i]} the {things[i + 1]} was lost." if i < last_thing else
-        f"And all for the want of a {qualifier + ' ' if qualifier else ''}{things[0]}."
-        for i in range(len(things))
+import itertools
+
+
+def proverb(*things: str, qualifier: str | None = None) -> list[str]:
+    if not things:
+        return []
+
+    verses = [
+        f"For want of a {want} the {lost} was lost."
+        for want, lost in itertools.pairwise(things)
     ]
+    qualified_noun = f"{qualifier} {things[0]}" if qualifier else things[0]
+    verses.append(f"And all for the want of a {qualified_noun}.")
+    return verses
