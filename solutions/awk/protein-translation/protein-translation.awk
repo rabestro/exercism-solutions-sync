@@ -11,10 +11,8 @@ BEGIN {
 }
 {
     for (i = 1; i<= NF; ++i)
-        if ($i ~ Stop)
-            NF = i - 1
-        else
-            $i = translate($i)
+        if ($i ~ Stop) NF = i - 1
+        else $i = translate($i)
     print
 }
 
