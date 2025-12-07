@@ -3,7 +3,7 @@ from itertools import batched
 
 DIGIT_WIDTH = 3
 DIGIT_HEIGHT = 4
-type DigitPattern = tuple[str, ...]
+type DigitPattern = tuple[tuple[str, ...], ...]
 
 OCR_TEMPLATE_STR = [
     " _     _  _     _  _  _  _  _ ",
@@ -14,7 +14,7 @@ OCR_TEMPLATE_STR = [
 
 
 def extract_patterns(rows: Iterable[str]) -> Iterator[DigitPattern]:
-    return zip(*(batched(row, DIGIT_WIDTH) for row in rows))
+    return zip(*(batched(row, DIGIT_WIDTH) for row in rows), strict=True)
 
 
 PATTERN_TO_DIGIT: dict[DigitPattern, str] = dict(
@@ -22,9 +22,9 @@ PATTERN_TO_DIGIT: dict[DigitPattern, str] = dict(
 )
 
 
-def convert_ocr_rows(rows: tuple[str, ...]) -> str:
-    return ''.join(
-        PATTERN_TO_DIGIT.get(pattern, '?')
+def convert_ocr_rows(rows: Iterable[str]) -> str:
+    return "".join(
+        PATTERN_TO_DIGIT.get(pattern, "?")
         for pattern in extract_patterns(rows)
     )
 
@@ -33,7 +33,7 @@ def convert(input_grid: list[str]) -> str:
     if len(input_grid) % DIGIT_HEIGHT != 0:
         raise ValueError("Number of input lines is not a multiple of four")
 
-    if any(len(x) % DIGIT_WIDTH != 0 for x in input_grid):
+    if any(len(row) % DIGIT_WIDTH != 0 for row in input_grid):
         raise ValueError("Number of input columns is not a multiple of three")
 
-    return ','.join(map(convert_ocr_rows, batched(input_grid, DIGIT_HEIGHT)))
+    return ",".join(map(convert_ocr_rows, batched(input_grid, DIGIT_HEIGHT)))
