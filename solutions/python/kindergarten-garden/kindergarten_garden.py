@@ -1,17 +1,25 @@
-from itertools import batched, chain
+PLANT_CODES = {
+    "C": "Clover",
+    "G": "Grass",
+    "R": "Radishes",
+    "V": "Violets"
+}
 
-STUDENTS = (
+DEFAULT_STUDENTS = (
     "Alice", "Bob", "Charlie", "David", "Eve", "Fred",
     "Ginny", "Harriet", "Ileana", "Joseph", "Kincaid", "Larry"
 )
 
-PLANT_CODES = {"C": "Clover", "G": "Grass", "R": "Radishes", "V": "Violets"}
 
 class Garden:
-    def __init__(self, diagram, students=STUDENTS):
-        rows = (batched(row, 2) for row in diagram.splitlines())
-        plants_by_student = tuple(map(tuple, map(chain.from_iterable, zip(*rows))))
-        self.students = dict(zip(sorted(students), plants_by_student))
+    def __init__(self, diagram: str, students: tuple[str, ...] = DEFAULT_STUDENTS):
+        self.rows = diagram.splitlines()
+        self.students = sorted(students)
 
     def plants(self, student: str) -> list[str]:
-        return list(map(PLANT_CODES.get, self.students[student]))
+        index = self.students.index(student)
+        start = index * 2
+        end = start + 2
+        row1_segment = self.rows[0][start:end]
+        row2_segment = self.rows[1][start:end]
+        return [PLANT_CODES[code] for code in row1_segment + row2_segment]
