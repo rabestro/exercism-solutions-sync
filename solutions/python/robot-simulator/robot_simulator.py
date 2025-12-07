@@ -1,29 +1,27 @@
 # Globals for the directions
 # Change the values as you see fit
 
-NORTH = 0
-EAST = 1
-SOUTH = 2
-WEST = 3
+NORTH = 1j
+EAST = 1 + 0j
+SOUTH = -1j
+WEST = -1 + 0j
 
 
 class Robot:
     def __init__(self, direction=NORTH, x_pos=0, y_pos=0):
         self.direction = direction
-        self.coordinates = (x_pos, y_pos)
+        self.position = complex(x_pos, y_pos)
 
-    def move(self, commands):
+    @property
+    def coordinates(self) -> tuple[int, int]:
+        return int(self.position.real), int(self.position.imag)
+
+    def move(self, commands: str) -> None:
         for command in commands:
             match command:
-                case "A" if self.direction == NORTH:
-                    self.coordinates = (self.coordinates[0], self.coordinates[1] + 1)
-                case "A" if self.direction == EAST:
-                    self.coordinates = (self.coordinates[0] + 1, self.coordinates[1])
-                case "A" if self.direction == SOUTH:
-                    self.coordinates = (self.coordinates[0], self.coordinates[1] - 1)
-                case "A" if self.direction == WEST:
-                    self.coordinates = (self.coordinates[0] - 1, self.coordinates[1])
+                case "A":
+                    self.position += self.direction
                 case "R":
-                    self.direction = (self.direction + 1) % 4
+                    self.direction *= -1j
                 case "L":
-                    self.direction = (self.direction + 3) % 4
+                    self.direction *= 1j
