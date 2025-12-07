@@ -1,10 +1,10 @@
 from collections.abc import Iterable, Iterator
 from itertools import batched
 
-DIGIT_WIDTH = 3
-DIGIT_HEIGHT = 4
 type DigitPattern = tuple[tuple[str, ...], ...]
 
+DIGIT_WIDTH = 3
+DIGIT_HEIGHT = 4
 OCR_TEMPLATE_STR = [
     " _     _  _     _  _  _  _  _ ",
     "| |  | _| _||_||_ |_   ||_||_|",
