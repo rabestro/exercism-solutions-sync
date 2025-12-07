@@ -1,3 +1,4 @@
+import string
 from collections.abc import Iterable, Iterator
 from itertools import batched
 
@@ -18,7 +19,7 @@ def extract_patterns(rows: Iterable[str]) -> Iterator[DigitPattern]:
 
 
 PATTERN_TO_DIGIT: dict[DigitPattern, str] = dict(
-    zip(extract_patterns(OCR_TEMPLATE_STR), map(str, range(10)))
+    zip(extract_patterns(OCR_TEMPLATE_STR), string.digits)
 )
 
 
