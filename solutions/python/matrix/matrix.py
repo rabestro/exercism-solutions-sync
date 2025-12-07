@@ -5,8 +5,8 @@ class Matrix:
             for row in matrix_string.splitlines()
         ]
 
-    def row(self, index):
+    def row(self, index: int) -> list[int]:
         return self.matrix[index - 1]
 
-    def column(self, index):
-        return list(list(zip(*self.matrix, strict=True))[index - 1])
+    def column(self, index: int) -> list[int]:
+        return [row[index - 1] for row in self.matrix]
