@@ -1,6 +1,3 @@
-# Globals for the directions
-# Change the values as you see fit
-
 NORTH = 1j
 EAST = 1 + 0j
 SOUTH = -1j
