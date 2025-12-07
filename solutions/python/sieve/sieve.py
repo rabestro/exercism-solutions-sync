@@ -3,6 +3,27 @@ from itertools import compress
 
 
 def primes(limit: int) -> list[int]:
+    """Calculate prime numbers up to a specified limit using the Sieve of Eratosthenes.
+
+    This function employs an optimized version of the Sieve, using a bytearray
+    for memory efficiency and slice assignment for speed (pushing loops to C-level).
+
+    Args:
+        limit: The inclusive upper bound for the range of numbers to check.
+               Must be an integer >= 0.
+
+    Returns:
+        A list of integers representing all prime numbers less than or equal to `limit`.
+
+    Examples:
+        >>> primes(10)
+        [2, 3, 5, 7]
+        >>> primes(1)
+        []
+
+    Time Complexity: O(N log log N)
+    Space Complexity: O(N) (specifically N bytes)
+    """
     if limit < 2:
         return []
 
