@@ -13,6 +13,6 @@ def primes(limit: int) -> list[int]:
         if is_prime[number]:
             start = number * number
             num_composites = (limit - start) // number + 1
-            is_prime[number * number: limit + 1: number] = [False] * num_composites
+            is_prime[start: limit + 1: number] = [False] * num_composites
 
     return list(compress(range(limit + 1), is_prime))
