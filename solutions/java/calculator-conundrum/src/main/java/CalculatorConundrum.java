@@ -2,15 +2,15 @@ class CalculatorConundrum {
     public String calculate(int operand1, int operand2, String operation) {
         mustNot(operation == null, "Operation cannot be null");
         mustNot(operation.isEmpty(), "Operation cannot be empty");
-        int result = calculate(operand1, operand2, operation.charAt(1));
+        int result = calc(operand1, operand2, operation);
         return operand1 + " " + operation + " " + operand2 + " = " + result;
     }
 
-    private int calculate(int operand1, int operand2, char operation) {
+    private int calc(int operand1, int operand2, String operation) {
         return switch (operation) {
-            case '*' -> operand1 * operand2;
-            case '+' -> operand1 + operand2;
-            case '/' -> {
+            case "*" -> operand1 * operand2;
+            case "+" -> operand1 + operand2;
+            case "/" -> {
                 try {
                     yield operand1 / operand2;
                 } catch (ArithmeticException e) {
