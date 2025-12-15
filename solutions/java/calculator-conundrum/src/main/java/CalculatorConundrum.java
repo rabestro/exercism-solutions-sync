@@ -6,19 +6,17 @@ class CalculatorConundrum {
         var result = switch (operation) {
             case "*" -> operand1 * operand2;
             case "+" -> operand1 + operand2;
-            case "/" -> divide(operand1, operand2);
+            case "/" -> {
+                try {
+                    yield operand1 / operand2;
+                } catch (ArithmeticException e) {
+                    throw new IllegalOperationException("Division by zero is not allowed", e);
+                }
+            }
             default -> throw new IllegalOperationException("Operation '" + operation + "' does not exist");
         };
 
         return operand1 + " " + operation + " " + operand2 + " = " + result;
-    }
-
-    private int divide(int operand1, int operand2) {
-        try {
-            return operand1 / operand2;
-        } catch (Exception e) {
-            throw new IllegalOperationException("Division by zero is not allowed", e);
-        }
     }
 
     private void mustNot(boolean condition, String message) {
