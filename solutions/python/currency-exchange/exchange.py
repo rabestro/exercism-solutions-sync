@@ -6,23 +6,22 @@ Overview of exchanging currency when travelling: https://www.compareremit.com/mo
 """
 
 
-def exchange_money(budget, exchange_rate) -> float:
+def exchange_money(budget: float, exchange_rate: float) -> float:
     """
-
-    :param budget: float - amount of money you are planning to exchange.
-    :param exchange_rate: float - unit value of the foreign currency.
-    :return: float - exchanged value of the foreign currency you can receive.
+    :param budget - amount of money you are planning to exchange.
+    :param exchange_rate - unit value of the foreign currency.
+    :return - exchanged value of the foreign currency you can receive.
     """
 
     return budget / exchange_rate
 
 
-def get_change(budget, exchanging_value) -> float:
+def get_change(budget: float, exchanging_value: float) -> float:
     """
 
-    :param budget: float - amount of money you own.
-    :param exchanging_value: float - amount of your money you want to exchange now.
-    :return: float - amount left of your starting currency after exchanging.
+    :param budget - amount of money you own.
+    :param exchanging_value - amount of your money you want to exchange now.
+    :return - amount left of your starting currency after exchanging.
     """
 
     return budget - exchanging_value
