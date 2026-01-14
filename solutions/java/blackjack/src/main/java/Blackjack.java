@@ -1,4 +1,9 @@
 public class Blackjack {
+    private final int BLACKJACK = 21;
+    private final String STAND = "S";
+    private final String HIT = "H";
+    private final String SPLIT = "P";
+    private final String WIN = "W";
 
     public int parseCard(String card) {
         return switch (card) {
@@ -17,17 +22,17 @@ public class Blackjack {
     }
 
     public boolean isBlackjack(String card1, String card2) {
-        return parseCard(card1) + parseCard(card2) == 21;
+        return parseCard(card1) + parseCard(card2) == BLACKJACK;
     }
 
     public String largeHand(boolean isBlackjack, int dealerScore) {
-        return !isBlackjack ? "P" : dealerScore > 9 ? "S" : "W";
+        return !isBlackjack ? SPLIT : dealerScore > 9 ? STAND : WIN;
     }
 
     public String smallHand(int handScore, int dealerScore) {
-        return handScore > 16 ? "S"
-                : handScore < 12 ? "H"
-                : dealerScore < 7 ? "S" : "H";
+        return handScore > 16 ? STAND
+                : handScore < 12 ? HIT
+                : dealerScore < 7 ? STAND : HIT;
     }
 
     // FirstTurn returns the semi-optimal decision for the first turn, given the cards of the player and the dealer.
