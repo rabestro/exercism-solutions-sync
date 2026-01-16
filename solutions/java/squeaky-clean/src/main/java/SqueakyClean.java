@@ -3,7 +3,7 @@ class SqueakyClean {
         return identifier
                 .codePoints()
                 .map(new SqueakyCodePointConverter())
-                .filter(i -> i > 0)
+                .filter(c -> c != Character.MIN_VALUE)
                 .collect(StringBuilder::new,
                         StringBuilder::appendCodePoint,
                         StringBuilder::append)

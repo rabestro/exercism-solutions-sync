@@ -14,11 +14,11 @@ public class SqueakyCodePointConverter implements IntUnaryOperator {
             case ' ' -> '_';
             case '-' -> {
                 isUpperCase = true;
-                yield -1;
+                yield Character.MIN_VALUE;
             }
             default -> {
                 if (!Character.isLetter(codePoint)) {
-                    yield -1;
+                    yield Character.MIN_VALUE;
                 }
                 if (isUpperCase) {
                     isUpperCase = false;
