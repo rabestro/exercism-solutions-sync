@@ -21,7 +21,7 @@ public final class ProductionRemoteControlCar implements RemoteControlCar, Compa
     }
 
     @Override
-    public int compareTo(ProductionRemoteControlCar o) {
-        return Integer.compare(o.victories, this.victories);
+    public int compareTo(ProductionRemoteControlCar other) {
+        return Integer.compare(other.getNumberOfVictories(), this.getNumberOfVictories());
     }
 }
