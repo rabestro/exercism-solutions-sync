@@ -1,3 +1,4 @@
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,18 +24,26 @@ class BinarySearchTree<T extends Comparable<T>> {
     }
 
     List<T> getAsLevelOrderList() {
-        return traverseLevels(Stream.ofNullable(root).toList()).map(Node::getData).toList();
-    }
-
-    Stream<Node<T>> traverseLevels(List<Node<T>> previous) {
-        if (previous.isEmpty()) {
-            return Stream.empty();
+        var result = new ArrayList<T>();
+        if (root == null) {
+            return result;
         }
-        var current = previous.stream()
-                .flatMap(node -> Stream.of(node.getLeft(), node.getRight()))
-                .filter(Objects::nonNull)
-                .toList();
-        return Stream.concat(previous.stream(), traverseLevels(current));
+
+        var queue = new ArrayDeque<Node<T>>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            var current = queue.poll();
+            result.add(current.getData());
+
+            if (current.getLeft() != null) {
+                queue.add(current.getLeft());
+            }
+            if (current.getRight() != null) {
+                queue.add(current.getRight());
+            }
+        }
+        return result;
     }
 
     Node<T> getRoot() {
