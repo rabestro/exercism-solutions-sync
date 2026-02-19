@@ -1,8 +1,6 @@
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 class BinarySearchTree<T extends Comparable<T>> {
     private Node<T> root;
@@ -17,8 +15,17 @@ class BinarySearchTree<T extends Comparable<T>> {
 
     List<T> getAsSortedList() {
         var result = new ArrayList<T>();
-        if (root != null) {
-            root.inOrderTraversal(result);
+        var stack = new ArrayDeque<Node<T>>();
+        var current = root;
+
+        while (current != null || !stack.isEmpty()) {
+            while (current != null) {
+                stack.push(current);
+                current = current.getLeft();
+            }
+            current = stack.pop();
+            result.add(current.getData());
+            current = current.getRight();
         }
         return result;
     }
@@ -57,16 +64,6 @@ class BinarySearchTree<T extends Comparable<T>> {
 
         Node(T data) {
             this.data = data;
-        }
-
-        void inOrderTraversal(List<T> result) {
-            if (getLeft() != null) {
-                getLeft().inOrderTraversal(result);
-            }
-            result.add(getData());
-            if (getRight() != null) {
-                getRight().inOrderTraversal(result);
-            }
         }
 
         void insert(T value) {
