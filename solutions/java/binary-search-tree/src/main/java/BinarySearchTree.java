@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -14,24 +15,26 @@ class BinarySearchTree<T extends Comparable<T>> {
     }
 
     List<T> getAsSortedList() {
-        var result = new java.util.ArrayList<T>();
-        root.inOrderTraversal(result);
+        var result = new ArrayList<T>();
+        if (root != null) {
+            root.inOrderTraversal(result);
+        }
         return result;
     }
 
     List<T> getAsLevelOrderList() {
-        return levels(Stream.ofNullable(root).toList()).map(Node::getData).toList();
+        return traverseLevels(Stream.ofNullable(root).toList()).map(Node::getData).toList();
     }
 
-    Stream<Node<T>> levels(List<Node<T>> previous) {
+    Stream<Node<T>> traverseLevels(List<Node<T>> previous) {
         if (previous.isEmpty()) {
             return Stream.empty();
         }
         var current = previous.stream()
-                .flatMap(node -> Stream.of(node.left, node.right))
+                .flatMap(node -> Stream.of(node.getLeft(), node.getRight()))
                 .filter(Objects::nonNull)
                 .toList();
-        return Stream.concat(previous.stream(), levels(current));
+        return Stream.concat(previous.stream(), traverseLevels(current));
     }
 
     Node<T> getRoot() {
@@ -51,7 +54,6 @@ class BinarySearchTree<T extends Comparable<T>> {
             if (getLeft() != null) {
                 getLeft().inOrderTraversal(result);
             }
-            var x = Integer.toString(10);
             result.add(getData());
             if (getRight() != null) {
                 getRight().inOrderTraversal(result);
