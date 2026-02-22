@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,47 +12,25 @@ class BuildTree {
     }
 
     TreeNode buildTree(List<Record> records) throws InvalidRecordsException {
-        records.sort(Comparator.comparing(Record::recordId));
+        if (records.isEmpty()) return null;
+        var sortedRecords = records.stream()
+                .sorted(Comparator.comparing(Record::recordId)).toList();
 
-        if (!isValid(records)) {
+        if (!isValid(sortedRecords))
             throw new InvalidRecordsException("Invalid Records");
-        }
 
-        var treeNodes = records.stream()
+        var treeNodes = sortedRecords.stream()
                 .map(Record::recordId)
                 .map(TreeNode::new)
                 .toList();
 
-        var orderedRecordIds = records.stream().map(Record::recordId).sorted().toList();
+        sortedRecords.stream().skip(1L).forEach(record -> {
+            var parent = treeNodes.get(record.parentId());
+            var child = treeNodes.get(record.recordId());
+            parent.getChildren().add(child);
+        });
 
-        for (int i = 0; i < orderedRecordIds.size(); i++) {
-            TreeNode parent;
-            for (TreeNode n : treeNodes) {
-                if (i == n.getNodeId()) {
-                    parent = n;
-                    for (Record record : records) {
-                        if (record.parentId() == i) {
-                            for (TreeNode node : treeNodes) {
-                                if (node.getNodeId() == 0) {
-                                    continue;
-                                }
-                                if (record.recordId() == node.getNodeId()) {
-                                    parent.getChildren().add(node);
-                                }
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-
-        }
-
-        if (!treeNodes.isEmpty()) {
-            return treeNodes.getFirst();
-        }
-
-        return null;
+        return treeNodes.getFirst();
     }
 
 }
