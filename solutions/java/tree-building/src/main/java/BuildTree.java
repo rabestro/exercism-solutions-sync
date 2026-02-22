@@ -1,42 +1,34 @@
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 class BuildTree {
-    TreeNode buildTree(ArrayList<Record> records) throws InvalidRecordsException {
+
+    private static boolean isValid(List<Record> records) {
+        if (records.isEmpty()) return true;
+        return records.getLast().recordId() == records.size() - 1
+                && records.getFirst().recordId() == 0
+                && records.getFirst().parentId() == 0
+                && records.stream().skip(1).allMatch(r -> r.parentId() < r.recordId());
+    }
+
+    TreeNode buildTree(List<Record> records) throws InvalidRecordsException {
         records.sort(Comparator.comparing(Record::recordId));
+
+        if (!isValid(records)) {
+            throw new InvalidRecordsException("Invalid Records");
+        }
+
+        var treeNodes = records.stream()
+                .map(Record::recordId)
+                .map(TreeNode::new)
+                .toList();
+
         var orderedRecordIds = records.stream().map(Record::recordId).sorted().toList();
-
-        if (!records.isEmpty()) {
-            if (orderedRecordIds.getLast() != orderedRecordIds.size() - 1) {
-                throw new InvalidRecordsException("Invalid Records");
-            }
-            if (orderedRecordIds.getFirst() != 0) {
-                throw new InvalidRecordsException("Invalid Records");
-            }
-        }
-
-        ArrayList<TreeNode> treeNodes = new ArrayList<>();
-
-        for (Integer orderedRecordId : orderedRecordIds) {
-            for (Record record : records) {
-                if (orderedRecordId == record.recordId()) {
-                    if (record.recordId() == 0 && record.parentId() != 0) {
-                        throw new InvalidRecordsException("Invalid Records");
-                    }
-                    if (record.recordId() < record.parentId()) {
-                        throw new InvalidRecordsException("Invalid Records");
-                    }
-                    if (record.recordId() == record.parentId() && record.recordId() != 0) {
-                        throw new InvalidRecordsException("Invalid Records");
-                    }
-                    treeNodes.add(new TreeNode(record.recordId()));
-                }
-            }
-        }
 
         for (int i = 0; i < orderedRecordIds.size(); i++) {
             TreeNode parent;
-            for (TreeNode n: treeNodes) {
+            for (TreeNode n : treeNodes) {
                 if (i == n.getNodeId()) {
                     parent = n;
                     for (Record record : records) {
