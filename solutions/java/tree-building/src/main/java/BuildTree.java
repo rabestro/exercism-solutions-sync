@@ -22,15 +22,15 @@ class BuildTree {
         var treeNodes = sortedRecords.stream()
                 .map(Record::recordId)
                 .map(TreeNode::new)
-                .toList();
+                .toArray(TreeNode[]::new);
 
         sortedRecords.stream().skip(1L).forEach(record -> {
-            var parent = treeNodes.get(record.parentId());
-            var child = treeNodes.get(record.recordId());
+            var parent = treeNodes[record.parentId()];
+            var child = treeNodes[record.recordId()];
             parent.getChildren().add(child);
         });
 
-        return treeNodes.getFirst();
+        return treeNodes[0];
     }
 
 }
