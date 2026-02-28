@@ -1,8 +1,10 @@
+from dataclasses import dataclass
 
+
+@dataclass
 class Record:
-    def __init__(self, record_id, parent_id):
-        self.record_id = record_id
-        self.parent_id = parent_id
+    record_id: int
+    parent_id: int
 
 
 class Node:
@@ -11,44 +13,31 @@ class Node:
         self.children = []
 
 
-def BuildTree(records):
+def BuildTree(records: list[Record]) -> Node | None:
+    if not records:
+        return None
 
+    n = len(records)
+    ordered_records: list[Record | None] = [None] * n
 
+    for record in records:
+        record_id = record.record_id
+        parent_id = record.parent_id
 
-    root = None
-    records.sort(key=lambda x: x.record_id)
-    ordered_id = [i.record_id for i in records]
-    if records:
-        if ordered_id[-1] != len(ordered_id) - 1:
+        if record_id < 0 or record_id >= n or ordered_records[record_id] is not None:
             raise ValueError('Record id is invalid or out of order.')
-        if ordered_id[0] != 0:
-            raise ValueError('Record id is invalid or out of order.')
-    trees = []
-    parent = {}
-    for i in range(len(ordered_id)):
-        for j in records:
-            if ordered_id[i] == j.record_id:
-                if j.record_id == 0:
-                    if j.parent_id != 0:
-                        raise ValueError('Node parent_id should be smaller than its record_id.')
-                if j.record_id < j.parent_id:
-                    raise ValueError('Node parent_id should be smaller than its record_id.')
-                if j.record_id == j.parent_id:
-                    if j.record_id != 0:
-                        raise ValueError('Only root should have equal record and parent id.')
-                trees.append(Node(ordered_id[i]))
-    for i in range(len(ordered_id)):
-        for j in trees:
-            if i == j.node_id:
-                parent = j
-        for j in records:
-            if j.parent_id == i:
-                for k in trees:
-                    if k.node_id == 0:
-                        continue
-                    if j.record_id == k.node_id:
-                        child = k
-                        parent.children.append(child)
-    if len(trees) > 0:
-        root = trees[0]
-    return root
+        if 0 < record_id == parent_id:
+            raise ValueError('Only root should have equal record and parent id.')
+        if record_id < parent_id:
+            raise ValueError('Node parent_id should be smaller than its record_id.')
+        ordered_records[record_id] = record
+
+    tree_nodes: list[Node | None] = [None] * n
+    tree_nodes[0] = Node(0)
+
+    for i in range(1, n):
+        child = Node(i)
+        tree_nodes[i] = child
+        tree_nodes[ordered_records[i].parent_id].children.append(child)
+
+    return tree_nodes[0]
