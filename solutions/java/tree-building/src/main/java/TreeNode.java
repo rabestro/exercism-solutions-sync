@@ -1,19 +1,17 @@
 import java.util.ArrayList;
+import java.util.List;
 
-class TreeNode {
-    private final int nodeId;
-    private final ArrayList<TreeNode> children;
+record TreeNode(int nodeId, List<TreeNode> children) {
 
     TreeNode(int nodeId) {
-        this.nodeId = nodeId;
-        this.children = new ArrayList<>();
+        this(nodeId, new ArrayList<>());
     }
 
     int getNodeId() {
         return nodeId;
     }
 
-    ArrayList<TreeNode> getChildren() {
+    List<TreeNode> getChildren() {
         return children;
     }
 }

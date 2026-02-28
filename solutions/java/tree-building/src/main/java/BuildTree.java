@@ -16,10 +16,9 @@ class BuildTree {
         var sortedRecords = records.stream()
                 .sorted(Comparator.comparing(Record::recordId)).toList();
 
-        if (!isValid(sortedRecords)) {
+        if (!isValid(sortedRecords))
             throw new InvalidRecordsException("Invalid Records");
-        }
-            
+
         var treeNodes = sortedRecords.stream()
                 .map(Record::recordId)
                 .map(TreeNode::new)
