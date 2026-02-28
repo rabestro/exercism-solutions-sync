@@ -1,34 +1,35 @@
-import java.util.Comparator;
 import java.util.List;
 
 class BuildTree {
 
-    private static boolean isValid(List<Record> records) {
-        if (records.isEmpty()) return true;
-        return records.getLast().recordId() == records.size() - 1
-                && records.getFirst().recordId() == 0
-                && records.getFirst().parentId() == 0
-                && records.stream().skip(1).allMatch(r -> r.parentId() < r.recordId());
-    }
-
     TreeNode buildTree(List<Record> records) throws InvalidRecordsException {
         if (records.isEmpty()) return null;
-        var sortedRecords = records.stream()
-                .sorted(Comparator.comparing(Record::recordId)).toList();
 
-        if (!isValid(sortedRecords))
-            throw new InvalidRecordsException("Invalid Records");
+        int n = records.size();
+        var orderedRecords = new Record[n];
 
-        var treeNodes = sortedRecords.stream()
-                .map(Record::recordId)
-                .map(TreeNode::new)
-                .toArray(TreeNode[]::new);
+        for (Record record : records) {
+            int id = record.recordId();
+            int parentId = record.parentId();
 
-        sortedRecords.stream().skip(1L).forEach(record -> {
-            var parent = treeNodes[record.parentId()];
-            var child = treeNodes[record.recordId()];
-            parent.getChildren().add(child);
-        });
+            if (id < 0 || id >= n || orderedRecords[id] != null) {
+                throw new InvalidRecordsException("Invalid Records");
+            }
+            if (id == 0 ? parentId != 0 : parentId >= id) {
+                throw new InvalidRecordsException("Invalid Records");
+            }
+            orderedRecords[id] = record;
+        }
+        var treeNodes = new TreeNode[n];
+        treeNodes[0] = new TreeNode(0);
+
+        for (int i = 1; i < n; i++) {
+            var child = new TreeNode(i);
+            treeNodes[i] = child;
+
+            int parentId = orderedRecords[i].parentId();
+            treeNodes[parentId].getChildren().add(child);
+        }
 
         return treeNodes[0];
     }
