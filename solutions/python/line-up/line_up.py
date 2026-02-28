@@ -8,12 +8,4 @@ def line_up(name: str, number: int) -> str:
 def ordinal_suffix(number: int) -> str:
     if 11 <= number % 100 <= 13:
         return "th"
-    match number % 10:
-        case 1:
-            return "st"
-        case 2:
-            return "nd"
-        case 3:
-            return "rd"
-        case _:
-            return "th"
+    return {1: "st", 2: "nd", 3: "rd"}.get(number % 10, "th")
