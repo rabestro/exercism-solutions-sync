@@ -1,3 +1,5 @@
+"""Module to format customer line-up messages with proper ordinal suffixes."""
+
 def line_up(name: str, number: int) -> str:
     return f"{name}, you are the {number}{ordinal_suffix(number)} customer we serve today. Thank you!"
 
