@@ -1,5 +1,6 @@
-object Pangrams {
+object Pangrams:
   private val AlphabetSize = ('A' to 'Z').size
+
   def isPangram(phrase: String): Boolean =
     LazyList.from(phrase)
       .filter(_.isLetter)
@@ -7,5 +8,4 @@ object Pangrams {
       .distinct
       .take(AlphabetSize)
       .length == AlphabetSize
-}
 
