@@ -1,14 +1,14 @@
 import scala.annotation.targetName
 
-final case class Clock private (minutes: Int) {
+final case class Clock private(minutes: Int):
   @targetName("add")
   def +(other: Clock): Clock = Clock(minutes + other.minutes)
 
   @targetName("minus")
   def -(other: Clock): Clock = Clock(minutes - other.minutes)
-}
 
-object Clock {
+
+object Clock:
   private val MinutesInHour = 60
   private val MinutesInDay = MinutesInHour * 24
 
@@ -18,4 +18,3 @@ object Clock {
     new Clock(normalizedMinutes)
 
   def apply(minutes: Int): Clock = Clock(0, minutes)
-}
