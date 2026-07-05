@@ -1,5 +1,3 @@
-import Schedule.Schedule
-
 import java.time.temporal.TemporalAdjusters.{dayOfWeekInMonth, firstInMonth, lastInMonth, nextOrSame}
 import java.time.{DayOfWeek, LocalDate, Year}
 
@@ -19,10 +17,8 @@ case class Meetup(month: Int, year: Int):
     Year.of(year).atMonth(month).atDay(firstTeenthDay) `with` adjuster
 
 
-object Schedule extends Enumeration:
-  type Schedule = Value
-  val Teenth, First, Second, Third, Fourth, Last = Value
-
+enum Schedule:
+  case Teenth, First, Second, Third, Fourth, Last
 
 object Meetup:
   val Mon = DayOfWeek.MONDAY.getValue
