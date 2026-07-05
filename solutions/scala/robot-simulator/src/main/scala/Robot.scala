@@ -1,6 +1,6 @@
 import Bearing.*
 
-case class Robot(bearing: Bearing, coordinates: (Int, Int)) {
+case class Robot(bearing: Bearing, coordinates: (Int, Int)):
   def turnRight: Robot = copy(bearing = bearing.turnRight)
 
   def turnLeft: Robot = copy(bearing = bearing.turnLeft)
@@ -15,10 +15,10 @@ case class Robot(bearing: Bearing, coordinates: (Int, Int)) {
     copy(coordinates = nextPosition)
 
   def simulate(actions: String): Robot =
-    actions.foldLeft(this) { (robot, action) =>
+    actions.foldLeft(this): (robot, action) =>
       action match
         case 'A' => robot.advance
         case 'R' => robot.turnRight
         case 'L' => robot.turnLeft
-    }
-}
+    
+
