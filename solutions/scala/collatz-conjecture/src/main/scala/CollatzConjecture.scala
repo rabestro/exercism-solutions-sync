@@ -1,9 +1,7 @@
-import scala.annotation.tailrec
-
 object CollatzConjecture:
 
   def steps(number: Int): Option[Int] =
-    @tailrec
+    @scala.annotation.tailrec
     def loop(number: Int, step: Int): Int =
       number match
         case 1 => step
