@@ -8,6 +8,6 @@ object Diamond:
       outerSpaces + current + innerSpaces + current + outerSpaces
 
   def rows(widest: Char): List[String] =
-    val forwardSequence = ('A' to widest).toList
-    val reverseSequence = ('A' until widest).toList.reverse
-    forwardSequence ++ reverseSequence map line(widest)
+    val topLetters = ('A' to widest).toList
+    val bottomLetters = ('A' until widest).toList.reverse
+    topLetters ++ bottomLetters map line(widest)
