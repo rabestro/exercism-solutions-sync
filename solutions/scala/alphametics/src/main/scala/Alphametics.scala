@@ -10,7 +10,6 @@ object Alphametics:
     val letterToIndex = uniqueLetters.zipWithIndex.toMap
 
     val leadingLetters = words
-      .filter(_.length > 1)
       .map(_.head).toSet
       .map(letterToIndex)
 
