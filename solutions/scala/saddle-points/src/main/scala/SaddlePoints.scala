@@ -1,13 +1,16 @@
 case class Matrix(matrix: List[List[Int]]):
   lazy val saddlePoints: Set[(Int, Int)] =
-    val coordinates = for {
-      row <- 0 until rows
-      col <- 0 until cols
-      if rowsMaximum(row) == colsMinimum(col)
-    } yield (row, col)
-    coordinates.toSet
+    if matrix.isEmpty || matrix.head.isEmpty then Set.empty
+    else
+      val rows = matrix.size
+      val cols = matrix.head.size
+      val rowMax = matrix.map(_.max).toVector
+      val colMin = matrix.transpose.map(_.min).toVector
 
-  private lazy val rows = matrix.size
-  private lazy val cols = if rows > 0 then matrix.head.size else 0
-  private lazy val rowsMaximum = matrix.map(_.max)
-  private lazy val colsMinimum = matrix.transpose.map(_.min)
+      val coordinates = for {
+        row <- 0 until rows
+        col <- 0 until cols
+        if rowMax(row) == colMin(col)
+      } yield (row, col)
+
+      coordinates.toSet
