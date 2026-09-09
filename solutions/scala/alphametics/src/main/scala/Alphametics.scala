@@ -37,13 +37,10 @@ object Alphametics:
 
     val digits = (0 to 9).toList
 
-    def hasLeadingZeros(hypothesis: Hypothesis): Boolean =
-      leadingLetters.exists(hypothesis(_) == 0)
-
     digits
       .combinations(uniqueLetters.length)
       .flatMap(_.permutations)
-      .filterNot(hasLeadingZeros)
+      .filter(hypothesis => leadingLetters.forall(hypothesis(_) != 0))
       .find(isHypothesisValid)
       .map(uniqueLetters.zip(_).toMap)
 
