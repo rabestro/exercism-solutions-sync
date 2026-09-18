@@ -6,14 +6,14 @@ sealed trait Bowling:
   def score(): Either[String, Int]
 
 object Bowling:
-  val MinPins = 0
+  private val MinPins = 0
   val MaxPins = 10
   val MaxFrames = 10
 
   def apply(): Bowling = RunningGame(Nil, EmptyFrame)
 
   def withPinValidation(pins: Int)(logic: Int => Bowling): Bowling =
-    if (pins < MinPins || pins > MaxPins)
+    if pins < MinPins || pins > MaxPins then
       IncorrectGame(s"Pins must have a value from $MinPins to $MaxPins")
     else
       logic(pins)
@@ -23,7 +23,7 @@ sealed trait IncompleteGame extends Bowling:
     Left("Score cannot be taken until the end of the game")
 
 case class RunningGame(completed: List[CompletedFrame], current: StateFrame = EmptyFrame) extends IncompleteGame:
-  override def roll(pins: Int): Bowling = Bowling.withPinValidation(pins) { pins =>
+  override def roll(pins: Int): Bowling = Bowling.withPinValidation(pins): pins =>
     current match
       case IncompleteFrame(first) if first + pins > MaxPins =>
         IncorrectGame("Pin count exceeds pins on the lane")
@@ -48,15 +48,13 @@ case class RunningGame(completed: List[CompletedFrame], current: StateFrame = Em
 
       case EmptyFrame =>
         RunningGame(completed, IncompleteFrame(pins))
-  }
 
 case class AwaitingSpareBonus(frames: List[CompletedFrame]) extends IncompleteGame:
-  override def roll(pins: Int): Bowling = Bowling.withPinValidation(pins) { pins =>
+  override def roll(pins: Int): Bowling = Bowling.withPinValidation(pins): pins =>
     CompletedGame(frames, pins :: Nil)
-  }
 
 case class AwaitingStrikeBonus(frames: List[CompletedFrame], rolls: List[Int] = Nil) extends IncompleteGame:
-  override def roll(pins: Int): Bowling = Bowling.withPinValidation(pins) { pins =>
+  override def roll(pins: Int): Bowling = Bowling.withPinValidation(pins): pins =>
     rolls match
       case first :: Nil if first < MaxPins && first + pins > MaxPins =>
         IncorrectGame(s"Second bonus roll after a strike in the last frame cannot score more than $MaxPins points")
@@ -64,7 +62,6 @@ case class AwaitingStrikeBonus(frames: List[CompletedFrame], rolls: List[Int] = 
         CompletedGame(frames, first :: pins :: Nil)
       case _ =>
         AwaitingStrikeBonus(frames, pins :: Nil)
-  }
 
 case class IncorrectGame(reason: String) extends Bowling:
   override def roll(pins: Int): Bowling = this

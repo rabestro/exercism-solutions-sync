@@ -13,4 +13,3 @@ case class OpenFrame(first: Int, second: Int) extends CompletedFrame
 case class SpareFrame(first: Int, second: Int) extends CompletedFrame
 
 case object StrikeFrame extends CompletedFrame
-
