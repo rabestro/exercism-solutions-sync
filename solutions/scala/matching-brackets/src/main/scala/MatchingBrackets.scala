@@ -1,6 +1,6 @@
 import scala.annotation.tailrec
 
-object MatchingBrackets {
+object MatchingBrackets:
   private val BracketPairs = Map(
     ']' -> '[', ')' -> '(', '}' -> '{'
   )
@@ -19,4 +19,3 @@ object MatchingBrackets {
     else if OpeningBrackets contains brackets.head
     then isPaired(brackets.tail, brackets.head :: stack)
     else isPaired(brackets.tail, stack)
-}
