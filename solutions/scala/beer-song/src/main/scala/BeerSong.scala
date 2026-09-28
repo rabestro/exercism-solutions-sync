@@ -1,4 +1,4 @@
-object BeerSong {
+object BeerSong:
   private def verse(bottles: Int) = bottles match
     case 0 => List(
       "No more bottles of beer on the wall, no more bottles of beer.",
@@ -17,4 +17,3 @@ object BeerSong {
     startBottles.until(startBottles - takeDown, -1)
       .flatMap(verse)
       .mkString("\n")
-}
