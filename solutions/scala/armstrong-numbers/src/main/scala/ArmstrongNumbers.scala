@@ -6,7 +6,7 @@ object ArmstrongNumbers:
     else extractDigits(n / 10, (n % 10) :: acc)
 
   private def pow(exp: Int)(base: Int): Int =
-    (1 to exp).fold(1)((a, *) => a * base)
+    (1 to exp).fold(1)((a, _) => a * base)
 
   def isArmstrongNumber(number: Int): Boolean =
     val digits = extractDigits(number)
