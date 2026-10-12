@@ -16,6 +16,6 @@ public final class SalaryCalculator {
 
     public double finalSalary(int daysSkipped, int productsSold) {
         var salary = BASE_SALARY * salaryMultiplier(daysSkipped) + bonusForProductsSold(productsSold);
-        return Math.min(salary, MAX_SALARY);
+        return salary < MAX_SALARY ? salary : MAX_SALARY;
     }
 }
