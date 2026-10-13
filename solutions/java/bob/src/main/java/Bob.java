@@ -4,13 +4,15 @@ class Bob {
         if (phrase.isBlank()) {
             return "Fine. Be that way!";
         }
-        if (phrase.matches("[^a-z]*[A-Z][^a-z]*\\?")) {
+        var isQuestion = phrase.trim().endsWith("?");
+        var isYelling = phrase.matches("[^a-z]*[A-Z][^a-z]*");
+        if (isQuestion && isYelling) {
             return "Calm down, I know what I'm doing!";
         }
-        if (phrase.trim().endsWith("?")) {
+        if (isQuestion) {
             return "Sure.";
         }
-        if (phrase.matches("[^a-z]*[A-Z][^a-z]*")) {
+        if (isYelling) {
             return "Whoa, chill out!";
         }
         return "Whatever.";
