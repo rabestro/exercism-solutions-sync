@@ -1,7 +1,7 @@
 import java.time.Duration;
 import java.time.Instant;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class RateLimiter<K> {
     record TimeFrame(Instant endTime, int count) {
@@ -19,13 +19,14 @@ public class RateLimiter<K> {
         this.limit = limit;
         this.windowSize = windowSize;
         this.timeSource = timeSource;
-        this.frameMap = new HashMap<>();
+        this.frameMap = new ConcurrentHashMap<>();
     }
 
     public boolean allow(K clientId) {
-        var timeFrame = frameMap.getOrDefault(clientId, new TimeFrame(timeSource.now().plus(windowSize), 0));
-        if (timeFrame.endTime().isBefore(timeSource.now()) || timeSource.now().equals(timeFrame.endTime())) {
-            timeFrame = new TimeFrame(timeSource.now().plus(windowSize), 0);
+        var now = timeSource.now();
+        var timeFrame = frameMap.getOrDefault(clientId, new TimeFrame(now.plus(windowSize), 0));
+        if (timeFrame.endTime().isBefore(now) || now.equals(timeFrame.endTime())) {
+            timeFrame = new TimeFrame(now.plus(windowSize), 0);
         }
         if (timeFrame.count() == limit) return false;
         frameMap.put(clientId, timeFrame.increase());
