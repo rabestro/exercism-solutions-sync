@@ -1,8 +1,9 @@
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 import static java.lang.Math.*;
 
@@ -17,16 +18,23 @@ public class Prism {
     }
 
     public static List<Integer> findSequence(LaserInfo laser, List<PrismInfo> prisms) {
-        var result = new ArrayList<Integer>();
-        var source = laser;
-
-        for (var target = nextPrism(source, prisms); target.isPresent(); target = nextPrism(source, prisms)) {
-            var prism = target.get();
-            result.add(prism.id());
-            source = new LaserInfo(prism.x(), prism.y(), source.angle() + prism.angle());
+        record Step(int prismId, LaserInfo nextLaser) {
         }
-        return result;
+
+        UnaryOperator<Optional<Step>> nextStep = current -> current
+                .map(Step::nextLaser)
+                .flatMap(l -> nextPrism(l, prisms)
+                        .map(p -> new Step(p.id(), new LaserInfo(p.x(), p.y(), l.angle() + p.angle()))));
+
+        var firstStep = nextPrism(laser, prisms)
+                .map(p -> new Step(p.id(), new LaserInfo(p.x(), p.y(), laser.angle() + p.angle())));
+
+        return Stream.iterate(firstStep, Optional::isPresent, nextStep)
+                .map(Optional::orElseThrow)
+                .map(Step::prismId)
+                .toList();
     }
+
 
     static double distance(LaserInfo laser, PrismInfo prism) {
         return hypot(prism.x() - laser.x(), prism.y() - laser.y());
