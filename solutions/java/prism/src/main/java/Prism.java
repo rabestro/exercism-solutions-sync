@@ -31,15 +31,17 @@ public class Prism {
     public record PrismInfo(int id, double x, double y, double angle) {
     }
 
-    public static List<Integer> findSequence(LaserInfo laser, List<PrismInfo> prisms) {
-        record Step(int id, LaserInfo laser) {}
+    public static List<Integer> findSequence(LaserInfo laserInfo, List<PrismInfo> prisms) {
+        record Step(int id, LaserInfo laser) {
+        }
 
-        Function<LaserInfo, Optional<Step>> step = l -> prisms.stream()
-                .filter(l::hits)
-                .min(Comparator.comparingDouble(l::distanceTo))
-                .map(p -> new Step(p.id(), l.deflect(p)));
+        Function<LaserInfo, Optional<Step>> step = laser ->
+                prisms.stream()
+                        .filter(laser::hits)
+                        .min(Comparator.comparingDouble(laser::distanceTo))
+                        .map(prism -> new Step(prism.id(), laser.deflect(prism)));
 
-        return Stream.iterate(step.apply(laser), Optional::isPresent, opt -> opt.map(Step::laser).flatMap(step))
+        return Stream.iterate(step.apply(laserInfo), Optional::isPresent, opt -> opt.map(Step::laser).flatMap(step))
                 .map(opt -> opt.orElseThrow().id())
                 .toList();
     }
