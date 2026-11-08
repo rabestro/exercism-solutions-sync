@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 final class RelativeDistance {
 
     private final Map<String, Set<String>> familyTree;
+    private Set<String> visited;
 
     RelativeDistance(Map<String, List<String>> familyTree) {
         this.familyTree = new HashMap<>(familyTree.size());
@@ -14,49 +15,51 @@ final class RelativeDistance {
     }
 
     int degreeOfSeparation(String personA, String personB) {
-        var family = new HashSet<>(Set.of(personA));
-        for (var distance = 0; ; distance++) {
-            if (family.contains(personB)) return distance;
-            var relatives = relatives(family);
-            if (relatives.isEmpty()) return -1;
-            family.addAll(relatives);
+        var nextLevel = Set.of(personA);
+        visited = new HashSet<>();
+
+        for (var distance = 0; !nextLevel.isEmpty(); distance++) {
+            if (nextLevel.contains(personB)) return distance;
+            visited.addAll(nextLevel);
+            nextLevel = findNextLevel(visited);
         }
+        return -1;
     }
 
-    Set<String> relatives(Set<String> family) {
+    Set<String> findNextLevel(Set<String> family) {
         return family.stream()
-                .flatMap(this::closeFamily)
-                .filter(Predicate.not(family::contains))
+                .flatMap(this::neighbors)
+                .filter(Predicate.not(visited::contains))
                 .collect(Collectors.toSet());
     }
 
-    Stream<String> children(String parent) {
+    Stream<String> childrenOf(String parent) {
         return this.familyTree.getOrDefault(parent, Set.of()).stream();
     }
 
-    Stream<String> siblings(String person) {
+    Stream<String> siblingsOf(String person) {
         return this.familyTree.values().stream()
                 .filter(s -> s.contains(person))
                 .flatMap(Collection::stream)
                 .filter(Predicate.not(person::equals));
     }
 
-    Stream<String> partners(String person) {
-        var children = children(person).collect(Collectors.toSet());
+    Stream<String> coParentsOf(String person) {
+        var children = childrenOf(person).collect(Collectors.toSet());
         return this.familyTree.entrySet().stream()
                 .filter(e -> !e.getKey().equals(person))
                 .filter(e -> !Collections.disjoint(e.getValue(), children))
                 .map(Map.Entry::getKey);
     }
 
-    Stream<String> parents(String person) {
+    Stream<String> parentsOf(String person) {
         return this.familyTree.entrySet().stream()
                 .filter(e -> e.getValue().contains(person))
                 .map(Map.Entry::getKey);
     }
 
-    Stream<String> closeFamily(String person) {
-        return Stream.of(children(person), siblings(person), parents(person), partners(person))
+    Stream<String> neighbors(String person) {
+        return Stream.of(childrenOf(person), siblingsOf(person), parentsOf(person), coParentsOf(person))
                 .flatMap(Function.identity());
     }
 }
