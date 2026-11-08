@@ -2,7 +2,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -30,13 +29,16 @@ final class RelativeDistance {
         if (!relativesByPerson.containsKey(personA) || !relativesByPerson.containsKey(personB)) {
             return -1;
         }
-        var nextLevel = Set.of(personA);
+
+        var currentLevel = Set.of(personA);
         var visited = new HashSet<String>();
 
-        for (var distance = 0; !nextLevel.isEmpty(); distance++) {
-            if (nextLevel.contains(personB)) return distance;
-            visited.addAll(nextLevel);
-            nextLevel = findNextLevel(nextLevel, visited);
+        for (var distance = 0; !currentLevel.isEmpty(); distance++) {
+            if (currentLevel.contains(personB)) {
+                return distance;
+            }
+            visited.addAll(currentLevel);
+            currentLevel = findNextLevel(currentLevel, visited);
         }
         return -1;
     }
