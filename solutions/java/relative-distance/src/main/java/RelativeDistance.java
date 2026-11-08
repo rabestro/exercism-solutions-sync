@@ -27,6 +27,9 @@ final class RelativeDistance {
     }
 
     int degreeOfSeparation(String personA, String personB) {
+        if (!relativesByPerson.containsKey(personA) || !relativesByPerson.containsKey(personB)) {
+            return -1;
+        }
         var nextLevel = Set.of(personA);
         var visited = new HashSet<String>();
 
@@ -41,7 +44,6 @@ final class RelativeDistance {
     private Set<String> findNextLevel(Set<String> currentLevel, Set<String> visited) {
         return currentLevel.stream()
                 .map(relativesByPerson::get)
-                .filter(Objects::nonNull)
                 .flatMap(Set::stream)
                 .filter(Predicate.not(visited::contains))
                 .collect(Collectors.toSet());
