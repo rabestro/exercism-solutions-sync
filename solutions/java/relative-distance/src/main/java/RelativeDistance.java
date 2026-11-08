@@ -1,28 +1,29 @@
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.util.function.Predicate.not;
 
 final class RelativeDistance {
 
     private final Map<String, Set<String>> relativesByPerson;
 
     RelativeDistance(Map<String, List<String>> familyTree) {
-        relativesByPerson = new HashMap<>();
+        record Edge(String from, String to) {
+        }
 
-        familyTree.forEach((parent, children) -> {
-            relativesByPerson.computeIfAbsent(parent, _ -> new HashSet<>()).addAll(children);
-
-            for (var child : children) {
-                var childRelatives = relativesByPerson.computeIfAbsent(child, _ -> new HashSet<>());
-                childRelatives.add(parent);
-                childRelatives.addAll(children);
-                childRelatives.remove(child);
-            }
-        });
+        relativesByPerson = familyTree.entrySet().stream()
+                .map(e -> Stream.concat(Stream.of(e.getKey()), e.getValue().stream()).toList())
+                .flatMap(family -> family.stream().flatMap(from -> family.stream()
+                        .filter(not(from::equals))
+                        .map(to -> new Edge(from, to))))
+                .collect(Collectors.groupingBy(
+                        Edge::from,
+                        Collectors.mapping(Edge::to, Collectors.toUnmodifiableSet())
+                ));
     }
 
     int degreeOfSeparation(String personA, String personB) {
@@ -30,24 +31,21 @@ final class RelativeDistance {
             return -1;
         }
 
-        var currentLevel = Set.of(personA);
-        var visited = new HashSet<String>();
+        var visited = new HashSet<>(Set.of(personA));
 
-        for (var distance = 0; !currentLevel.isEmpty(); distance++) {
-            if (currentLevel.contains(personB)) {
-                return distance;
-            }
-            visited.addAll(currentLevel);
-            currentLevel = findNextLevel(currentLevel, visited);
-        }
-        return -1;
+        var distance = (int) Stream
+                .iterate(Set.of(personA), not(Set::isEmpty), level -> findNextLevel(level, visited))
+                .takeWhile(level -> !level.contains(personB))
+                .count();
+
+        return visited.contains(personB) ? distance : -1;
     }
 
     private Set<String> findNextLevel(Set<String> currentLevel, Set<String> visited) {
         return currentLevel.stream()
                 .map(relativesByPerson::get)
                 .flatMap(Set::stream)
-                .filter(Predicate.not(visited::contains))
-                .collect(Collectors.toSet());
+                .filter(visited::add)
+                .collect(Collectors.toUnmodifiableSet());
     }
 }
