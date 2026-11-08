@@ -1,47 +1,29 @@
-import java.util.*;
-import java.util.function.Function;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 final class RelativeDistance {
 
     private final Map<String, Set<String>> relativesByPerson;
 
     RelativeDistance(Map<String, List<String>> familyTree) {
-        relativesByPerson = Stream
-                .concat(
-                        familyTree.keySet().stream(),
-                        familyTree.values().stream().flatMap(List::stream)
-                )
-                .distinct()
-                .collect(Collectors.toMap(
-                        person -> person,
-                        person -> new HashSet<>()
-                ));
+        relativesByPerson = new HashMap<>();
 
-        for (var entry : familyTree.entrySet()) {
-            var parent = entry.getKey();
-            var children = entry.getValue();
-            var relatives = relativesByPerson.get(parent);
-            relatives.addAll(children);
-            familyTree.entrySet().stream()
-                    .filter(e -> !e.getKey().equals(parent))
-                    .filter(e -> !Collections.disjoint(e.getValue(), children))
-                    .map(Map.Entry::getKey)
-                    .forEach(relatives::add);
-            familyTree.entrySet().stream()
-                    .filter(e -> e.getValue().contains(parent))
-                    .map(Map.Entry::getKey)
-                    .forEach(relatives::add);
+        familyTree.forEach((parent, children) -> {
+            relativesByPerson.computeIfAbsent(parent, _ -> new HashSet<>()).addAll(children);
 
             for (var child : children) {
-                var siblings = new HashSet<>(children);
-                siblings.remove(child);
-                relativesByPerson.get(child).add(parent);
-                relativesByPerson.get(child).addAll(siblings);
+                var childRelatives = relativesByPerson.computeIfAbsent(child, _ -> new HashSet<>());
+                childRelatives.add(parent);
+                childRelatives.addAll(children);
+                childRelatives.remove(child);
             }
-        }
+        });
     }
 
     int degreeOfSeparation(String personA, String personB) {
