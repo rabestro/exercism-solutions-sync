@@ -15,10 +15,10 @@ final class RelativeDistance {
 
     int degreeOfSeparation(String personA, String personB) {
         var family = new HashSet<>(Set.of(personA));
-        for (var distance = 1;;distance++) {
+        for (var distance = 0; ; distance++) {
+            if (family.contains(personB)) return distance;
             var relatives = relatives(family);
             if (relatives.isEmpty()) return -1;
-            if (relatives.contains(personB)) return distance;
             family.addAll(relatives);
         }
     }
