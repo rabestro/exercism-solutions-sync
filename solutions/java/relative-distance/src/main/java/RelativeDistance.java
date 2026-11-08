@@ -1,4 +1,3 @@
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,17 +11,20 @@ final class RelativeDistance {
     private final Map<String, Set<String>> relativesByPerson;
 
     RelativeDistance(Map<String, List<String>> familyTree) {
-        record Edge(String from, String to) {
-        }
-
         relativesByPerson = familyTree.entrySet().stream()
-                .map(e -> Stream.concat(Stream.of(e.getKey()), e.getValue().stream()).toList())
-                .flatMap(family -> family.stream().flatMap(from -> family.stream()
-                        .filter(not(from::equals))
-                        .map(to -> new Edge(from, to))))
+                .map(entry -> Stream.concat(
+                        Stream.of(entry.getKey()),
+                        entry.getValue().stream()
+                ).toList())
+                .flatMap(family -> family.stream()
+                        .map(person -> Map.entry(person, family)))
                 .collect(Collectors.groupingBy(
-                        Edge::from,
-                        Collectors.mapping(Edge::to, Collectors.toUnmodifiableSet())
+                        Map.Entry::getKey,
+                        Collectors.flatMapping(
+                                entry -> entry.getValue().stream()
+                                        .filter(not(entry.getKey()::equals)),
+                                Collectors.toUnmodifiableSet()
+                        )
                 ));
     }
 
@@ -31,21 +33,27 @@ final class RelativeDistance {
             return -1;
         }
 
-        var visited = new HashSet<>(Set.of(personA));
+        record State(Set<String> level, Set<String> visited, int distance) {
+            State next(Map<String, Set<String>> graph) {
+                var nextVisited = Stream.concat(visited.stream(), level.stream())
+                        .collect(Collectors.toUnmodifiableSet());
+                var nextLevel = level.stream()
+                        .map(graph::get)
+                        .flatMap(Set::stream)
+                        .filter(not(nextVisited::contains))
+                        .collect(Collectors.toUnmodifiableSet());
+                return new State(nextLevel, nextVisited, distance + 1);
+            }
+        }
 
-        var distance = (int) Stream
-                .iterate(Set.of(personA), not(Set::isEmpty), level -> findNextLevel(level, visited))
-                .takeWhile(level -> !level.contains(personB))
-                .count();
-
-        return visited.contains(personB) ? distance : -1;
-    }
-
-    private Set<String> findNextLevel(Set<String> currentLevel, Set<String> visited) {
-        return currentLevel.stream()
-                .map(relativesByPerson::get)
-                .flatMap(Set::stream)
-                .filter(visited::add)
-                .collect(Collectors.toUnmodifiableSet());
+        return Stream.iterate(
+                        new State(Set.of(personA), Set.of(), 0),
+                        state -> !state.level().isEmpty(),
+                        state -> state.next(relativesByPerson)
+                )
+                .filter(state -> state.level().contains(personB))
+                .mapToInt(State::distance)
+                .findFirst()
+                .orElse(-1);
     }
 }
