@@ -1,8 +1,8 @@
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class SplitSecondStopwatch {
     enum State {READY, RUNNING, STOPPED}
@@ -16,7 +16,7 @@ public class SplitSecondStopwatch {
         return Duration.between(LocalTime.MIN, LocalTime.parse(text));
     }
 
-    private String print(Duration duration) {
+    private String display(Duration duration) {
         return "%02d:%02d:%02d".formatted(
                 duration.toHours(),
                 duration.toMinutesPart(),
@@ -39,23 +39,21 @@ public class SplitSecondStopwatch {
     }
 
     public void reset() {
-        if (state == State.STOPPED) {
-            state = State.READY;
-            currentLap = Duration.ZERO;
-            previousLaps.clear();
-        } else {
+        if (state != State.STOPPED) {
             throw new IllegalStateException("cannot reset a stopwatch that is not stopped");
         }
+        state = State.READY;
+        currentLap = Duration.ZERO;
+        totalDuration = Duration.ZERO;
+        previousLaps.clear();
     }
 
     public void lap() {
-        if (state == State.RUNNING) {
-            previousLaps.add(print(currentLap));
-            currentLap = Duration.ZERO;
-        } else {
+        if (state != State.RUNNING) {
             throw new IllegalStateException("cannot lap a stopwatch that is not running");
         }
-
+        previousLaps.add(display(currentLap));
+        currentLap = Duration.ZERO;
     }
 
     public String state() {
@@ -63,15 +61,15 @@ public class SplitSecondStopwatch {
     }
 
     public String currentLap() {
-        return print(currentLap);
+        return display(currentLap);
     }
 
     public String total() {
-        return print(totalDuration);
+        return display(totalDuration);
     }
 
     public java.util.List<String> previousLaps() {
-        return previousLaps;
+        return Collections.unmodifiableList(previousLaps);
     }
 
     public void advanceTime(String timeString) {
