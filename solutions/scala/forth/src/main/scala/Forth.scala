@@ -80,8 +80,12 @@ class Forth extends ForthEvaluator:
           case Some(n) =>
             loop(rest, state.copy(stack = n :: state.stack))
           case None =>
-            Left(ForthError.UnknownWord)
+            state.words.get(token) match
+              case Some(expanded) =>
+                loop(expanded ++ rest, state)
+              case None =>
+                Left(ForthError.UnknownWord)
 
   def eval(text: String): Either[ForthError, ForthEvaluatorState] =
-    val tokens = text.trim.split("\\s+").filter(_.nonEmpty).toList
+    val tokens = text.trim.toLowerCase.split("\\s+").filter(_.nonEmpty).toList
     loop(tokens, State())
