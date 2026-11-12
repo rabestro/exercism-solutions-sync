@@ -3,23 +3,19 @@ enum NumberType:
 
 object PerfectNumbers:
   def classify(number: Int): Either[String, NumberType] =
-    if number <= 0 then
-      Left("Classification is only possible for natural numbers.")
-    else if number == 1 then
-      Right(NumberType.Deficient)
-    else
-      Right {
-        aliquotSum(number) match {
-          case sum if sum < number => NumberType.Deficient
-          case sum if sum == number => NumberType.Perfect
-          case sum if sum > number => NumberType.Abundant
-        }
-      }
+    Either.cond(number > 0,
+      aliquotSum(number).compare(number).sign match
+        case 0 => NumberType.Perfect
+        case 1 => NumberType.Abundant
+        case _ => NumberType.Deficient
+      ,
+      "Classification is only possible for natural numbers."
+    )
 
-  private def aliquotSum(number: Int): Int =
-    (2 to Math.sqrt(number).toInt)
-      .filter(number % _ == 0)
-      .foldLeft(1) { (sum, factor) =>
-        val complementaryFactor = number / factor
-        sum + factor + (if factor != complementaryFactor then complementaryFactor else 0)
-      }
+  private def aliquotSum(number: Int): Long =
+    if number == 1 then 0L
+    else
+      (2 to math.sqrt(number).toInt).view
+        .filter(number % _ == 0)
+        .flatMap(f => Set(f, number / f))
+        .foldLeft(1L)(_ + _)
