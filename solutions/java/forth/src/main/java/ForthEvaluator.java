@@ -6,7 +6,7 @@ class ForthEvaluator {
     private final ForthEngine forthEngine = new ForthEngine();
 
     public List<Integer> evaluateProgram(List<String> commands) {
-        commands.forEach(forthEngine);
-        return forthEngine.get();
+        commands.forEach(forthEngine::evaluate);
+        return forthEngine.stack();
     }
 }
