@@ -1,18 +1,17 @@
-case class PalindromeProducts(a: Int, b: Int):
-  private type Result = (Int, Set[(Int, Int)])
-  lazy val smallest: Option[Result] = palindromeProducts.keys.minOption.map(toSet)
-  lazy val largest: Option[Result] = palindromeProducts.keys.maxOption.map(toSet)
+case class PalindromeProducts(min: Int, max: Int):
+  import PalindromeProducts.Result
 
-  private def toSet(key: Int): Result = key -> palindromeProducts(key).toSet
+  lazy val smallest: Option[Result] = palindromeProducts.minByOption(_._1)
+  lazy val largest: Option[Result] = palindromeProducts.maxByOption(_._1)
 
-  private lazy val palindromeProducts =
-    val seq = for 
-      x <- a to b
-      y <- x to b
-      product = x * y
+  private lazy val palindromeProducts: Map[Int, Set[(Int, Int)]] =
+    val pairs = for
+      x <- (min to max).iterator
+      y <- (x to max).iterator
+      product = Math.multiplyExact(x, y)
       if isPalindrome(product)
     yield product -> (x -> y)
-    seq.groupMap(_._1)(_._2)
+    pairs.toSet.groupMap(_._1)(_._2)
 
   private def isPalindrome(originalNumber: Int): Boolean =
     var number = originalNumber
@@ -22,3 +21,6 @@ case class PalindromeProducts(a: Int, b: Int):
       reversed += number % 10
       number /= 10
     reversed == originalNumber
+
+object PalindromeProducts:
+  private type Result = (Int, Set[(Int, Int)])
