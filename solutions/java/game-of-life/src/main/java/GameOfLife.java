@@ -1,6 +1,5 @@
 class GameOfLife {
-
-    record Universe(int[][] matrix) {
+    private record Universe(int[][] matrix) {
         int rows() {
             return matrix.length;
         }
