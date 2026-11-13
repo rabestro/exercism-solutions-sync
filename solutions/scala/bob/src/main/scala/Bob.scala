@@ -1,19 +1,17 @@
 object Bob:
   def response(statement: String): String =
     val trimmed = statement.trim
-    val isQuestion = trimmed.endsWith("?")
-    val isYelling =
-      val letters = trimmed.filter(_.isLetter)
-      letters.nonEmpty && letters.forall(_.isUpper)
+    val letters = trimmed.filter(_.isLetter)
+    val yelling = letters.nonEmpty && letters.forall(_.isUpper)
+    val question = trimmed.endsWith("?")
 
-    trimmed match
-      case _ if isYelling && isQuestion =>
-        "Calm down, I know what I'm doing!"
-      case _ if isYelling =>
-        "Whoa, chill out!"
-      case _ if isQuestion =>
-        "Sure."
-      case "" =>
-        "Fine. Be that way!"
-      case _ =>
-        "Whatever."
+    if yelling && question then
+      "Calm down, I know what I'm doing!"
+    else if yelling then
+      "Whoa, chill out!"
+    else if question then
+      "Sure."
+    else if trimmed.isEmpty then
+      "Fine. Be that way!"
+    else
+      "Whatever."
