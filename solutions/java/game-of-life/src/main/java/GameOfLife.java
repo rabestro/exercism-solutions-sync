@@ -26,14 +26,11 @@ class GameOfLife {
     }
 
     public int[][] tick(int[][] matrix) {
-        if (matrix.length == 0 || matrix[0].length == 0) {
-            return matrix;
-        }
         var universe = new Universe(matrix);
         var result = new int[universe.rows()][universe.cols()];
 
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[0].length; j++) {
+        for (int i = 0; i < universe.rows(); i++) {
+            for (int j = 0; j < universe.cols(); j++) {
                 result[i][j] = switch (universe.neighbors(i, j)) {
                     case 2 -> universe.value(i, j);
                     case 3 -> 1;
