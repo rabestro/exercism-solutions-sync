@@ -17,5 +17,6 @@ object PerfectNumbers:
     else
       (2 to math.sqrt(number).toInt).view
         .filter(number % _ == 0)
-        .flatMap(f => Set(f, number / f))
-        .foldLeft(1L)(_ + _)
+        .foldLeft(1L): (sum, factor) =>
+          val complement = number / factor
+          if factor == complement then sum + factor else sum + factor + complement
